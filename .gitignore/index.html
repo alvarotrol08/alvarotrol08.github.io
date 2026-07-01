@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WEBO</title>
+<meta name="description" content="WEBO — gear, plugins, gallery, events y secret weekly pick.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Bungee&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================
+   TOKENS
+   ===================================================== */
+:root{
+  --white:#ffffff;
+  --black:#000000;
+  --nav-h:64px;
+  --font-display:'Monoton', cursive;
+  --font-heading:'Bungee', sans-serif;
+  --font-body:'Quicksand', sans-serif;
+}
+
+*{ box-sizing:border-box; }
+
+html, body{
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  background:#000;
+  font-family:var(--font-body);
+  color:var(--white);
+  -webkit-tap-highlight-color:transparent;
+}
+body{
+  position:fixed;
+  inset:0;
+  overscroll-behavior:none;
+  touch-action:none;
+}
+
+button{ font-family:inherit; }
+a{ color:inherit; }
+
+:focus-visible{
+  outline:2px solid var(--white);
+  outline-offset:3px;
+}
+
+/* =====================================================
+   FONDO DE VÍDEO
+   ===================================================== */
+.bg-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+  filter:blur(0px) brightness(1);
+  transform:scale(1);
+  transition:filter .5s ease, transform .5s ease;
+}
+.bg-video.blurred{
+  filter:blur(24px) brightness(.65);
+  transform:scale(1.06); /* evita ver el borde difuminado del vídeo */
+}
+.bg-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  background:rgba(0,0,0,0);
+  transition:background .5s ease;
+  pointer-events:none;
+}
+.bg-overlay.dimmed{ background:rgba(0,0,0,.45); }
+
+/* =====================================================
+   NAV
+   ===================================================== */
+.navbar{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:var(--nav-h);
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 20px;
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.35);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:clamp(1.1rem, 2.4vw, 1.6rem);
+  color:var(--white);
+  text-shadow:0 0 8px rgba(255,255,255,.5);
+  background:none;
+  border:none;
+  cursor:pointer;
+  letter-spacing:.06em;
+  flex:0 0 auto;
+}
+.nav-links{
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  flex:1;
+  justify-content:flex-end;
+}
+.nav-links::-webkit-scrollbar{ display:none; }
+.nav-links button{
+  flex:0 0 auto;
+  font-family:var(--font-heading);
+  font-size:clamp(.62rem, 1.3vw, .85rem);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--white);
+  background:none;
+  border:none;
+  padding:6px 2px;
+  cursor:pointer;
+  opacity:.6;
+  transition:opacity .2s;
+}
+.nav-links button:hover{ opacity:1; }
+.nav-links button.active{
+  opacity:1;
+  text-shadow:0 0 10px rgba(255,255,255,.85);
+}
+
+/* =====================================================
+   ESCENARIO / PANTALLAS (sin scroll)
+   ===================================================== */
+main{
+  position:fixed;
+  top:var(--nav-h);
+  left:0; right:0; bottom:0;
+  overflow:hidden;
+  z-index:2;
+}
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .35s ease;
+}
+.screen.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+/* ---------- PANELES (subpáginas) ---------- */
+.panel{
+  width:min(900px, 92vw);
+  max-height:calc(100vh - var(--nav-h) - 40px);
+  background:rgba(0,0,0,.45);
+  border:1px solid var(--white);
+  border-radius:24px;
+  box-shadow:0 0 40px rgba(255,255,255,.1);
+  padding:clamp(18px, 3.5vw, 36px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  overflow:hidden;
+  backdrop-filter:blur(2px);
+}
+.panel-narrow{ width:min(440px, 92vw); }
+.panel-wide{ width:min(960px, 94vw); }
+
+.page-title{
+  font-family:var(--font-heading);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-size:clamp(1.5rem, 3.6vw, 2.6rem);
+  color:var(--white);
+  text-shadow:0 0 12px rgba(255,255,255,.4);
+  margin:0;
+  text-align:center;
+}
+.page-sub{
+  margin:0;
+  text-align:center;
+  opacity:.85;
+  font-size:clamp(.85rem, 1.6vw, 1rem);
+}
+
+/* ---------- TARJETAS (tiendas / galería / eventos) ---------- */
+.grid-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:14px;
+  width:100%;
+  overflow:hidden;
+}
+.card{
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--white);
+  border-radius:16px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  text-align:center;
+  transition:.2s;
+}
+.card:hover{ transform:translateY(-3px); box-shadow:0 8px 22px rgba(255,255,255,.15); }
+.card-soon{ opacity:.55; border-style:dashed; }
+.card-emoji{ font-size:2.1rem; }
+.card-name{ font-family:var(--font-heading); font-size:.85rem; color:var(--white); }
+.card-price{ color:var(--white); font-weight:700; font-size:.85rem; }
+.card-desc{ font-size:.75rem; opacity:.85; }
+.card-link{
+  margin-top:4px;
+  padding:6px 14px;
+  border-radius:20px;
+  border:1px solid var(--white);
+  background:transparent;
+  color:var(--white);
+  font-weight:700;
+  text-decoration:none;
+  font-size:.75rem;
+  transition:.2s;
+}
+.card-link:hover{ background:rgba(255,255,255,.15); }
+
+.gallery-item{
+  aspect-ratio:1;
+  border-radius:14px;
+  border:1px solid var(--white);
+  overflow:hidden;
+  cursor:pointer;
+}
+.gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+.photo-placeholder{
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+  font-size:.75rem;
+  padding:8px;
+  background:rgba(255,255,255,.08);
+}
+
+.pager{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:4px;
+}
+.pager-btn{
+  background:transparent;
+  border:1px solid var(--white);
+  color:var(--white);
+  border-radius:20px;
+  padding:6px 14px;
+  cursor:pointer;
+  font-size:.8rem;
+  transition:.2s;
+}
+.pager-btn:hover{ background:rgba(255,255,255,.15); }
+.page-indicator{ font-size:.8rem; opacity:.8; }
+
+/* ---------- FORMULARIO CONTACTO ---------- */
+.funk-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:100%;
+}
+.funk-form label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  opacity:.9;
+}
+.funk-form input, .funk-form textarea{
+  font-family:var(--font-body);
+  font-size:1rem;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid var(--white);
+  background:rgba(255,255,255,.08);
+  color:var(--white);
+  resize:none;
+}
+.funk-form input::placeholder, .funk-form textarea::placeholder{ color:rgba(255,255,255,.45); }
+.funk-form input:focus, .funk-form textarea:focus{ outline:none; box-shadow:0 0 10px rgba(255,255,255,.5); }
+.funk-form button{
+  align-self:center;
+  margin-top:4px;
+  padding:11px 28px;
+  border-radius:30px;
+  border:1px solid var(--white);
+  background:transparent;
+  color:var(--white);
+  font-family:var(--font-heading);
+  font-size:.95rem;
+  cursor:pointer;
+  transition:.2s;
+}
+.funk-form button:hover{ background:rgba(255,255,255,.15); }
+.form-status{
+  min-height:1.2em;
+  text-align:center;
+  font-size:.8rem;
+  color:var(--white);
+  margin:0;
+}
+
+/* ---------- SECRET ---------- */
+.rec-box{ display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; }
+.rec-title{ font-family:var(--font-heading); color:var(--white); margin:4px 0 0; text-align:center; font-size:clamp(1rem,2.4vw,1.3rem); }
+.rec-artist{ margin:0; opacity:.8; font-size:.85rem; }
+.rec-note{ margin:4px 0 0; font-style:italic; font-size:.8rem; opacity:.8; text-align:center; max-width:480px; }
+.rec-video{ width:min(420px, 78vw); height:min(236px, 30vh); border-radius:14px; border:1px solid var(--white); }
+.rec-cover{
+  width:min(190px, 40vw);
+  aspect-ratio:1;
+  border-radius:14px;
+  border:1px solid var(--white);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+  padding:10px;
+  background:rgba(255,255,255,.08);
+}
+.rec-cover-title{ font-family:var(--font-heading); color:var(--white); font-size:.9rem; }
+.countdown{
+  font-family:var(--font-heading);
+  color:var(--white);
+  text-shadow:0 0 8px rgba(255,255,255,.5);
+  font-size:clamp(.8rem,1.8vw,1.05rem);
+  letter-spacing:.03em;
+  margin:2px 0;
+}
+.comments-wrap{
+  width:100%;
+  max-height:32vh;
+  overflow-y:auto;
+  border-top:1px dashed var(--white);
+  padding-top:8px;
+}
+
+/* ---------- LIGHTBOX ---------- */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.92);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+.lightbox.active{ display:flex; }
+.lightbox img{ max-width:82vw; max-height:80vh; border-radius:12px; border:1px solid var(--white); }
+.lightbox-close{
+  position:absolute;
+  top:18px; right:24px;
+  font-size:1.6rem;
+  background:none;
+  border:none;
+  color:var(--white);
+  cursor:pointer;
+}
+
+/* ---------- ACCESIBILIDAD / RESPONSIVE ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+@media (max-width:680px){
+  :root{ --nav-h:56px; }
+  .nav-links{ gap:12px; }
+}
+</style>
+</head>
+<body>
+
+<!--
+  🛠️ FONDO: coloca tu vídeo (sin audio) en la misma carpeta que este archivo
+  y llámalo "background.mp4". Si prefieres usar una foto fija en vez de vídeo,
+  borra la etiqueta <source> de abajo y cambia el atributo poster="poster.jpg"
+  por el nombre de tu foto: se mostrará igual, ocupando todo el fondo.
+  <source src="background.mp4" type="video/mp4">
+-->
+
+
+<video id="bg-video" class="bg-video" autoplay muted loop playsinline poster="Foto_Web-3.png">
+</video>
+<div class="bg-overlay" id="bg-overlay"></div>
+
+<nav class="navbar">
+  <button class="nav-logo" onclick="showScreen('home')">WEBO</button>
+  <div class="nav-links">
+    <button data-target="gear" onclick="showScreen('gear')">Gear</button>
+    <button data-target="plugins" onclick="showScreen('plugins')">Plugins</button>
+    <button data-target="gallery" onclick="showScreen('gallery')">Gallery</button>
+    <button data-target="events" onclick="showScreen('events')">Events</button>
+    <button data-target="contact" onclick="showScreen('contact')">Contact</button>
+    <button data-target="secret" onclick="showScreen('secret')">Secret</button>
+  </div>
+</nav>
+
+<main>
+
+  <section id="home" class="screen active"></section>
+
+  <section id="gear" class="screen">
+    <div class="panel">
+      <h2 class="page-title">Gear</h2>
+      <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
+      <div class="grid-cards" id="gear-grid"></div>
+      <div class="pager" id="gear-pager"></div>
+    </div>
+  </section>
+
+  <section id="plugins" class="screen">
+    <div class="panel">
+      <h2 class="page-title">Plugins</h2>
+      <p class="page-sub">VSTs creados por WEBO</p>
+      <div class="grid-cards" id="plugins-grid"></div>
+      <div class="pager" id="plugins-pager"></div>
+    </div>
+  </section>
+
+  <section id="gallery" class="screen">
+    <div class="panel">
+      <h2 class="page-title">Gallery</h2>
+      <p class="page-sub">Lo último que voy haciendo</p>
+      <div class="grid-cards" id="gallery-grid"></div>
+      <div class="pager" id="gallery-pager"></div>
+    </div>
+  </section>
+
+  <section id="events" class="screen">
+    <div class="panel">
+      <h2 class="page-title">Events</h2>
+      <p class="page-sub">Próximos directos y eventos de WEBO</p>
+      <div class="grid-cards" id="events-grid"></div>
+      <div class="pager" id="events-pager"></div>
+    </div>
+  </section>
+
+  <section id="contact" class="screen">
+    <div class="panel panel-narrow">
+      <h2 class="page-title">Contact</h2>
+      <p class="page-sub">Cuéntame qué necesitas y te respondo en cuanto pueda</p>
+      <form class="funk-form" id="contact-form">
+        <label>Nombre
+          <input type="text" name="name" placeholder="Tu nombre" required>
+        </label>
+        <label>Contacto
+          <input type="text" name="contact" placeholder="Email o teléfono" required>
+        </label>
+        <label>Mensaje
+          <textarea name="message" rows="3" placeholder="Escribe aquí..." required></textarea>
+        </label>
+        <button type="submit">Enviar 🎉</button>
+        <p class="form-status" id="form-status"></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="secret" class="screen">
+    <div class="panel panel-wide">
+      <h2 class="page-title">Secret</h2>
+      <div class="rec-box" id="rec-box"></div>
+      <p class="countdown" id="countdown"></p>
+      <div class="comments-wrap" id="disqus_thread"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" alt="">
+</div>
+
+<script>
+/* =====================================================
+   WEBO — configuración
+   Edita los bloques marcados con 🛠️ para personalizar tu web.
+   No necesitas tocar nada más abajo de la sección "LÓGICA".
+   ===================================================== */
+
+// 🛠️ 1) GEAR — pedales y diseños. Copia un objeto y cambia los datos.
+const PRODUCTS_GEAR = [
+  { name:'Funk Fuzz MK1', price:'89€', emoji:'🎛️', desc:'Pedal fuzz analógico, edición limitada. (ejemplo)', link:'#', soon:false },
+  { name:'Próximo pedal', price:'—', emoji:'🔧', desc:'Todavía en el banco de pruebas...', link:'#', soon:true }
+];
+
+// 🛠️ 2) PLUGINS — tus VST.
+const PRODUCTS_PLUGINS = [
+  { name:'FunkVerb', price:'Gratis', emoji:'🎚️', desc:'Reverb con carácter analógico ochentero. (ejemplo)', link:'#', soon:false },
+  { name:'Próximo VST', price:'—', emoji:'💾', desc:'Cociendo a fuego lento...', link:'#', soon:true }
+];
+
+// 🛠️ 3) GALLERY — pon tus fotos en una carpeta /images junto a este archivo
+// y añade objetos como { src:'images/tufoto.jpg', caption:'Descripción' }.
+// Mientras no tengas fotos reales, se muestran estos huecos de ejemplo.
+const PHOTOS = [
+  { grad:null, caption:'Sube tu primera foto 📷' },
+  { grad:null, caption:'Y la siguiente...' },
+  { grad:null, caption:'¡Sin límite!' }
+];
+
+// 🛠️ 4) EVENTS — directos, showcases, lo que sea. Copia un objeto y cambia los datos.
+const EVENTS_LIST = [
+  { date:'18 Jul 2026', title:'WEBO Live (ejemplo)', place:'Sala X, Madrid', desc:'Sesión funk en directo.', link:'#' },
+  { date:'—', title:'Próximo evento', place:'Por anunciar', desc:'Aún organizando los detalles...', link:'#' }
+];
+
+// 🛠️ 5) CONTACT — crea una cuenta gratis en https://formspree.io,
+// copia tu endpoint y pégalo aquí. Mientras no lo hagas, el formulario
+// mostrará automáticamente el email de respaldo.
+const FORM_ENDPOINT = 'https://formspree.io/f/TU_ID_AQUI';
+const FALLBACK_EMAIL = 'webo@tu-email.com';
+
+// 🛠️ 6) SECRET — añade tantas recomendaciones como quieras al final del array.
+// Rotan automáticamente cada semana (de lunes a lunes), sin que tengas
+// que tocar nada salvo seguir añadiendo entradas nuevas de vez en cuando.
+const RECS_START = new Date(2025, 0, 6); // lunes de referencia — no lo cambies
+const RECS = [
+  { type:'video', title:'Tu vídeo recomendado', artist:'Canal / Autor', embed:'https://www.youtube.com/embed/VIDEO_ID_AQUI', note:'Por qué te va a encantar esta semana.' },
+  { type:'album', title:'Tu álbum recomendado', artist:'Artista', link:'https://open.spotify.com/', note:'El disco que no puede faltar en tu playlist.' },
+  { type:'video', title:'Otro vídeo de ejemplo', artist:'Canal / Autor', embed:'https://www.youtube.com/embed/VIDEO_ID_AQUI', note:'Sustituye este enlace por el tuyo.' },
+  { type:'album', title:'Otro álbum de ejemplo', artist:'Artista', link:'https://open.spotify.com/', note:'Sustituye este enlace por el tuyo.' }
+];
+
+// 🛠️ 7) COMENTARIOS — crea una cuenta gratis en https://disqus.com
+// y pon tu "shortname" aquí para que la gente pueda dejar su opinión.
+const DISQUS_SHORTNAME = 'TU-SHORTNAME-DISQUS';
+
+/* =====================================================
+   LÓGICA — no hace falta tocar nada de aquí en adelante
+   ===================================================== */
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.target === id));
+  const isHome = id === 'home';
+  document.getElementById('bg-video').classList.toggle('blurred', !isHome);
+  document.getElementById('bg-overlay').classList.toggle('dimmed', !isHome);
+  if(id === 'secret') initDisqus();
+}
+
+function paginate(list, perPage){
+  const pages = [];
+  for(let i=0; i<list.length; i+=perPage) pages.push(list.slice(i, i+perPage));
+  return pages.length ? pages : [[]];
+}
+
+function setupGrid(gridId, pagerId, items, renderCard, perPage){
+  perPage = perPage || 6;
+  const grid = document.getElementById(gridId);
+  const pager = document.getElementById(pagerId);
+  const indexed = items.map((item, idx) => ({ item, idx }));
+  const pages = paginate(indexed, perPage);
+  let page = 0;
+
+  function draw(){
+    grid.innerHTML = pages[page].map(o => renderCard(o.item, o.idx)).join('');
+    if(pages.length > 1){
+      pager.innerHTML = `
+        <button class="pager-btn" id="${gridId}-prev">‹ Anterior</button>
+        <span class="page-indicator">${page+1} / ${pages.length}</span>
+        <button class="pager-btn" id="${gridId}-next">Siguiente ›</button>`;
+      document.getElementById(gridId + '-prev').onclick = () => { page = (page - 1 + pages.length) % pages.length; draw(); };
+      document.getElementById(gridId + '-next').onclick = () => { page = (page + 1) % pages.length; draw(); };
+    } else {
+      pager.innerHTML = '';
+    }
+  }
+  draw();
+}
+
+function storeCard(it){
+  return `<div class="card ${it.soon ? 'card-soon' : ''}">
+    <div class="card-emoji">${it.emoji}</div>
+    <div class="card-name">${escapeHtml(it.name)}</div>
+    <div class="card-price">${escapeHtml(it.price)}</div>
+    <div class="card-desc">${escapeHtml(it.desc)}</div>
+    ${it.soon ? '<span class="card-desc">🔒 Próximamente</span>' : `<a class="card-link" href="${it.link}" target="_blank" rel="noopener">Ver más</a>`}
+  </div>`;
+}
+
+function eventCard(it){
+  return `<div class="card">
+    <div class="card-name">${escapeHtml(it.title)}</div>
+    <div class="card-price">${escapeHtml(it.date)}</div>
+    <div class="card-desc">${escapeHtml(it.place)}</div>
+    <div class="card-desc">${escapeHtml(it.desc || '')}</div>
+    <a class="card-link" href="${it.link}" target="_blank" rel="noopener">Más info</a>
+  </div>`;
+}
+
+function galleryCard(p, idx){
+  const inner = p.src
+    ? `<img src="${p.src}" alt="${escapeHtml(p.caption || '')}">`
+    : `<div class="photo-placeholder"><span>📷 ${escapeHtml(p.caption || '')}</span></div>`;
+  return `<div class="gallery-item" onclick="openLightbox(${idx})">${inner}</div>`;
+}
+
+function openLightbox(idx){
+  const p = PHOTOS[idx];
+  if(!p || !p.src) return;
+  const img = document.getElementById('lightbox-img');
+  img.src = p.src;
+  img.alt = p.caption || '';
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+// ---- Secret ----
+function weekIndex(){
+  const now = new Date();
+  const diff = now - RECS_START;
+  const weeks = Math.floor(diff / (7*24*60*60*1000));
+  return ((weeks % RECS.length) + RECS.length) % RECS.length;
+}
+
+function renderRec(){
+  const rec = RECS[weekIndex()];
+  const box = document.getElementById('rec-box');
+  if(rec.type === 'video'){
+    box.innerHTML = `
+      <iframe class="rec-video" src="${rec.embed}" title="${escapeHtml(rec.title)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <h3 class="rec-title">${escapeHtml(rec.title)}</h3>
+      <p class="rec-artist">${escapeHtml(rec.artist)}</p>
+      <p class="rec-note">${escapeHtml(rec.note)}</p>`;
+  } else {
+    box.innerHTML = `
+      <div class="rec-cover"><span class="rec-cover-title">${escapeHtml(rec.title)}</span></div>
+      <h3 class="rec-title">${escapeHtml(rec.title)}</h3>
+      <p class="rec-artist">${escapeHtml(rec.artist)}</p>
+      <a class="card-link" href="${rec.link}" target="_blank" rel="noopener">Escuchar</a>
+      <p class="rec-note">${escapeHtml(rec.note)}</p>`;
+  }
+}
+
+function getNextMonday(){
+  const d = new Date();
+  d.setHours(0,0,0,0);
+  const day = d.getDay();
+  let diffDays = (8 - day) % 7;
+  if(diffDays === 0) diffDays = 7;
+  d.setDate(d.getDate() + diffDays);
+  return d;
+}
+
+function updateCountdown(){
+  const target = getNextMonday();
+  let diff = Math.max(0, target - new Date());
+  const days = Math.floor(diff/86400000); diff %= 86400000;
+  const hours = Math.floor(diff/3600000); diff %= 3600000;
+  const mins = Math.floor(diff/60000); diff %= 60000;
+  const secs = Math.floor(diff/1000);
+  document.getElementById('countdown').textContent =
+    `Próxima secret pick en ${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+}
+
+let disqusLoaded = false;
+function initDisqus(){
+  if(disqusLoaded) return;
+  disqusLoaded = true;
+  window.disqus_config = function(){
+    this.page.url = window.location.href;
+    this.page.identifier = 'webo-secret-' + weekIndex();
+  };
+  const s = document.createElement('script');
+  s.src = `https://${DISQUS_SHORTNAME}.disqus.com/embed.js`;
+  s.setAttribute('data-timestamp', String(+new Date()));
+  document.head.appendChild(s);
+}
+
+// ---- Contact ----
+document.getElementById('contact-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const form = e.target;
+  const status = document.getElementById('form-status');
+  status.textContent = 'Enviando...';
+  try{
+    const res = await fetch(FORM_ENDPOINT, {
+      method:'POST',
+      headers:{ 'Accept':'application/json' },
+      body:new FormData(form)
+    });
+    if(res.ok){
+      status.textContent = '¡Mensaje enviado! Te responderé pronto 🎶';
+      form.reset();
+    } else {
+      throw new Error('fail');
+    }
+  } catch(err){
+    status.textContent = `No se pudo enviar automáticamente. Escríbeme a ${FALLBACK_EMAIL}`;
+  }
+});
+
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', () => {
+  const bgVideo = document.getElementById('bg-video');
+  bgVideo.muted = true;
+  bgVideo.play().catch(() => {});
+
+  setupGrid('gear-grid', 'gear-pager', PRODUCTS_GEAR, storeCard);
+  setupGrid('plugins-grid', 'plugins-pager', PRODUCTS_PLUGINS, storeCard);
+  setupGrid('gallery-grid', 'gallery-pager', PHOTOS, galleryCard);
+  setupGrid('events-grid', 'events-pager', EVENTS_LIST, eventCard);
+  renderRec();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
+</script>
+</body>
+</html>
+EOF
+echo "OK"

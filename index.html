@@ -6,15 +6,15 @@
 <title>WEBO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Bungee&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="webo_logo_white copy.png">
 
 <style>
 :root{
   --white:#ffffff;
   --font-display:'Monoton', cursive;
-  --font-heading:'Bungee', sans-serif;
-  --font-body:'Quicksand', sans-serif;
+  --font-heading:'Oswald', sans-serif;
+  --font-body:'Oswald', sans-serif;
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
 html, body{
@@ -180,20 +180,65 @@ main{
 }
 .card-link:hover{ background:rgba(255,255,255,.2); }
 
-.gallery-item{
-  aspect-ratio:1;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.7);
-  overflow:hidden;
-  cursor:pointer;
-  backdrop-filter:blur(4px);
-}
-.gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
 .photo-placeholder{
   width:100%; height:100%;
   background:rgba(0,0,0,.38);
   display:flex; align-items:center; justify-content:center;
   font-size:.75rem; padding:8px; text-align:center;
+}
+
+/* ── GALERÍA — nube flotante ── */
+.gallery-cloud{
+  position:relative;
+  width:min(1100px, 94vw);
+  height:min(560px, 68vh);
+  pointer-events:auto;
+}
+.gallery-cloud-item{
+  position:absolute;
+  animation-name:cloud-float;
+  animation-timing-function:ease-in-out;
+  animation-iteration-count:infinite;
+  will-change:transform;
+}
+.gallery-cloud-item.active{
+  z-index:30;
+  animation-play-state:paused;
+}
+.gallery-cloud-inner{
+  width:100%; height:100%;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.7);
+  overflow:hidden;
+  cursor:pointer;
+  backdrop-filter:blur(4px);
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  transform:rotate(var(--rot, 0deg));
+  transition:transform .45s ease, filter .45s ease, opacity .45s ease, box-shadow .45s ease;
+}
+.gallery-cloud-inner img{ width:100%; height:100%; object-fit:cover; display:block; }
+.gallery-cloud-item.active .gallery-cloud-inner{
+  transform:rotate(0deg) scale(2.15);
+  box-shadow:0 18px 46px rgba(0,0,0,.6);
+}
+.gallery-cloud.has-active .gallery-cloud-item:not(.active) .gallery-cloud-inner{
+  filter:blur(3px);
+  opacity:.4;
+}
+@keyframes cloud-float{
+  0%   { transform:translateY(0px); }
+  50%  { transform:translateY(-14px); }
+  100% { transform:translateY(0px); }
+}
+
+/* ── BIO ── */
+.bio-text{
+  text-align:center;
+  font-size:clamp(.85rem, 1.6vw, 1.05rem);
+  line-height:1.6;
+  max-width:640px;
+  text-shadow:0 1px 8px rgba(0,0,0,.9);
+  white-space:pre-line;
 }
 
 .pager{
@@ -256,50 +301,6 @@ main{
 .funk-form button:hover{ background:rgba(255,255,255,.2); }
 .form-status{ min-height:1.1em; text-align:center; font-size:.78rem; text-shadow:0 1px 6px rgba(0,0,0,.9); }
 
-/* ── SECRET ── */
-.rec-box{ display:flex; flex-direction:column; align-items:center; gap:8px; }
-.rec-video{ width:min(400px, 80vw); height:min(226px, 28vh); border-radius:12px; border:1px solid rgba(255,255,255,.7); }
-.rec-title{ font-family:var(--font-heading); text-align:center; font-size:clamp(.9rem,2vw,1.2rem); text-shadow:0 2px 10px rgba(0,0,0,.9); }
-.rec-artist{ opacity:.8; font-size:.82rem; text-shadow:0 1px 6px rgba(0,0,0,.9); }
-.rec-note{ font-style:italic; font-size:.78rem; opacity:.8; text-align:center; max-width:440px; text-shadow:0 1px 6px rgba(0,0,0,.9); }
-.rec-cover{
-  width:min(170px, 38vw); aspect-ratio:1; border-radius:12px;
-  border:1px solid rgba(255,255,255,.7);
-  background:rgba(0,0,0,.38); backdrop-filter:blur(4px);
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:10px;
-}
-.rec-cover-title{ font-family:var(--font-heading); font-size:.85rem; }
-.countdown{
-  font-family:var(--font-heading);
-  font-size:clamp(.72rem, 1.6vw, .95rem);
-  letter-spacing:.03em;
-  text-shadow:0 2px 10px rgba(0,0,0,.9);
-  margin-top:6px;
-}
-.comments-wrap{
-  width:min(600px, 90vw);
-  max-height:26vh;
-  overflow-y:auto;
-  border-top:1px dashed rgba(255,255,255,.5);
-  padding-top:8px;
-  margin-top:4px;
-}
-
-/* ── LIGHTBOX ── */
-.lightbox{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.88);
-  display:none; align-items:center; justify-content:center;
-  z-index:50;
-}
-.lightbox.active{ display:flex; }
-.lightbox img{ max-width:82vw; max-height:80vh; border-radius:10px; border:1px solid rgba(255,255,255,.7); }
-.lightbox-close{
-  position:absolute; top:18px; right:24px;
-  font-size:1.5rem; background:none; border:none; color:#fff; cursor:pointer;
-}
-
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
 }
@@ -312,12 +313,12 @@ main{
 <nav class="navbar">
   <button class="nav-logo" onclick="showScreen('home')">WEBO</button>
   <div class="nav-links">
-    <button data-target="gear"    onclick="showScreen('gear')">Gear</button>
-    <button data-target="plugins" onclick="showScreen('plugins')">Plugins</button>
-    <button data-target="gallery" onclick="showScreen('gallery')">Gallery</button>
-    <button data-target="events"  onclick="showScreen('events')">Events</button>
-    <button data-target="contact" onclick="showScreen('contact')">Contact</button>
-    <button data-target="secret"  onclick="showScreen('secret')">Secret</button>
+    <button data-target="bio"     onclick="showScreen('bio')">Bio</button>
+    <button data-target="gear"    onclick="showScreen('gear')">Aparatos</button>
+    <button data-target="plugins" onclick="showScreen('plugins')">VSTs</button>
+    <button data-target="gallery" onclick="showScreen('gallery')">Galería</button>
+    <button data-target="events"  onclick="showScreen('events')">Eventos</button>
+    <button data-target="contact" onclick="showScreen('contact')">Contacto</button>
   </div>
 </nav>
 
@@ -325,36 +326,40 @@ main{
 
   <section id="home" class="screen active"></section>
 
+  <section id="bio" class="screen">
+    <h2 class="page-title">Bio</h2>
+    <p class="bio-text" id="bio-text"></p>
+  </section>
+
   <section id="gear" class="screen">
-    <h2 class="page-title">Gear</h2>
+    <h2 class="page-title">Aparatos</h2>
     <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
     <div class="grid-cards" id="gear-grid"></div>
     <div class="pager" id="gear-pager"></div>
   </section>
 
   <section id="plugins" class="screen">
-    <h2 class="page-title">Plugins</h2>
+    <h2 class="page-title">VSTs</h2>
     <p class="page-sub">VSTs creados por WEBO</p>
     <div class="grid-cards" id="plugins-grid"></div>
     <div class="pager" id="plugins-pager"></div>
   </section>
 
   <section id="gallery" class="screen">
-    <h2 class="page-title">Gallery</h2>
+    <h2 class="page-title">Galería</h2>
     <p class="page-sub">Lo último que voy haciendo</p>
-    <div class="grid-cards" id="gallery-grid"></div>
-    <div class="pager" id="gallery-pager"></div>
+    <div class="gallery-cloud" id="gallery-cloud"></div>
   </section>
 
   <section id="events" class="screen">
-    <h2 class="page-title">Events</h2>
+    <h2 class="page-title">Eventos</h2>
     <p class="page-sub">Próximos directos y eventos de WEBO</p>
     <div class="grid-cards" id="events-grid"></div>
     <div class="pager" id="events-pager"></div>
   </section>
 
   <section id="contact" class="screen">
-    <h2 class="page-title">Contact</h2>
+    <h2 class="page-title">Contacto</h2>
     <p class="page-sub" style="margin-bottom:18px">Cuéntame qué necesitas y te respondo en cuanto pueda</p>
     <form class="funk-form" id="contact-form">
       <label>Nombre
@@ -371,24 +376,18 @@ main{
     </form>
   </section>
 
-  <section id="secret" class="screen">
-    <h2 class="page-title">Secret</h2>
-    <div class="rec-box" id="rec-box"></div>
-    <p class="countdown" id="countdown"></p>
-    <div class="comments-wrap" id="disqus_thread"></div>
-  </section>
 
 </main>
-
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" alt="">
-</div>
 
 <script>
 /* =====================================================
    🛠️  CONFIGURACIÓN — edita sólo esta sección
    ===================================================== */
+
+// Texto de la sección Bio — edita libremente lo que quieras que diga
+const BIO_TEXT = `Escribe aquí quién eres, a qué te dedicas y cuál es tu propósito.
+
+Este texto se edita cambiando la constante BIO_TEXT al principio del script.`;
 
 const PRODUCTS_GEAR = [
   { name:'Sound Fuck',  price:'—',  emoji:'🔧', desc:'Próximamente', link:'#', soon:true  }
@@ -415,15 +414,6 @@ const EVENTS_LIST = [
 const FORM_ENDPOINT  = 'https://formspree.io/f/TU_ID_AQUI';
 const FALLBACK_EMAIL = 'webo@tu-email.com';
 
-// Secret: rota automáticamente cada lunes
-const RECS_START = new Date(2025, 0, 6);
-const RECS = [
-  { type:'video', title:'NuDisco Set', artist:'Humano', embed:'https://www.youtube.com/watch?v=E9gqXzNlyHc&list=RDE9gqXzNlyHc&start_radio=1&t=2838s', note:'' }
-];
-
-// Crea cuenta en disqus.com y pon tu shortname aquí
-const DISQUS_SHORTNAME = 'TU-SHORTNAME-DISQUS';
-
 /* =====================================================
    LÓGICA — no hace falta tocar nada de aquí en adelante
    ===================================================== */
@@ -434,7 +424,6 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id===id));
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.target===id));
   document.getElementById('bg-photo').classList.toggle('blurred', id!=='home');
-  if(id==='secret') initDisqus();
 }
 
 function setupGrid(gridId, pagerId, items, render, perPage=6){
@@ -478,62 +467,76 @@ function eventCard(it){
   </div>`;
 }
 
-function galleryCard(p,idx){
-  return `<div class="gallery-item" onclick="openLightbox(${idx})">
-    ${p.src?`<img src="${p.src}" alt="${esc(p.caption||'')}">`:`<div class="photo-placeholder">📷 ${esc(p.caption||'')}</div>`}
+/* ── GALERÍA: nube flotante ──
+   Para añadir fotos, solo agrega objetos al array PHOTOS de arriba;
+   cada una recibe automáticamente una posición y sigue flotando
+   junto con las demás, sin que tengas que tocar nada más. */
+
+function galleryCloudItem(p, idx){
+  return `<div class="gallery-cloud-item" data-idx="${idx}" onclick="toggleGalleryItem(event, ${idx})">
+    <div class="gallery-cloud-inner">
+      ${p.src?`<img src="${esc(p.src)}" alt="${esc(p.caption||'')}">`:`<div class="photo-placeholder">📷 ${esc(p.caption||'')}</div>`}
+    </div>
   </div>`;
 }
 
-function openLightbox(idx){
-  const p=PHOTOS[idx]; if(!p||!p.src) return;
-  document.getElementById('lightbox-img').src=p.src;
-  document.getElementById('lightbox').classList.add('active');
-}
-function closeLightbox(){ document.getElementById('lightbox').classList.remove('active'); }
-
-function weekIndex(){
-  const diff=new Date()-RECS_START;
-  const w=Math.floor(diff/(7*864e5));
-  return((w%RECS.length)+RECS.length)%RECS.length;
+function seededRandom(seed){
+  const x = Math.sin(seed*9301+49297)*233280;
+  return x-Math.floor(x);
 }
 
-function renderRec(){
-  const rec=RECS[weekIndex()];
-  const box=document.getElementById('rec-box');
-  if(rec.type==='video'){
-    box.innerHTML=`<iframe class="rec-video" src="${rec.embed}" title="${esc(rec.title)}" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>
-      <p class="rec-title">${esc(rec.title)}</p><p class="rec-artist">${esc(rec.artist)}</p><p class="rec-note">${esc(rec.note)}</p>`;
+function layoutGalleryCloud(){
+  const items = document.querySelectorAll('#gallery-cloud .gallery-cloud-item');
+  const n = items.length;
+  if(!n) return;
+  const cols = Math.max(1, Math.round(Math.sqrt(n*1.7)));
+  const rows = Math.ceil(n/cols);
+  items.forEach((el,i)=>{
+    const col=i%cols, row=Math.floor(i/cols);
+    const cellW=100/cols, cellH=100/rows;
+    const jx=(seededRandom(i*7+1)-0.5)*cellW*0.7;
+    const jy=(seededRandom(i*13+2)-0.5)*cellH*0.7;
+    let left = Math.min(Math.max(cellW*col+cellW/2+jx, 10), 90);
+    let top  = Math.min(Math.max(cellH*row+cellH/2+jy, 10), 90);
+    const size = 92 + seededRandom(i*3+5)*54;
+    const rot  = (seededRandom(i*11+9)-0.5)*18;
+    const dur  = 5 + seededRandom(i*17+3)*3;
+    const delay= seededRandom(i*19+7)*4;
+    el.style.left = `calc(${left}% - ${size/2}px)`;
+    el.style.top  = `calc(${top}% - ${size/2}px)`;
+    el.style.width = size+'px';
+    el.style.height = size+'px';
+    el.style.setProperty('--rot', rot.toFixed(2)+'deg');
+    el.style.animationDuration = dur.toFixed(2)+'s';
+    el.style.animationDelay = delay.toFixed(2)+'s';
+  });
+}
+
+function renderGalleryCloud(){
+  const cloud = document.getElementById('gallery-cloud');
+  cloud.innerHTML = PHOTOS.map(galleryCloudItem).join('');
+  layoutGalleryCloud();
+  cloud.onclick = e => { if(e.target===cloud) clearGalleryActive(); };
+}
+
+function toggleGalleryItem(e, idx){
+  e.stopPropagation();
+  const cloud = document.getElementById('gallery-cloud');
+  const el = cloud.querySelector(`.gallery-cloud-item[data-idx="${idx}"]`);
+  const wasActive = el.classList.contains('active');
+  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
+  if(!wasActive){
+    el.classList.add('active');
+    cloud.classList.add('has-active');
   } else {
-    box.innerHTML=`<div class="rec-cover"><p class="rec-cover-title">${esc(rec.title)}</p></div>
-      <p class="rec-title">${esc(rec.title)}</p><p class="rec-artist">${esc(rec.artist)}</p>
-      <a class="card-link" href="${rec.link}" target="_blank" rel="noopener">Escuchar</a>
-      <p class="rec-note">${esc(rec.note)}</p>`;
+    cloud.classList.remove('has-active');
   }
 }
 
-function nextMonday(){
-  const d=new Date(); d.setHours(0,0,0,0);
-  const diff=(8-d.getDay())%7||7; d.setDate(d.getDate()+diff); return d;
-}
-
-function updateCountdown(){
-  let diff=Math.max(0,nextMonday()-new Date());
-  const d=Math.floor(diff/864e5); diff%=864e5;
-  const h=Math.floor(diff/36e5); diff%=36e5;
-  const m=Math.floor(diff/6e4); diff%=6e4;
-  const s=Math.floor(diff/1e3);
-  document.getElementById('countdown').textContent=
-    `Próxima secret pick en ${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
-}
-
-let disqusLoaded=false;
-function initDisqus(){
-  if(disqusLoaded) return; disqusLoaded=true;
-  window.disqus_config=function(){ this.page.url=location.href; this.page.identifier='webo-secret-'+weekIndex(); };
-  const sc=document.createElement('script');
-  sc.src=`https://${DISQUS_SHORTNAME}.disqus.com/embed.js`;
-  sc.setAttribute('data-timestamp',String(+new Date()));
-  document.head.appendChild(sc);
+function clearGalleryActive(){
+  const cloud = document.getElementById('gallery-cloud');
+  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
+  cloud.classList.remove('has-active');
 }
 
 document.getElementById('contact-form').addEventListener('submit', async e=>{
@@ -548,13 +551,11 @@ document.getElementById('contact-form').addEventListener('submit', async e=>{
 });
 
 document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('bio-text').textContent = BIO_TEXT;
   setupGrid('gear-grid',    'gear-pager',    PRODUCTS_GEAR,    storeCard);
   setupGrid('plugins-grid', 'plugins-pager', PRODUCTS_PLUGINS, storeCard);
-  setupGrid('gallery-grid', 'gallery-pager', PHOTOS,           galleryCard);
   setupGrid('events-grid',  'events-pager',  EVENTS_LIST,      eventCard);
-  renderRec();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  renderGalleryCloud();
 });
 </script>
 </body>

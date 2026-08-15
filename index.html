@@ -200,10 +200,19 @@ main{
   animation-timing-function:ease-in-out;
   animation-iteration-count:infinite;
   will-change:transform;
+  transition:left .5s cubic-bezier(.2,.8,.2,1), top .5s cubic-bezier(.2,.8,.2,1),
+             width .5s cubic-bezier(.2,.8,.2,1), height .5s cubic-bezier(.2,.8,.2,1),
+             transform .5s cubic-bezier(.2,.8,.2,1);
 }
 .gallery-cloud-item.active{
-  z-index:30;
-  animation-play-state:paused;
+  position:fixed !important;
+  left:50% !important;
+  top:50% !important;
+  width:min(82vw, 82vh, 640px) !important;
+  height:min(82vw, 82vh, 640px) !important;
+  transform:translate(-50%, -50%) !important;
+  animation:none !important;
+  z-index:40;
 }
 .gallery-cloud-inner{
   width:100%; height:100%;
@@ -214,17 +223,127 @@ main{
   backdrop-filter:blur(4px);
   box-shadow:0 8px 24px rgba(0,0,0,.35);
   transform:rotate(var(--rot, 0deg));
-  transition:transform .45s ease, filter .45s ease, opacity .45s ease, box-shadow .45s ease;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1), filter .45s ease, opacity .45s ease, box-shadow .5s ease;
 }
 .gallery-cloud-inner img{ width:100%; height:100%; object-fit:cover; display:block; }
 .gallery-cloud-item.active .gallery-cloud-inner{
-  transform:rotate(0deg) scale(2.15);
-  box-shadow:0 18px 46px rgba(0,0,0,.6);
+  transform:rotate(0deg) scale(1);
+  box-shadow:0 30px 80px rgba(0,0,0,.75);
+}
+.gallery-cloud.has-active::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:35;
 }
 .gallery-cloud.has-active .gallery-cloud-item:not(.active) .gallery-cloud-inner{
   filter:blur(3px);
   opacity:.4;
 }
+.gallery-cloud-items{ position:absolute; inset:0; }
+.gallery-nav{
+  display:none;
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:46;
+  width:46px; height:46px;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.75);
+  border-radius:50%;
+  color:#fff;
+  font-size:1.6rem;
+  line-height:1;
+  cursor:pointer;
+  backdrop-filter:blur(4px);
+  transition:background .2s, transform .2s;
+}
+.gallery-nav:hover{ background:rgba(255,255,255,.2); }
+.gallery-nav-prev{ left:3vw; }
+.gallery-nav-next{ right:3vw; }
+.gallery-cloud.has-active .gallery-nav{ display:flex; }
+
+/* ── APARATOS — filas apiladas ── */
+.aparato-stack{
+  width:min(560px, 90vw);
+  max-height:68vh;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:2px 4px 12px 2px;
+}
+.aparato-row{
+  position:relative;
+  width:100%;
+  height:150px;
+  flex-shrink:0;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.6);
+  background:#111;
+  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+.aparato-row:hover, .aparato-row:focus-visible{
+  transform:translateY(-2px) scale(1.015);
+  box-shadow:0 10px 30px rgba(0,0,0,.55);
+  filter:brightness(1.3);
+}
+.aparato-photo{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+}
+.aparato-row .photo-placeholder{ font-size:2.6rem; background:rgba(255,255,255,.08); }
+.aparato-overlay{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.55));
+  pointer-events:none;
+}
+.aparato-name{
+  font-family:var(--font-heading);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-size:clamp(1.1rem, 3vw, 1.8rem);
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.9);
+  text-align:center;
+  padding:0 14px;
+}
+
+/* ── PÁGINA DE UN APARATO ── */
+.aparato-back{
+  align-self:flex-start;
+  margin:0 auto 14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid var(--white);
+  color:var(--white);
+  border-radius:20px;
+  padding:6px 16px;
+  cursor:pointer;
+  font-size:.78rem;
+  backdrop-filter:blur(4px);
+  transition:.2s;
+}
+.aparato-back:hover{ background:rgba(255,255,255,.2); }
+.aparato-detail-photo{
+  width:min(380px, 78vw);
+  aspect-ratio:1;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.7);
+  margin-bottom:16px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(4px);
+}
+.aparato-detail-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.aparato-detail-photo .photo-placeholder{ font-size:3.4rem; }
 @keyframes cloud-float{
   0%   { transform:translateY(0px); }
   50%  { transform:translateY(-14px); }
@@ -315,7 +434,7 @@ main{
   <div class="nav-links">
     <button data-target="bio"     onclick="showScreen('bio')">Bio</button>
     <button data-target="gear"    onclick="showScreen('gear')">Aparatos</button>
-    <button data-target="plugins" onclick="showScreen('plugins')">VSTs</button>
+    <button data-target="portfolio" onclick="showScreen('portfolio')">Portfolio</button>
     <button data-target="gallery" onclick="showScreen('gallery')">Galería</button>
     <button data-target="events"  onclick="showScreen('events')">Eventos</button>
     <button data-target="contact" onclick="showScreen('contact')">Contacto</button>
@@ -334,21 +453,32 @@ main{
   <section id="gear" class="screen">
     <h2 class="page-title">Aparatos</h2>
     <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
-    <div class="grid-cards" id="gear-grid"></div>
-    <div class="pager" id="gear-pager"></div>
+    <div class="aparato-stack" id="gear-grid"></div>
   </section>
 
-  <section id="plugins" class="screen">
-    <h2 class="page-title">VSTs</h2>
-    <p class="page-sub">VSTs creados por WEBO</p>
-    <div class="grid-cards" id="plugins-grid"></div>
-    <div class="pager" id="plugins-pager"></div>
+  <section id="aparato-detail" class="screen">
+    <button class="aparato-back" onclick="showScreen('gear')">← Volver</button>
+    <div class="aparato-detail-photo" id="aparato-detail-photo"></div>
+    <h2 class="page-title" id="aparato-detail-name"></h2>
+    <p class="card-price" id="aparato-detail-price" style="margin-bottom:8px"></p>
+    <p class="page-sub" id="aparato-detail-desc"></p>
+    <a class="card-link" id="aparato-detail-link" target="_blank" rel="noopener">Ver más</a>
+  </section>
+
+  <section id="portfolio" class="screen">
+    <h2 class="page-title">Portfolio</h2>
+    <p class="page-sub">Próximamente</p>
+    <div class="grid-cards" id="portfolio-grid"></div>
   </section>
 
   <section id="gallery" class="screen">
     <h2 class="page-title">Galería</h2>
     <p class="page-sub">Lo último que voy haciendo</p>
-    <div class="gallery-cloud" id="gallery-cloud"></div>
+    <div class="gallery-cloud" id="gallery-cloud">
+      <div class="gallery-cloud-items" id="gallery-cloud-items"></div>
+      <button class="gallery-nav gallery-nav-prev" onclick="stepGalleryItem(-1)" aria-label="Foto anterior">‹</button>
+      <button class="gallery-nav gallery-nav-next" onclick="stepGalleryItem(1)" aria-label="Foto siguiente">›</button>
+    </div>
   </section>
 
   <section id="events" class="screen">
@@ -385,34 +515,37 @@ main{
    ===================================================== */
 
 // Texto de la sección Bio — edita libremente lo que quieras que diga
-const BIO_TEXT = `Escribe aquí quién eres, a qué te dedicas y cuál es tu propósito.
+const BIO_TEXT = `grabo artistas en estudios. diseño aparatos musicales eléctricos.
 
-Este texto se edita cambiando la constante BIO_TEXT al principio del script.`;
+estudié ingenieria de audio y producción en abbey road amsterdam. volví a madrid en 2026 para trabajar en la industria.`;
 
+// Para añadir un aparato nuevo, copia una línea y cambia sus datos.
+// "photo" es el nombre del archivo de la foto del aparato (súbela junto al index.html).
 const PRODUCTS_GEAR = [
-  { name:'Sound Fuck',  price:'—',  emoji:'🔧', desc:'Próximamente', link:'#', soon:true  }
+  { name:'TalkBox', price:'—', photo:'talkbox.jpeg', emoji:'', desc:'el aparato del funk', link:'#', soon:true }
 ];
 
-const PRODUCTS_PLUGINS = [
-  { name:'Rhodes', price:'—', emoji:'💾', desc:'Próximamente', link:'#', soon:true }
-];
+// Portfolio — de momento vacío, añade aquí tus trabajos cuando quieras mostrarlos
+const PORTFOLIO_ITEMS = [];
 
 // Para añadir fotos: { src:'images/mi-foto.jpg', caption:'Descripción' }
 const PHOTOS = [
-  { src:'CBD61213-BF4D-42C5-A042-1200FF885B29_CF60D708-8D9F-4411-B9C4-E9EBD0E01078.jpg', caption:'' },
-  { src:'652eefa2-2405-4a23-b89b-e7e06df958fb.jpg', caption:'' },
-  { src:'6BFBE44C-E8BC-4ECD-9E7D-F1E2B5F0AEEA.jpg', caption:'' },
-  { src:'DSCF5722.jpg', caption:'' },
-  { src:'IMG_9991.jpg', caption:'' }
+  { src:'stu2_1.jpg', caption:'' },
+  { src:'stu2_2.jpg', caption:'' },
+  { src:'stu2_3.jpg', caption:'' },
+  { src:'stu2_4.JPG', caption:'' },
+  { src:'stu2_5.jpg', caption:'' },
+  { src:'paradiso_foto.png', caption:'' },
+  { src:'piano_casa.jpg', caption:'' }
 ];
 
 const EVENTS_LIST = [
-  { date:'—', title:'Fiebre', place:'Pregunta a tu red de contactos', desc:'Diez artistas, BYOD, solo por invitación', link:'#' }
+  { date:'—', title:'Fiebre', place:'usa tu red de contactos', desc:'diez artistas, byod, solo por invitación', link:'#' }
 ];
 
 // Crea cuenta en formspree.io y pega tu endpoint aquí
-const FORM_ENDPOINT  = 'https://formspree.io/f/TU_ID_AQUI';
-const FALLBACK_EMAIL = 'webo@tu-email.com';
+const FORM_ENDPOINT  = 'https://formspree.io/f/mppajzry';
+const FALLBACK_EMAIL = 'webo.managment@gmail.com';
 
 /* =====================================================
    LÓGICA — no hace falta tocar nada de aquí en adelante
@@ -428,13 +561,14 @@ function showScreen(id){
 
 function setupGrid(gridId, pagerId, items, render, perPage=6){
   const grid = document.getElementById(gridId);
-  const pager = document.getElementById(pagerId);
+  const pager = pagerId ? document.getElementById(pagerId) : null;
   const pages = [];
   for(let i=0;i<items.length;i+=perPage) pages.push(items.slice(i,i+perPage));
   if(!pages.length) pages.push([]);
   let page=0;
   function draw(){
     grid.innerHTML = pages[page].map((it,i)=>render(it,page*perPage+i)).join('');
+    if(!pager) return;
     pager.innerHTML = pages.length>1 ? `
       <button class="pager-btn" id="${gridId}-p">‹</button>
       <span class="page-indicator">${page+1} / ${pages.length}</span>
@@ -467,6 +601,45 @@ function eventCard(it){
   </div>`;
 }
 
+/* ── APARATOS: filas apiladas + página individual ── */
+
+function slugify(s){
+  return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/(^-+|-+$)/g,'');
+}
+
+function aparatoRow(it, idx){
+  const photo = it.photo
+    ? `<img class="aparato-photo" src="${esc(it.photo)}" alt="${esc(it.name)}">`
+    : `<div class="aparato-photo photo-placeholder">${esc(it.emoji||'🔧')}</div>`;
+  return `<div class="aparato-row" onclick="showAparato(${idx})" tabindex="0"
+      onkeydown="if(event.key==='Enter')showAparato(${idx})">
+    ${photo}
+    <div class="aparato-overlay"><span class="aparato-name">${esc(it.name).toUpperCase()}</span></div>
+  </div>`;
+}
+
+function renderAparatos(){
+  document.getElementById('gear-grid').innerHTML = PRODUCTS_GEAR.map(aparatoRow).join('');
+}
+
+function showAparato(idx){
+  const it = PRODUCTS_GEAR[idx];
+  if(!it) return;
+  document.getElementById('aparato-detail-photo').innerHTML = it.photo
+    ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}">`
+    : `<div class="photo-placeholder">${esc(it.emoji||'🔧')}</div>`;
+  document.getElementById('aparato-detail-name').textContent  = it.name;
+  document.getElementById('aparato-detail-price').textContent = it.price || '';
+  document.getElementById('aparato-detail-desc').textContent  = it.desc || '';
+  const link = document.getElementById('aparato-detail-link');
+  if(it.soon || !it.link || it.link==='#'){ link.style.display='none'; }
+  else { link.style.display='inline-block'; link.href=it.link; }
+  history.replaceState(null, '', '#aparato-'+slugify(it.name));
+  showScreen('aparato-detail');
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.target==='gear'));
+}
+
 /* ── GALERÍA: nube flotante ──
    Para añadir fotos, solo agrega objetos al array PHOTOS de arriba;
    cada una recibe automáticamente una posición y sigue flotando
@@ -486,7 +659,7 @@ function seededRandom(seed){
 }
 
 function layoutGalleryCloud(){
-  const items = document.querySelectorAll('#gallery-cloud .gallery-cloud-item');
+  const items = document.querySelectorAll('#gallery-cloud-items .gallery-cloud-item');
   const n = items.length;
   if(!n) return;
   const cols = Math.max(1, Math.round(Math.sqrt(n*1.7)));
@@ -514,23 +687,37 @@ function layoutGalleryCloud(){
 
 function renderGalleryCloud(){
   const cloud = document.getElementById('gallery-cloud');
-  cloud.innerHTML = PHOTOS.map(galleryCloudItem).join('');
+  const items = document.getElementById('gallery-cloud-items');
+  items.innerHTML = PHOTOS.map(galleryCloudItem).join('');
   layoutGalleryCloud();
-  cloud.onclick = e => { if(e.target===cloud) clearGalleryActive(); };
+  cloud.onclick = e => { if(e.target===cloud || e.target===items) clearGalleryActive(); };
+}
+
+function activateGalleryItem(idx){
+  const cloud = document.getElementById('gallery-cloud-items');
+  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
+  const el = cloud.querySelector(`.gallery-cloud-item[data-idx="${idx}"]`);
+  if(el){
+    el.classList.add('active');
+    document.getElementById('gallery-cloud').classList.add('has-active');
+  }
+}
+
+function stepGalleryItem(dir){
+  const cloud = document.getElementById('gallery-cloud-items');
+  const activeEl = cloud.querySelector('.gallery-cloud-item.active');
+  const current = activeEl ? parseInt(activeEl.dataset.idx, 10) : 0;
+  const next = (current + dir + PHOTOS.length) % PHOTOS.length;
+  activateGalleryItem(next);
 }
 
 function toggleGalleryItem(e, idx){
   e.stopPropagation();
-  const cloud = document.getElementById('gallery-cloud');
+  const cloud = document.getElementById('gallery-cloud-items');
   const el = cloud.querySelector(`.gallery-cloud-item[data-idx="${idx}"]`);
   const wasActive = el.classList.contains('active');
-  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
-  if(!wasActive){
-    el.classList.add('active');
-    cloud.classList.add('has-active');
-  } else {
-    cloud.classList.remove('has-active');
-  }
+  if(!wasActive){ activateGalleryItem(idx); }
+  else { clearGalleryActive(); }
 }
 
 function clearGalleryActive(){
@@ -552,8 +739,8 @@ document.getElementById('contact-form').addEventListener('submit', async e=>{
 
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('bio-text').textContent = BIO_TEXT;
-  setupGrid('gear-grid',    'gear-pager',    PRODUCTS_GEAR,    storeCard);
-  setupGrid('plugins-grid', 'plugins-pager', PRODUCTS_PLUGINS, storeCard);
+  renderAparatos();
+  setupGrid('portfolio-grid', null, PORTFOLIO_ITEMS, storeCard);
   setupGrid('events-grid',  'events-pager',  EVENTS_LIST,      eventCard);
   renderGalleryCloud();
 });

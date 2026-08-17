@@ -1,0 +1,27 @@
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Local tooling and logs
+node_modules/
+dist/
+*.log
+.tmp/
+
+# Full-resolution source images used by tools/optimize-images.ps1
+/Foto_Web-3.png
+/paradiso_foto.png
+/piano_casa.jpg
+/stu2_1.jpg
+/stu2_2.jpg
+/stu2_3.jpg
+/stu2_4.JPG
+/stu2_5.jpg
+/talkbox.jpeg
+/webo_logo_white copy.png

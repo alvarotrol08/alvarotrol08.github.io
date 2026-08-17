@@ -1,749 +1,178 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>WEBO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="webo_logo_white copy.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="WEBO: grabación de artistas, ingeniería de audio y diseño de aparatos musicales eléctricos en Madrid.">
+  <meta name="robots" content="index, follow">
 
-<style>
-:root{
-  --white:#ffffff;
-  --font-display:'Monoton', cursive;
-  --font-heading:'Oswald', sans-serif;
-  --font-body:'Oswald', sans-serif;
-}
-*{ box-sizing:border-box; margin:0; padding:0; }
-html, body{
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  font-family:var(--font-body);
-  color:var(--white);
-  -webkit-tap-highlight-color:transparent;
-}
-body{ position:fixed; inset:0; overscroll-behavior:none; }
-button, a{ font-family:inherit; }
-:focus-visible{ outline:2px solid rgba(255,255,255,.7); outline-offset:3px; }
+  <title>WEBO — Ingeniería de audio y aparatos musicales</title>
+  <link rel="canonical" href="https://webowebo.com/">
 
-/* ── FONDO FOTO ── */
-.bg-photo{
-  position:fixed; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  z-index:0;
-  filter:blur(0px) brightness(1);
-  transform:scale(1);
-  transition:filter .55s ease, transform .55s ease, brightness .55s ease;
-}
-.bg-photo.blurred{
-  filter:blur(22px) brightness(.45);
-  transform:scale(1.07);
-}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="WEBO">
+  <meta property="og:title" content="WEBO — Ingeniería de audio y aparatos musicales">
+  <meta property="og:description" content="Grabación de artistas, ingeniería de audio y diseño de aparatos musicales eléctricos en Madrid.">
+  <meta property="og:url" content="https://webowebo.com/">
+  <meta property="og:image" content="https://webowebo.com/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="WEBO trabajando en un estudio de grabación">
 
-/* ── NAV FLOTANTE ── */
-.navbar{
-  position:fixed;
-  top:0; left:0; right:0;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:22px 32px;
-  background:none;
-}
-.nav-logo{
-  font-family:var(--font-display);
-  font-size:clamp(1rem, 2vw, 1.5rem);
-  color:var(--white);
-  text-shadow:0 0 12px rgba(0,0,0,.9), 0 2px 6px rgba(0,0,0,.8);
-  background:none;
-  border:none;
-  cursor:pointer;
-  letter-spacing:.06em;
-}
-.nav-links{
-  display:flex;
-  gap:clamp(14px, 2.6vw, 32px);
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-.nav-links::-webkit-scrollbar{ display:none; }
-.nav-links button{
-  background:none;
-  border:none;
-  font-family:var(--font-heading);
-  font-size:clamp(.6rem, 1.2vw, .8rem);
-  text-transform:uppercase;
-  letter-spacing:.06em;
-  color:var(--white);
-  cursor:pointer;
-  opacity:.55;
-  text-shadow:0 1px 6px rgba(0,0,0,.9);
-  transition:opacity .2s;
-  white-space:nowrap;
-}
-.nav-links button:hover{ opacity:1; }
-.nav-links button.active{
-  opacity:1;
-  text-decoration:underline;
-  text-underline-offset:4px;
-}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WEBO — Ingeniería de audio y aparatos musicales">
+  <meta name="twitter:description" content="Grabación de artistas, ingeniería de audio y diseño de aparatos musicales eléctricos en Madrid.">
+  <meta name="twitter:image" content="https://webowebo.com/assets/images/og-image.jpg">
 
-/* ── PANTALLAS ── */
-main{
-  position:fixed;
-  inset:0;
-  z-index:2;
-  overflow:hidden;
-  pointer-events:none;
-}
-.screen{
-  position:absolute; inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:80px 24px 24px;
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .35s ease;
-  pointer-events:none;
-}
-.screen.active{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
 
-/* ── TEXTO Y ELEMENTOS SUELTOS (sin panel) ── */
-.page-title{
-  font-family:var(--font-heading);
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  font-size:clamp(1.6rem, 4vw, 3rem);
-  color:var(--white);
-  text-shadow:0 2px 14px rgba(0,0,0,.9);
-  text-align:center;
-  margin-bottom:10px;
-}
-.page-sub{
-  text-align:center;
-  opacity:.9;
-  font-size:clamp(.8rem, 1.5vw, .95rem);
-  text-shadow:0 1px 8px rgba(0,0,0,.9);
-  margin-bottom:14px;
-  max-width:500px;
-}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "WEBO",
+    "url": "https://webowebo.com/",
+    "image": "https://webowebo.com/assets/images/og-image.jpg",
+    "jobTitle": "Ingeniero de audio y diseñador de aparatos musicales",
+    "description": "Grabación de artistas, ingeniería de audio y diseño de aparatos musicales eléctricos en Madrid."
+  }
+  </script>
 
-/* ── GRIDS ── */
-.grid-cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-  gap:14px;
-  width:min(860px, 90vw);
-}
-.card{
-  background:rgba(0,0,0,.38);
-  border:1px solid rgba(255,255,255,.7);
-  border-radius:14px;
-  padding:14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  text-align:center;
-  transition:.2s;
-  backdrop-filter:blur(4px);
-}
-.card:hover{ transform:translateY(-3px); background:rgba(0,0,0,.55); }
-.card-soon{ opacity:.55; border-style:dashed; }
-.card-emoji{ font-size:2rem; }
-.card-name{ font-family:var(--font-heading); font-size:.82rem; }
-.card-price{ font-weight:700; font-size:.82rem; }
-.card-desc{ font-size:.72rem; opacity:.85; }
-.card-link{
-  margin-top:4px;
-  padding:5px 14px;
-  border:1px solid var(--white);
-  border-radius:20px;
-  background:transparent;
-  color:var(--white);
-  font-weight:700;
-  text-decoration:none;
-  font-size:.72rem;
-  transition:.2s;
-}
-.card-link:hover{ background:rgba(255,255,255,.2); }
-
-.photo-placeholder{
-  width:100%; height:100%;
-  background:rgba(0,0,0,.38);
-  display:flex; align-items:center; justify-content:center;
-  font-size:.75rem; padding:8px; text-align:center;
-}
-
-/* ── GALERÍA — nube flotante ── */
-.gallery-cloud{
-  position:relative;
-  width:min(1100px, 94vw);
-  height:min(560px, 68vh);
-  pointer-events:auto;
-}
-.gallery-cloud-item{
-  position:absolute;
-  animation-name:cloud-float;
-  animation-timing-function:ease-in-out;
-  animation-iteration-count:infinite;
-  will-change:transform;
-  transition:left .5s cubic-bezier(.2,.8,.2,1), top .5s cubic-bezier(.2,.8,.2,1),
-             width .5s cubic-bezier(.2,.8,.2,1), height .5s cubic-bezier(.2,.8,.2,1),
-             transform .5s cubic-bezier(.2,.8,.2,1);
-}
-.gallery-cloud-item.active{
-  position:fixed !important;
-  left:50% !important;
-  top:50% !important;
-  width:min(82vw, 82vh, 640px) !important;
-  height:min(82vw, 82vh, 640px) !important;
-  transform:translate(-50%, -50%) !important;
-  animation:none !important;
-  z-index:40;
-}
-.gallery-cloud-inner{
-  width:100%; height:100%;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.7);
-  overflow:hidden;
-  cursor:pointer;
-  backdrop-filter:blur(4px);
-  box-shadow:0 8px 24px rgba(0,0,0,.35);
-  transform:rotate(var(--rot, 0deg));
-  transition:transform .5s cubic-bezier(.2,.8,.2,1), filter .45s ease, opacity .45s ease, box-shadow .5s ease;
-}
-.gallery-cloud-inner img{ width:100%; height:100%; object-fit:cover; display:block; }
-.gallery-cloud-item.active .gallery-cloud-inner{
-  transform:rotate(0deg) scale(1);
-  box-shadow:0 30px 80px rgba(0,0,0,.75);
-}
-.gallery-cloud.has-active::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:35;
-}
-.gallery-cloud.has-active .gallery-cloud-item:not(.active) .gallery-cloud-inner{
-  filter:blur(3px);
-  opacity:.4;
-}
-.gallery-cloud-items{ position:absolute; inset:0; }
-.gallery-nav{
-  display:none;
-  position:fixed;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:46;
-  width:46px; height:46px;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.4);
-  border:1px solid rgba(255,255,255,.75);
-  border-radius:50%;
-  color:#fff;
-  font-size:1.6rem;
-  line-height:1;
-  cursor:pointer;
-  backdrop-filter:blur(4px);
-  transition:background .2s, transform .2s;
-}
-.gallery-nav:hover{ background:rgba(255,255,255,.2); }
-.gallery-nav-prev{ left:3vw; }
-.gallery-nav-next{ right:3vw; }
-.gallery-cloud.has-active .gallery-nav{ display:flex; }
-
-/* ── APARATOS — filas apiladas ── */
-.aparato-stack{
-  width:min(560px, 90vw);
-  max-height:68vh;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  padding:2px 4px 12px 2px;
-}
-.aparato-row{
-  position:relative;
-  width:100%;
-  height:150px;
-  flex-shrink:0;
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.6);
-  background:#111;
-  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
-}
-.aparato-row:hover, .aparato-row:focus-visible{
-  transform:translateY(-2px) scale(1.015);
-  box-shadow:0 10px 30px rgba(0,0,0,.55);
-  filter:brightness(1.3);
-}
-.aparato-photo{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-}
-.aparato-row .photo-placeholder{ font-size:2.6rem; background:rgba(255,255,255,.08); }
-.aparato-overlay{
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.55));
-  pointer-events:none;
-}
-.aparato-name{
-  font-family:var(--font-heading);
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.06em;
-  font-size:clamp(1.1rem, 3vw, 1.8rem);
-  color:#fff;
-  text-shadow:0 2px 14px rgba(0,0,0,.9);
-  text-align:center;
-  padding:0 14px;
-}
-
-/* ── PÁGINA DE UN APARATO ── */
-.aparato-back{
-  align-self:flex-start;
-  margin:0 auto 14px;
-  background:rgba(0,0,0,.35);
-  border:1px solid var(--white);
-  color:var(--white);
-  border-radius:20px;
-  padding:6px 16px;
-  cursor:pointer;
-  font-size:.78rem;
-  backdrop-filter:blur(4px);
-  transition:.2s;
-}
-.aparato-back:hover{ background:rgba(255,255,255,.2); }
-.aparato-detail-photo{
-  width:min(380px, 78vw);
-  aspect-ratio:1;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.7);
-  margin-bottom:16px;
-  background:rgba(0,0,0,.38);
-  backdrop-filter:blur(4px);
-}
-.aparato-detail-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-.aparato-detail-photo .photo-placeholder{ font-size:3.4rem; }
-@keyframes cloud-float{
-  0%   { transform:translateY(0px); }
-  50%  { transform:translateY(-14px); }
-  100% { transform:translateY(0px); }
-}
-
-/* ── BIO ── */
-.bio-text{
-  text-align:center;
-  font-size:clamp(.85rem, 1.6vw, 1.05rem);
-  line-height:1.6;
-  max-width:640px;
-  text-shadow:0 1px 8px rgba(0,0,0,.9);
-  white-space:pre-line;
-}
-
-.pager{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-top:8px;
-}
-.pager-btn{
-  background:rgba(0,0,0,.35);
-  border:1px solid var(--white);
-  color:var(--white);
-  border-radius:20px;
-  padding:6px 16px;
-  cursor:pointer;
-  font-size:.78rem;
-  backdrop-filter:blur(4px);
-  transition:.2s;
-}
-.pager-btn:hover{ background:rgba(255,255,255,.2); }
-.page-indicator{ font-size:.78rem; opacity:.8; text-shadow:0 1px 6px rgba(0,0,0,.9); }
-
-/* ── FORMULARIO ── */
-.funk-form{
-  display:flex;
-  flex-direction:column;
-  gap:11px;
-  width:min(380px, 90vw);
-}
-.funk-form label{
-  display:flex; flex-direction:column; gap:5px;
-  font-size:.72rem; text-transform:uppercase; letter-spacing:.04em;
-  text-shadow:0 1px 6px rgba(0,0,0,.9);
-}
-.funk-form input, .funk-form textarea{
-  font-family:var(--font-body); font-size:.95rem;
-  padding:9px 13px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.7);
-  background:rgba(0,0,0,.38);
-  color:var(--white);
-  backdrop-filter:blur(4px);
-  resize:none;
-}
-.funk-form input::placeholder, .funk-form textarea::placeholder{ color:rgba(255,255,255,.4); }
-.funk-form input:focus, .funk-form textarea:focus{ outline:none; border-color:#fff; }
-.funk-form button{
-  align-self:center;
-  padding:10px 28px;
-  border-radius:30px;
-  border:1px solid var(--white);
-  background:rgba(0,0,0,.38);
-  color:var(--white);
-  font-family:var(--font-heading);
-  font-size:.9rem;
-  cursor:pointer;
-  backdrop-filter:blur(4px);
-  transition:.2s;
-}
-.funk-form button:hover{ background:rgba(255,255,255,.2); }
-.form-status{ min-height:1.1em; text-align:center; font-size:.78rem; text-shadow:0 1px 6px rgba(0,0,0,.9); }
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
-}
-</style>
+  <script defer src="assets/js/content.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="assets/js/animations.js"></script>
+  <script defer src="assets/js/app.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
 
-<img class="bg-photo" id="bg-photo" src="Foto_Web-3.png" alt="">
+  <img
+    class="bg-photo"
+    id="bg-photo"
+    src="assets/images/background.jpg"
+    width="2560"
+    height="1089"
+    alt=""
+    fetchpriority="high"
+    decoding="async"
+  >
 
-<nav class="navbar">
-  <button class="nav-logo" onclick="showScreen('home')">WEBO</button>
-  <div class="nav-links">
-    <button data-target="bio"     onclick="showScreen('bio')">Bio</button>
-    <button data-target="gear"    onclick="showScreen('gear')">Aparatos</button>
-    <button data-target="portfolio" onclick="showScreen('portfolio')">Portfolio</button>
-    <button data-target="gallery" onclick="showScreen('gallery')">Galería</button>
-    <button data-target="events"  onclick="showScreen('events')">Eventos</button>
-    <button data-target="contact" onclick="showScreen('contact')">Contacto</button>
-  </div>
-</nav>
-
-<main>
-
-  <section id="home" class="screen active"></section>
-
-  <section id="bio" class="screen">
-    <h2 class="page-title">Bio</h2>
-    <p class="bio-text" id="bio-text"></p>
-  </section>
-
-  <section id="gear" class="screen">
-    <h2 class="page-title">Aparatos</h2>
-    <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
-    <div class="aparato-stack" id="gear-grid"></div>
-  </section>
-
-  <section id="aparato-detail" class="screen">
-    <button class="aparato-back" onclick="showScreen('gear')">← Volver</button>
-    <div class="aparato-detail-photo" id="aparato-detail-photo"></div>
-    <h2 class="page-title" id="aparato-detail-name"></h2>
-    <p class="card-price" id="aparato-detail-price" style="margin-bottom:8px"></p>
-    <p class="page-sub" id="aparato-detail-desc"></p>
-    <a class="card-link" id="aparato-detail-link" target="_blank" rel="noopener">Ver más</a>
-  </section>
-
-  <section id="portfolio" class="screen">
-    <h2 class="page-title">Portfolio</h2>
-    <p class="page-sub">Próximamente</p>
-    <div class="grid-cards" id="portfolio-grid"></div>
-  </section>
-
-  <section id="gallery" class="screen">
-    <h2 class="page-title">Galería</h2>
-    <p class="page-sub">Lo último que voy haciendo</p>
-    <div class="gallery-cloud" id="gallery-cloud">
-      <div class="gallery-cloud-items" id="gallery-cloud-items"></div>
-      <button class="gallery-nav gallery-nav-prev" onclick="stepGalleryItem(-1)" aria-label="Foto anterior">‹</button>
-      <button class="gallery-nav gallery-nav-next" onclick="stepGalleryItem(1)" aria-label="Foto siguiente">›</button>
+  <nav class="navbar" aria-label="Navegación principal">
+    <a class="nav-logo" href="#home" aria-label="WEBO, ir al inicio">WEBO</a>
+    <div class="nav-links">
+      <a data-route="bio" href="#bio">Bio</a>
+      <a data-route="gear" href="#aparatos">Aparatos</a>
+      <a data-route="portfolio" href="#portfolio">Portfolio</a>
+      <a data-route="gallery" href="#galeria">Galería</a>
+      <a data-route="events" href="#eventos">Eventos</a>
+      <a data-route="contact" href="#contacto">Contacto</a>
     </div>
-  </section>
+  </nav>
 
-  <section id="events" class="screen">
-    <h2 class="page-title">Eventos</h2>
-    <p class="page-sub">Próximos directos y eventos de WEBO</p>
-    <div class="grid-cards" id="events-grid"></div>
-    <div class="pager" id="events-pager"></div>
-  </section>
+  <main id="main-content">
+    <section id="home" class="screen screen-home" data-route-screen="home">
+      <div class="screen-content screen-content-home">
+        <h1 class="sr-only">WEBO — Ingeniería de audio y aparatos musicales</h1>
+        <p class="sr-only">Grabación de artistas, ingeniería de audio y diseño de aparatos musicales eléctricos en Madrid.</p>
+      </div>
+    </section>
 
-  <section id="contact" class="screen">
-    <h2 class="page-title">Contacto</h2>
-    <p class="page-sub" style="margin-bottom:18px">Cuéntame qué necesitas y te respondo en cuanto pueda</p>
-    <form class="funk-form" id="contact-form">
-      <label>Nombre
-        <input type="text" name="name" placeholder="Tu nombre" required>
-      </label>
-      <label>Contacto
-        <input type="text" name="contact" placeholder="Email o teléfono" required>
-      </label>
-      <label>Mensaje
-        <textarea name="message" rows="3" placeholder="Escribe aquí..." required></textarea>
-      </label>
-      <button type="submit">Enviar</button>
-      <p class="form-status" id="form-status"></p>
-    </form>
-  </section>
+    <section id="bio" class="screen" data-route-screen="bio" hidden>
+      <div class="screen-content">
+        <h1 class="page-title" tabindex="-1">Bio</h1>
+        <p class="bio-text" id="bio-text"></p>
+      </div>
+    </section>
 
+    <section id="gear" class="screen" data-route-screen="gear" hidden>
+      <div class="screen-content">
+        <h1 class="page-title" tabindex="-1">Aparatos</h1>
+        <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
+        <div class="aparato-stack" id="gear-grid"></div>
+      </div>
+    </section>
 
-</main>
+    <section id="aparato-detail" class="screen" data-route-screen="aparato-detail" hidden>
+      <article class="screen-content aparato-detail">
+        <a class="aparato-back" href="#aparatos">← Volver a aparatos</a>
+        <div class="aparato-detail-photo" id="aparato-detail-photo"></div>
+        <h1 class="page-title" id="aparato-detail-name" tabindex="-1"></h1>
+        <p class="card-price" id="aparato-detail-price"></p>
+        <p class="page-sub" id="aparato-detail-desc"></p>
+        <a class="card-link" id="aparato-detail-link" target="_blank" rel="noopener noreferrer">Ver más</a>
+      </article>
+    </section>
 
-<script>
-/* =====================================================
-   🛠️  CONFIGURACIÓN — edita sólo esta sección
-   ===================================================== */
+    <section id="portfolio" class="screen" data-route-screen="portfolio" hidden>
+      <div class="screen-content">
+        <h1 class="page-title" tabindex="-1">Portfolio</h1>
+        <p class="page-sub">Trabajos seleccionados</p>
+        <div class="grid-cards" id="portfolio-grid"></div>
+      </div>
+    </section>
 
-// Texto de la sección Bio — edita libremente lo que quieras que diga
-const BIO_TEXT = `grabo artistas en estudios. diseño aparatos musicales eléctricos.
+    <section id="gallery" class="screen" data-route-screen="gallery" hidden>
+      <div class="screen-content screen-content-wide">
+        <h1 class="page-title" tabindex="-1">Galería</h1>
+        <p class="page-sub">Lo último que voy haciendo</p>
+        <div class="gallery-cloud" id="gallery-cloud">
+          <div class="gallery-cloud-items" id="gallery-cloud-items"></div>
+        </div>
+      </div>
+    </section>
 
-estudié ingenieria de audio y producción en abbey road amsterdam. volví a madrid en 2026 para trabajar en la industria.`;
+    <section id="events" class="screen" data-route-screen="events" hidden>
+      <div class="screen-content">
+        <h1 class="page-title" tabindex="-1">Eventos</h1>
+        <p class="page-sub">Próximos directos y eventos de WEBO</p>
+        <div class="grid-cards" id="events-grid"></div>
+        <nav class="pager" id="events-pager" aria-label="Páginas de eventos"></nav>
+      </div>
+    </section>
 
-// Para añadir un aparato nuevo, copia una línea y cambia sus datos.
-// "photo" es el nombre del archivo de la foto del aparato (súbela junto al index.html).
-const PRODUCTS_GEAR = [
-  { name:'TalkBox', price:'—', photo:'talkbox.jpeg', emoji:'', desc:'el aparato del funk', link:'#', soon:true }
-];
+    <section id="contact" class="screen" data-route-screen="contact" hidden>
+      <div class="screen-content">
+        <h1 class="page-title" tabindex="-1">Contacto</h1>
+        <p class="page-sub page-sub-contact">Cuéntame qué necesitas y te respondo en cuanto pueda</p>
+        <form class="funk-form" id="contact-form" action="https://formspree.io/f/mppajzry" method="post">
+          <label for="contact-name">Nombre</label>
+          <input id="contact-name" type="text" name="name" autocomplete="name" placeholder="Tu nombre" required>
 
-// Portfolio — de momento vacío, añade aquí tus trabajos cuando quieras mostrarlos
-const PORTFOLIO_ITEMS = [];
+          <label for="contact-email">Email</label>
+          <input id="contact-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="tu@email.com" required>
 
-// Para añadir fotos: { src:'images/mi-foto.jpg', caption:'Descripción' }
-const PHOTOS = [
-  { src:'stu2_1.jpg', caption:'' },
-  { src:'stu2_2.jpg', caption:'' },
-  { src:'stu2_3.jpg', caption:'' },
-  { src:'stu2_4.JPG', caption:'' },
-  { src:'stu2_5.jpg', caption:'' },
-  { src:'paradiso_foto.png', caption:'' },
-  { src:'piano_casa.jpg', caption:'' }
-];
+          <label for="contact-message">Mensaje</label>
+          <textarea id="contact-message" name="message" rows="4" placeholder="Escribe aquí..." required></textarea>
 
-const EVENTS_LIST = [
-  { date:'—', title:'Fiebre', place:'usa tu red de contactos', desc:'diez artistas, byod, solo por invitación', link:'#' }
-];
+          <button type="submit">Enviar</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
 
-// Crea cuenta en formspree.io y pega tu endpoint aquí
-const FORM_ENDPOINT  = 'https://formspree.io/f/mppajzry';
-const FALLBACK_EMAIL = 'webo.managment@gmail.com';
-
-/* =====================================================
-   LÓGICA — no hace falta tocar nada de aquí en adelante
-   ===================================================== */
-
-const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id===id));
-  document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.target===id));
-  document.getElementById('bg-photo').classList.toggle('blurred', id!=='home');
-}
-
-function setupGrid(gridId, pagerId, items, render, perPage=6){
-  const grid = document.getElementById(gridId);
-  const pager = pagerId ? document.getElementById(pagerId) : null;
-  const pages = [];
-  for(let i=0;i<items.length;i+=perPage) pages.push(items.slice(i,i+perPage));
-  if(!pages.length) pages.push([]);
-  let page=0;
-  function draw(){
-    grid.innerHTML = pages[page].map((it,i)=>render(it,page*perPage+i)).join('');
-    if(!pager) return;
-    pager.innerHTML = pages.length>1 ? `
-      <button class="pager-btn" id="${gridId}-p">‹</button>
-      <span class="page-indicator">${page+1} / ${pages.length}</span>
-      <button class="pager-btn" id="${gridId}-n">›</button>` : '';
-    if(pages.length>1){
-      document.getElementById(gridId+'-p').onclick=()=>{page=(page-1+pages.length)%pages.length;draw();};
-      document.getElementById(gridId+'-n').onclick=()=>{page=(page+1)%pages.length;draw();};
-    }
-  }
-  draw();
-}
-
-function storeCard(it){
-  return `<div class="card${it.soon?' card-soon':''}">
-    <div class="card-emoji">${it.emoji}</div>
-    <div class="card-name">${esc(it.name)}</div>
-    <div class="card-price">${esc(it.price)}</div>
-    <div class="card-desc">${esc(it.desc)}</div>
-    ${it.soon?'<span class="card-desc">🔒 Próximamente</span>':`<a class="card-link" href="${it.link}" target="_blank" rel="noopener">Ver más</a>`}
-  </div>`;
-}
-
-function eventCard(it){
-  return `<div class="card">
-    <div class="card-name">${esc(it.title)}</div>
-    <div class="card-price">${esc(it.date)}</div>
-    <div class="card-desc">${esc(it.place)}</div>
-    <div class="card-desc">${esc(it.desc||'')}</div>
-    <a class="card-link" href="${it.link}" target="_blank" rel="noopener">Más info</a>
-  </div>`;
-}
-
-/* ── APARATOS: filas apiladas + página individual ── */
-
-function slugify(s){
-  return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9]+/g,'-').replace(/(^-+|-+$)/g,'');
-}
-
-function aparatoRow(it, idx){
-  const photo = it.photo
-    ? `<img class="aparato-photo" src="${esc(it.photo)}" alt="${esc(it.name)}">`
-    : `<div class="aparato-photo photo-placeholder">${esc(it.emoji||'🔧')}</div>`;
-  return `<div class="aparato-row" onclick="showAparato(${idx})" tabindex="0"
-      onkeydown="if(event.key==='Enter')showAparato(${idx})">
-    ${photo}
-    <div class="aparato-overlay"><span class="aparato-name">${esc(it.name).toUpperCase()}</span></div>
-  </div>`;
-}
-
-function renderAparatos(){
-  document.getElementById('gear-grid').innerHTML = PRODUCTS_GEAR.map(aparatoRow).join('');
-}
-
-function showAparato(idx){
-  const it = PRODUCTS_GEAR[idx];
-  if(!it) return;
-  document.getElementById('aparato-detail-photo').innerHTML = it.photo
-    ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}">`
-    : `<div class="photo-placeholder">${esc(it.emoji||'🔧')}</div>`;
-  document.getElementById('aparato-detail-name').textContent  = it.name;
-  document.getElementById('aparato-detail-price').textContent = it.price || '';
-  document.getElementById('aparato-detail-desc').textContent  = it.desc || '';
-  const link = document.getElementById('aparato-detail-link');
-  if(it.soon || !it.link || it.link==='#'){ link.style.display='none'; }
-  else { link.style.display='inline-block'; link.href=it.link; }
-  history.replaceState(null, '', '#aparato-'+slugify(it.name));
-  showScreen('aparato-detail');
-  document.querySelectorAll('.nav-links button').forEach(b => b.classList.toggle('active', b.dataset.target==='gear'));
-}
-
-/* ── GALERÍA: nube flotante ──
-   Para añadir fotos, solo agrega objetos al array PHOTOS de arriba;
-   cada una recibe automáticamente una posición y sigue flotando
-   junto con las demás, sin que tengas que tocar nada más. */
-
-function galleryCloudItem(p, idx){
-  return `<div class="gallery-cloud-item" data-idx="${idx}" onclick="toggleGalleryItem(event, ${idx})">
-    <div class="gallery-cloud-inner">
-      ${p.src?`<img src="${esc(p.src)}" alt="${esc(p.caption||'')}">`:`<div class="photo-placeholder">📷 ${esc(p.caption||'')}</div>`}
+  <dialog class="gallery-dialog" id="gallery-dialog" aria-labelledby="gallery-dialog-caption">
+    <div class="gallery-dialog-shell">
+      <button class="gallery-dialog-close" type="button" data-gallery-close aria-label="Cerrar imagen">×</button>
+      <button class="gallery-dialog-nav gallery-dialog-prev" type="button" data-gallery-prev aria-label="Foto anterior">‹</button>
+      <figure>
+        <img id="gallery-dialog-image" alt="" decoding="async">
+        <figcaption id="gallery-dialog-caption"></figcaption>
+      </figure>
+      <button class="gallery-dialog-nav gallery-dialog-next" type="button" data-gallery-next aria-label="Foto siguiente">›</button>
     </div>
-  </div>`;
-}
+  </dialog>
 
-function seededRandom(seed){
-  const x = Math.sin(seed*9301+49297)*233280;
-  return x-Math.floor(x);
-}
-
-function layoutGalleryCloud(){
-  const items = document.querySelectorAll('#gallery-cloud-items .gallery-cloud-item');
-  const n = items.length;
-  if(!n) return;
-  const cols = Math.max(1, Math.round(Math.sqrt(n*1.7)));
-  const rows = Math.ceil(n/cols);
-  items.forEach((el,i)=>{
-    const col=i%cols, row=Math.floor(i/cols);
-    const cellW=100/cols, cellH=100/rows;
-    const jx=(seededRandom(i*7+1)-0.5)*cellW*0.7;
-    const jy=(seededRandom(i*13+2)-0.5)*cellH*0.7;
-    let left = Math.min(Math.max(cellW*col+cellW/2+jx, 10), 90);
-    let top  = Math.min(Math.max(cellH*row+cellH/2+jy, 10), 90);
-    const size = 92 + seededRandom(i*3+5)*54;
-    const rot  = (seededRandom(i*11+9)-0.5)*18;
-    const dur  = 5 + seededRandom(i*17+3)*3;
-    const delay= seededRandom(i*19+7)*4;
-    el.style.left = `calc(${left}% - ${size/2}px)`;
-    el.style.top  = `calc(${top}% - ${size/2}px)`;
-    el.style.width = size+'px';
-    el.style.height = size+'px';
-    el.style.setProperty('--rot', rot.toFixed(2)+'deg');
-    el.style.animationDuration = dur.toFixed(2)+'s';
-    el.style.animationDelay = delay.toFixed(2)+'s';
-  });
-}
-
-function renderGalleryCloud(){
-  const cloud = document.getElementById('gallery-cloud');
-  const items = document.getElementById('gallery-cloud-items');
-  items.innerHTML = PHOTOS.map(galleryCloudItem).join('');
-  layoutGalleryCloud();
-  cloud.onclick = e => { if(e.target===cloud || e.target===items) clearGalleryActive(); };
-}
-
-function activateGalleryItem(idx){
-  const cloud = document.getElementById('gallery-cloud-items');
-  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
-  const el = cloud.querySelector(`.gallery-cloud-item[data-idx="${idx}"]`);
-  if(el){
-    el.classList.add('active');
-    document.getElementById('gallery-cloud').classList.add('has-active');
-  }
-}
-
-function stepGalleryItem(dir){
-  const cloud = document.getElementById('gallery-cloud-items');
-  const activeEl = cloud.querySelector('.gallery-cloud-item.active');
-  const current = activeEl ? parseInt(activeEl.dataset.idx, 10) : 0;
-  const next = (current + dir + PHOTOS.length) % PHOTOS.length;
-  activateGalleryItem(next);
-}
-
-function toggleGalleryItem(e, idx){
-  e.stopPropagation();
-  const cloud = document.getElementById('gallery-cloud-items');
-  const el = cloud.querySelector(`.gallery-cloud-item[data-idx="${idx}"]`);
-  const wasActive = el.classList.contains('active');
-  if(!wasActive){ activateGalleryItem(idx); }
-  else { clearGalleryActive(); }
-}
-
-function clearGalleryActive(){
-  const cloud = document.getElementById('gallery-cloud');
-  cloud.querySelectorAll('.gallery-cloud-item.active').forEach(x=>x.classList.remove('active'));
-  cloud.classList.remove('has-active');
-}
-
-document.getElementById('contact-form').addEventListener('submit', async e=>{
-  e.preventDefault();
-  const status=document.getElementById('form-status');
-  status.textContent='Enviando...';
-  try{
-    const res=await fetch(FORM_ENDPOINT,{method:'POST',headers:{Accept:'application/json'},body:new FormData(e.target)});
-    if(res.ok){ status.textContent='¡Mensaje enviado! Te respondo pronto 🎶'; e.target.reset(); }
-    else throw 0;
-  } catch{ status.textContent=`No se pudo enviar. Escríbeme a ${FALLBACK_EMAIL}`; }
-});
-
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('bio-text').textContent = BIO_TEXT;
-  renderAparatos();
-  setupGrid('portfolio-grid', null, PORTFOLIO_ITEMS, storeCard);
-  setupGrid('events-grid',  'events-pager',  EVENTS_LIST,      eventCard);
-  renderGalleryCloud();
-});
-</script>
+  <noscript>
+    <div class="noscript-message">Esta web necesita JavaScript para navegar por las secciones. Puedes escribir a <a href="mailto:webo.managment@gmail.com">webo.managment@gmail.com</a>.</div>
+  </noscript>
 </body>
 </html>

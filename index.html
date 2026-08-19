@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260819-4">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260819-6">
 
   <script type="application/ld+json">
   {
@@ -47,11 +47,11 @@
   </script>
 
   <!-- Cambia esta versión al publicar cambios de CSS o JavaScript para evitar mezclar archivos en caché. -->
-  <script defer src="assets/js/content.js?v=20260819-4"></script>
+  <script defer src="assets/js/content.js?v=20260819-6"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script defer src="assets/js/animations.js?v=20260819-4"></script>
-  <script defer src="assets/js/app.js?v=20260819-4"></script>
+  <script defer src="assets/js/animations.js?v=20260819-6"></script>
+  <script defer src="assets/js/app.js?v=20260819-6"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -166,31 +166,37 @@
       </div>
     </section>
 
-    <section id="gear" class="screen" data-route-screen="gear" hidden>
-      <div class="screen-content">
+    <section id="gear" class="screen gear-screen" data-route-screen="gear" hidden>
+      <div class="gear-side-gallery" id="gear-side-gallery" aria-hidden="true"></div>
+
+      <div class="screen-content gear-center">
         <h1 class="sr-only route-heading" tabindex="-1">Aparatos</h1>
-        <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
         <div class="aparato-stack" id="gear-grid"></div>
+        <p class="gear-more-note" id="gear-more-note"></p>
       </div>
     </section>
 
-    <section id="aparato-detail" class="screen" data-route-screen="aparato-detail" hidden>
-      <article class="screen-content aparato-detail">
-        <a class="aparato-back" href="#aparatos">← Volver a aparatos</a>
-        <div class="aparato-detail-photo" id="aparato-detail-photo"></div>
-        <h1 class="page-title" id="aparato-detail-name" tabindex="-1"></h1>
-        <p class="card-price" id="aparato-detail-price"></p>
-        <p class="page-sub" id="aparato-detail-desc"></p>
-        <a class="card-link" id="aparato-detail-link" target="_blank" rel="noopener noreferrer">Ver más</a>
+    <section id="aparato-detail" class="screen aparato-detail-screen" data-route-screen="aparato-detail" hidden>
+      <article class="aparato-process">
+        <h1 class="sr-only route-heading" id="aparato-detail-name" tabindex="-1"></h1>
+        <a class="aparato-process-back" href="#aparatos">← Volver a aparatos</a>
+        <div class="aparato-process-flow" id="aparato-process-flow"></div>
       </article>
     </section>
 
-    <section id="portfolio" class="screen" data-route-screen="portfolio" hidden>
-      <div class="screen-content">
+    <section id="portfolio" class="screen portfolio-screen" data-route-screen="portfolio" hidden>
+      <div class="screen-content portfolio-content">
         <h1 class="sr-only route-heading" tabindex="-1">Portfolio</h1>
-        <p class="page-sub">Trabajos seleccionados</p>
-        <div class="grid-cards" id="portfolio-grid"></div>
+        <div class="portfolio-stack" id="portfolio-grid"></div>
       </div>
+    </section>
+
+    <section id="portfolio-detail" class="screen aparato-detail-screen" data-route-screen="portfolio-detail" hidden>
+      <article class="aparato-process">
+        <h1 class="sr-only route-heading" id="portfolio-detail-name" tabindex="-1"></h1>
+        <a class="aparato-process-back" href="#portfolio">← Volver a portfolio</a>
+        <div class="aparato-process-flow" id="portfolio-detail-flow"></div>
+      </article>
     </section>
 
     <section id="contact" class="screen" data-route-screen="contact" hidden>

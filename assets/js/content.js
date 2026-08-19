@@ -80,18 +80,148 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
   gear: [
     {
       name: 'TalkBox',
-      price: '—',
       image: 'assets/images/gear/talkbox.jpg',
       imageWidth: 1440,
       imageHeight: 837,
       imageAlt: 'Componentes de un TalkBox con tubo transparente y driver de audio',
-      description: 'el aparato del funk',
-      link: null,
-      soon: true
+      moreNote: 'más próximamente',
+
+      // Estas seis imágenes forman los laterales de la portada de Aparatos.
+      // Sustitúyelas por componentes electrónicos y fotografías del taller cuando las tengas.
+      sideGallery: [
+        {
+          side: 'left',
+          src: 'assets/images/gear/talkbox.jpg',
+          width: 1440,
+          height: 837,
+          alt: 'Primer plano provisional de los componentes del TalkBox'
+        },
+        {
+          side: 'left',
+          src: 'assets/images/gallery/studio-console-3.jpg',
+          width: 1800,
+          height: 1723,
+          alt: 'Imagen provisional de trabajo técnico en estudio'
+        },
+        {
+          side: 'left',
+          src: 'assets/images/gallery/studio-console-5.jpg',
+          width: 1800,
+          height: 1350,
+          alt: 'Imagen provisional de una sala de trabajo de audio'
+        },
+        {
+          side: 'right',
+          src: 'assets/images/gallery/studio-console-4.jpg',
+          width: 1800,
+          height: 1200,
+          alt: 'Imagen provisional de ajustes sobre una mesa de mezclas'
+        },
+        {
+          side: 'right',
+          src: 'assets/images/gallery/studio-console-2.jpg',
+          width: 1536,
+          height: 1329,
+          alt: 'Imagen provisional de una sesión de trabajo técnico'
+        },
+        {
+          side: 'right',
+          src: 'assets/images/gallery/studio-console-1.jpg',
+          width: 1440,
+          height: 817,
+          alt: 'Imagen provisional de una mesa de mezclas'
+        }
+      ],
+
+      // Añade nuevos objetos a este array para ampliar el relato del proceso.
+      // Cada paso admite una imagen y un texto de la longitud que necesites.
+      process: [
+        {
+          src: 'assets/images/gear/talkbox.jpg',
+          width: 1440,
+          height: 837,
+          alt: 'Driver, tubo y primeras piezas utilizadas para construir el TalkBox',
+          text: `El punto de partida fue entender cómo llevar la señal de un amplificador hasta la boca sin perder la fuerza ni el carácter del sonido. Las primeras pruebas se centraron en el driver, el diámetro del tubo y la forma de unir cada pieza de manera resistente. Este texto es provisional: aquí podrás explicar las decisiones, los errores y las soluciones que fueron definiendo el aparato.`
+        },
+        {
+          src: 'assets/images/gallery/studio-console-4.jpg',
+          width: 1800,
+          height: 1200,
+          alt: 'Imagen provisional de una fase de pruebas de audio',
+          text: `Después llegaron las pruebas de nivel, respuesta y comodidad de uso. Cada versión permitió ajustar la presión, reducir ruidos y encontrar una construcción más sencilla de montar y reparar. Este segundo bloque también es editable y puede convertirse en un diario del proceso, incorporando nuevas fotografías a medida que el prototipo avance.`
+        }
+      ]
     }
   ],
 
-  portfolio: [],
+  // Cada proyecto genera una tarjeta y su propia URL #portfolio/nombre-del-proyecto.
+  // Añade nuevos bloques a `story` cuando quieras ampliar una subpágina.
+  portfolio: [
+    {
+      name: 'Paradiso',
+      image: 'assets/images/gallery/paradiso-studio.jpg',
+      imageWidth: 1537,
+      imageHeight: 1023,
+      imageAlt: 'WEBO sentado ante la mesa de mezclas del estudio Paradiso',
+      story: [
+        {
+          src: 'assets/images/gallery/paradiso-studio.jpg',
+          width: 1537,
+          height: 1023,
+          alt: 'WEBO trabajando en el estudio Paradiso',
+          text: `Este espacio está reservado para contar el trabajo desarrollado en Paradiso: el punto de partida del proyecto, las decisiones tomadas durante las sesiones y el resultado final. De momento funciona como texto provisional y podrá crecer con nuevas fotografías, créditos y detalles de cada producción.`
+        }
+      ]
+    },
+    {
+      name: 'Abbey Road',
+      image: 'assets/images/gallery/studio-console-1.jpg',
+      imageWidth: 1440,
+      imageHeight: 817,
+      imageAlt: 'Técnico de audio frente a una gran mesa de mezclas',
+      story: [
+        {
+          src: 'assets/images/gallery/studio-console-1.jpg',
+          width: 1440,
+          height: 817,
+          alt: 'Imagen provisional para el proyecto Abbey Road',
+          text: `Aquí podrás resumir la experiencia de Abbey Road, las técnicas que incorporaste a tu manera de trabajar y los proyectos vinculados a esa etapa. La fotografía y este texto son provisionales para que podamos ajustar primero la composición y el ritmo de lectura.`
+        }
+      ]
+    },
+    {
+      name: 'Suite Spot',
+      image: 'assets/images/gallery/studio-console-2.jpg',
+      imageWidth: 1536,
+      imageHeight: 1329,
+      imageAlt: 'Dos personas trabajando sobre una mesa de mezclas',
+      story: [
+        {
+          src: 'assets/images/gallery/studio-console-2.jpg',
+          width: 1536,
+          height: 1329,
+          alt: 'Imagen provisional para el proyecto Suite Spot',
+          text: `Este bloque puede explicar tu trabajo en Suite Spot, el contexto de las sesiones y las responsabilidades que asumiste en cada proyecto. Más adelante podrás sustituirlo por una selección concreta de trabajos, testimonios o fragmentos del proceso.`
+        }
+      ]
+    },
+    {
+      name: 'Producciones',
+      image: 'assets/images/gallery/home-piano.jpg',
+      imageWidth: 1800,
+      imageHeight: 1200,
+      imageAlt: 'WEBO trabajando con un teclado en un estudio doméstico',
+      story: [
+        {
+          src: 'assets/images/gallery/home-piano.jpg',
+          width: 1800,
+          height: 1200,
+          alt: 'WEBO desarrollando una producción propia',
+          text: `Producciones reúne los lanzamientos y experimentos que parten de una idea personal. Aquí podrás presentar cada obra con su historia, explicar cómo evolucionó desde la primera maqueta y enlazar las versiones publicadas cuando estén disponibles.`
+        }
+      ]
+    }
+  ],
 
   photos: [
     {

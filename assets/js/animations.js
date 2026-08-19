@@ -9,6 +9,8 @@
 
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let bioContext = null;
+  let gearContext = null;
+  let apparatusContext = null;
 
   function canAnimate() {
     return !reducedMotionQuery.matches;
@@ -102,7 +104,7 @@
       gsap.fromTo(
         bannerTrack,
         { xPercent: -50 },
-        { xPercent: 0, duration: 11, repeat: -1, ease: 'none' }
+        { xPercent: 0, duration: 22, repeat: -1, ease: 'none' }
       );
 
       const timeline = gsap.timeline({
@@ -120,34 +122,34 @@
       });
 
       timeline
-        .to(hero, { x: () => -window.innerWidth * 0.4, scale: 0.84, duration: 1.55 }, 0)
+        .to(hero, { x: () => -window.innerWidth * 0.46, scale: 0.84, duration: 1.15 }, 0)
         .to(
           copy,
           { x: () => -(window.innerWidth + copy.offsetWidth + 100), duration: 4.5 },
           0.3
         )
+        .to(parallaxTop, { autoAlpha: 1, duration: 0.18 }, 0.4)
         .to(
           parallaxTop,
           {
             x: () => -(window.innerWidth * 1.46 + parallaxTop.offsetWidth),
-            autoAlpha: 1,
             duration: 4.15
           },
-          0.52
+          0.4
         )
+        .to(parallaxBottom, { autoAlpha: 1, duration: 0.18 }, 1.1)
         .to(
           parallaxBottom,
           {
             x: () => -(window.innerWidth * 1.72 + parallaxBottom.offsetWidth),
-            autoAlpha: 1,
-            duration: 4.55
+            duration: 4.15
           },
-          0.72
+          1.1
         )
         .to(
           hero,
-          { x: () => -window.innerWidth * 0.74, autoAlpha: 0, duration: 2.5 },
-          1.55
+          { x: () => -window.innerWidth * 0.9, autoAlpha: 0, duration: 1.1 },
+          1.15
         )
         .to(
           [parallaxTop, parallaxBottom],
@@ -175,10 +177,129 @@
     }, section);
   }
 
+  function destroyGearGallery() {
+    if (gearContext) {
+      gearContext.revert();
+      gearContext = null;
+    }
+
+    const section = document.querySelector('.gear-screen');
+    if (section) section.classList.remove('gear-fallback');
+  }
+
+  function initGearGallery(section) {
+    destroyGearGallery();
+    if (!section) return;
+    if (!canAnimate() || !window.gsap) {
+      section.classList.add('gear-fallback');
+      return;
+    }
+
+    const { gsap } = window;
+    gearContext = gsap.context(() => {
+      const leftPhotos = section.querySelectorAll('.gear-side-photo-left');
+      const rightPhotos = section.querySelectorAll('.gear-side-photo-right');
+
+      gsap.fromTo(
+        leftPhotos,
+        { x: '-135%', autoAlpha: 0 },
+        {
+          x: 0,
+          autoAlpha: 0.62,
+          duration: 0.88,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform'
+        }
+      );
+
+      gsap.fromTo(
+        rightPhotos,
+        { x: '135%', autoAlpha: 0 },
+        {
+          x: 0,
+          autoAlpha: 0.62,
+          duration: 0.88,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform'
+        }
+      );
+    }, section);
+  }
+
+  function exitGearGallery(section) {
+    if (!section || !canAnimate() || !window.gsap) return Promise.resolve();
+
+    const { gsap } = window;
+    const leftPhotos = section.querySelectorAll('.gear-side-photo-left');
+    const rightPhotos = section.querySelectorAll('.gear-side-photo-right');
+    const allPhotos = [...leftPhotos, ...rightPhotos];
+    gsap.killTweensOf(allPhotos);
+
+    return new Promise((resolve) => {
+      gsap.timeline({ onComplete: resolve })
+        .to(
+          leftPhotos,
+          { x: '-145%', autoAlpha: 0, duration: 0.5, stagger: 0.045, ease: 'power3.in' },
+          0
+        )
+        .to(
+          rightPhotos,
+          { x: '145%', autoAlpha: 0, duration: 0.5, stagger: 0.045, ease: 'power3.in' },
+          0
+        );
+    });
+  }
+
+  function destroyApparatusStory() {
+    if (apparatusContext) {
+      apparatusContext.revert();
+      apparatusContext = null;
+    }
+  }
+
+  function initApparatusStory(section) {
+    destroyApparatusStory();
+    if (!section || !canAnimate() || !window.gsap || !window.ScrollTrigger) return;
+
+    const { gsap, ScrollTrigger } = window;
+    gsap.registerPlugin(ScrollTrigger);
+
+    apparatusContext = gsap.context(() => {
+      section.querySelectorAll('.aparato-process-step').forEach((step) => {
+        const parts = step.querySelectorAll('.aparato-process-image, .aparato-process-copy');
+        gsap.fromTo(
+          parts,
+          { y: 76, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.86,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: step,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      requestAnimationFrame(() => ScrollTrigger.refresh(true));
+    }, section);
+  }
+
   window.WEBO_ANIMATIONS = Object.freeze({
     screenIn,
     initBioStory,
     destroyBioStory,
+    initGearGallery,
+    exitGearGallery,
+    destroyGearGallery,
+    initApparatusStory,
+    destroyApparatusStory,
     prefersReducedMotion: () => reducedMotionQuery.matches
   });
 })();

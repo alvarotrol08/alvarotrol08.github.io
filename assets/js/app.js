@@ -5,7 +5,12 @@
   const animations = window.WEBO_ANIMATIONS || {
     screenIn() {},
     initBioStory(section) { section.classList.add('bio-fallback'); },
-    destroyBioStory() {}
+    destroyBioStory() {},
+    initGearGallery(section) { section.classList.add('gear-fallback'); },
+    exitGearGallery() { return Promise.resolve(); },
+    destroyGearGallery() {},
+    initApparatusStory() {},
+    destroyApparatusStory() {}
   };
 
   if (!content) {
@@ -39,16 +44,6 @@
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-+|-+$)/g, '');
-  }
-
-  function safeExternalUrl(value) {
-    if (!value) return null;
-    try {
-      const url = new URL(value, window.location.origin);
-      return ['http:', 'https:'].includes(url.protocol) ? url.href : null;
-    } catch {
-      return null;
-    }
   }
 
   function emptyState(message) {
@@ -88,8 +83,17 @@
 
     const bannerWordCount = Math.max(20, Math.ceil(window.innerWidth / 110) + 4);
     document.querySelectorAll('.scroll-banner-group').forEach((group) => {
-      const words = Array.from({ length: bannerWordCount }, () => createElement('span', null, 'SCROLL'));
-      group.replaceChildren(...words);
+      const items = Array.from({ length: bannerWordCount }, () => {
+        const word = createElement('span', null, 'SCROLL');
+        const icon = createElement('img', 'scroll-banner-icon');
+        icon.src = 'assets/images/favicon.png';
+        icon.alt = '';
+        icon.width = 192;
+        icon.height = 192;
+        icon.decoding = 'async';
+        return [word, icon];
+      });
+      group.replaceChildren(...items.flat());
     });
   }
 
@@ -97,8 +101,14 @@
     const button = createElement('button', 'aparato-row');
     button.type = 'button';
     button.setAttribute('aria-label', `Ver ${item.name}`);
-    button.addEventListener('click', () => {
-      window.location.hash = `aparatos/${slugify(item.name)}`;
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      try {
+        await animations.exitGearGallery(dom.gearScreen);
+      } finally {
+        button.disabled = false;
+        window.location.hash = `aparatos/${slugify(item.name)}`;
+      }
     });
 
     if (item.image) {
@@ -118,63 +128,92 @@
     return button;
   }
 
+  function renderGearSideGallery() {
+    const featuredItem = content.gear[0];
+    const sideCounts = { left: 0, right: 0 };
+    const photos = (featuredItem?.sideGallery || []).map((photo) => {
+      const side = photo.side === 'right' ? 'right' : 'left';
+      const figure = createElement('figure', `gear-side-photo gear-side-photo-${side}`);
+      figure.dataset.sideIndex = String(sideCounts[side]++);
+
+      const image = createElement('img');
+      applyImageData(image, { ...photo, alt: '' });
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      figure.append(image);
+      return figure;
+    });
+
+    dom.gearSideGallery.replaceChildren(...photos);
+  }
+
   function renderAparatos() {
     const rows = content.gear.map(buildAparatoRow);
     dom.gearGrid.replaceChildren(...(rows.length ? rows : [emptyState('El catálogo está en preparación.')]));
+    dom.gearMoreNote.textContent = content.gear[0]?.moreNote || '';
+    renderGearSideGallery();
+  }
+
+  function buildProcessStep(step, index) {
+    const section = createElement('section', `aparato-process-step${index % 2 ? ' is-reversed' : ''}`);
+
+    if (step.src) {
+      const figure = createElement('figure', 'aparato-process-image');
+      const image = createElement('img');
+      applyImageData(image, step);
+      image.loading = index === 0 ? 'eager' : 'lazy';
+      image.decoding = 'async';
+      figure.append(image);
+      section.append(figure);
+    }
+
+    if (step.text) {
+      section.append(createElement('p', 'aparato-process-copy', step.text));
+    }
+
+    return section;
   }
 
   function renderAparatoDetail(item) {
-    dom.detailPhoto.replaceChildren();
+    dom.detailName.textContent = item.name;
+    const steps = (item.process || []).map(buildProcessStep);
+    dom.processFlow.replaceChildren(...(steps.length ? steps : [emptyState('El proceso se documentará aquí.')]));
+  }
+
+  function buildPortfolioRow(item) {
+    const button = createElement('button', 'aparato-row portfolio-row');
+    button.type = 'button';
+    button.setAttribute('aria-label', `Ver ${item.name}`);
+    button.addEventListener('click', () => {
+      window.location.hash = `portfolio/${slugify(item.name)}`;
+    });
+
     if (item.image) {
-      const image = createElement('img');
+      const image = createElement('img', 'aparato-photo');
       image.src = item.image;
       image.alt = item.imageAlt || item.name;
       image.width = item.imageWidth;
       image.height = item.imageHeight;
+      image.loading = 'lazy';
       image.decoding = 'async';
-      dom.detailPhoto.append(image);
+      button.append(image);
     }
 
-    dom.detailName.textContent = item.name;
-    dom.detailPrice.textContent = item.price || '';
-    dom.detailDescription.textContent = item.description || '';
-
-    const link = safeExternalUrl(item.link);
-    dom.detailLink.hidden = Boolean(item.soon || !link);
-    if (link) dom.detailLink.href = link;
-  }
-
-  function buildPortfolioCard(item) {
-    const card = createElement('article', `card${item.soon ? ' card-soon' : ''}`);
-    card.append(createElement('h2', 'card-name', item.name || item.title || 'Sin título'));
-
-    if (item.price || item.date) {
-      card.append(createElement('p', 'card-price', item.price || item.date));
-    }
-    if (item.description || item.desc) {
-      card.append(createElement('p', 'card-desc', item.description || item.desc));
-    }
-
-    const link = safeExternalUrl(item.link);
-    if (link && !item.soon) {
-      const anchor = createElement('a', 'card-link', 'Ver más');
-      anchor.href = link;
-      anchor.target = '_blank';
-      anchor.rel = 'noopener noreferrer';
-      card.append(anchor);
-    } else if (item.soon) {
-      card.append(createElement('span', 'card-desc', 'Próximamente'));
-    }
-
-    return card;
+    const overlay = createElement('span', 'aparato-overlay');
+    overlay.append(createElement('span', 'aparato-name', item.name));
+    button.append(overlay);
+    return button;
   }
 
   function renderPortfolio() {
-    if (!content.portfolio.length) {
-      dom.portfolioGrid.replaceChildren(emptyState('Próximamente: aquí aparecerán los trabajos seleccionados.'));
-      return;
-    }
-    dom.portfolioGrid.replaceChildren(...content.portfolio.map(buildPortfolioCard));
+    const rows = content.portfolio.map(buildPortfolioRow);
+    dom.portfolioGrid.replaceChildren(...(rows.length ? rows : [emptyState('Próximamente.')]));
+  }
+
+  function renderPortfolioDetail(item) {
+    dom.portfolioDetailName.textContent = item.name;
+    const steps = (item.story || []).map(buildProcessStep);
+    dom.portfolioDetailFlow.replaceChildren(...(steps.length ? steps : [emptyState('Este proyecto se documentará aquí.')]));
   }
 
   function parseRoute() {
@@ -197,6 +236,21 @@
           screen: 'aparato-detail',
           nav: 'gear',
           title: `${item.name} | ${BASE_TITLE}`,
+          detailType: 'gear',
+          item
+        };
+      }
+    }
+
+    if (route === 'portfolio' && segments[1]) {
+      const item = content.portfolio.find((candidate) => slugify(candidate.name) === segments[1]);
+      if (item) {
+        return {
+          key: `portfolio/${segments[1]}`,
+          screen: 'portfolio-detail',
+          nav: 'portfolio',
+          title: `${item.name} | ${BASE_TITLE}`,
+          detailType: 'portfolio',
           item
         };
       }
@@ -229,9 +283,17 @@
     if (currentRoute === 'bio' && route.key !== 'bio') {
       animations.destroyBioStory();
     }
+    if (currentRoute === 'aparatos' && route.key !== 'aparatos') {
+      animations.destroyGearGallery();
+    }
+    const currentIsStory = currentRoute?.startsWith('aparatos/') || currentRoute?.startsWith('portfolio/');
+    if (currentIsStory && route.key !== currentRoute) {
+      animations.destroyApparatusStory();
+    }
     currentRoute = route.key;
 
-    if (route.item) renderAparatoDetail(route.item);
+    if (route.detailType === 'gear') renderAparatoDetail(route.item);
+    if (route.detailType === 'portfolio') renderPortfolioDetail(route.item);
 
     document.querySelectorAll('[data-route-screen]').forEach((screen) => {
       screen.hidden = screen.dataset.routeScreen !== route.screen;
@@ -247,6 +309,12 @@
 
     if (route.screen === 'bio') {
       requestAnimationFrame(() => animations.initBioStory(activeScreen));
+    }
+    if (route.screen === 'gear') {
+      requestAnimationFrame(() => animations.initGearGallery(activeScreen));
+    }
+    if (route.screen === 'aparato-detail' || route.screen === 'portfolio-detail') {
+      requestAnimationFrame(() => animations.initApparatusStory(activeScreen));
     }
 
     if (hasRenderedRoute) {
@@ -299,13 +367,15 @@
     dom.bioParallaxBottomImage = document.getElementById('bio-parallax-bottom-image');
     dom.bioLeftImage = document.getElementById('bio-left-image');
     dom.bioRightImage = document.getElementById('bio-right-image');
+    dom.gearScreen = document.getElementById('gear');
+    dom.gearSideGallery = document.getElementById('gear-side-gallery');
     dom.gearGrid = document.getElementById('gear-grid');
-    dom.detailPhoto = document.getElementById('aparato-detail-photo');
+    dom.gearMoreNote = document.getElementById('gear-more-note');
     dom.detailName = document.getElementById('aparato-detail-name');
-    dom.detailPrice = document.getElementById('aparato-detail-price');
-    dom.detailDescription = document.getElementById('aparato-detail-desc');
-    dom.detailLink = document.getElementById('aparato-detail-link');
+    dom.processFlow = document.getElementById('aparato-process-flow');
     dom.portfolioGrid = document.getElementById('portfolio-grid');
+    dom.portfolioDetailName = document.getElementById('portfolio-detail-name');
+    dom.portfolioDetailFlow = document.getElementById('portfolio-detail-flow');
     dom.contactForm = document.getElementById('contact-form');
     dom.formStatus = document.getElementById('form-status');
   }
@@ -326,7 +396,11 @@
     });
 
     window.addEventListener('hashchange', renderRoute);
-    window.addEventListener('pagehide', () => animations.destroyBioStory());
+    window.addEventListener('pagehide', () => {
+      animations.destroyBioStory();
+      animations.destroyGearGallery();
+      animations.destroyApparatusStory();
+    });
     renderRoute();
   }
 

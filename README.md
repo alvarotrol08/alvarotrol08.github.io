@@ -24,13 +24,16 @@ El contenido que cambia con frecuencia está en `assets/js/content.js`:
 - `bioStory.biography`: biografía larga que aparece en el centro al final de la secuencia.
 - `bioStory.hero`, `bioStory.parallaxTop`, `bioStory.parallaxBottom`, `bioStory.left` y `bioStory.right`: fotografía inicial, imágenes parallax y fotos laterales.
 - `bioStory.socials`: enlaces de Instagram, LinkedIn, contacto, SoundCloud y YouTube.
-- `gear`: aparatos y enlaces.
-- `portfolio`: trabajos publicados.
+- `gear`: aparatos disponibles. Dentro de cada aparato:
+  - `moreNote`: frase pequeña situada bajo la tarjeta central.
+  - `sideGallery`: las seis fotografías que entran desde los laterales de la portada.
+  - `process`: relato vertical del aparato. Añade un objeto con `src`, dimensiones, `alt` y `text` por cada nuevo paso del proceso.
+- `portfolio`: trabajos publicados. Cada objeto crea una tarjeta y una subpágina; amplía su array `story` con nuevos bloques de imagen y texto.
 - `photos`: fotografías reservadas para futuras secciones; ahora no se muestran como galería.
 - `events`: eventos reservados; la sección permanece fuera de la web hasta que haya contenido.
 - `contact`: endpoint de Formspree y correo alternativo.
 
-Cada aparato recibe una URL con el formato `#aparatos/nombre-del-aparato`. Las secciones públicas usan `#bio`, `#aparatos`, `#portfolio` y `#contacto`; atrás y adelante del navegador funcionan con estos hashes.
+Cada aparato recibe una URL con el formato `#aparatos/nombre-del-aparato` y cada proyecto usa `#portfolio/nombre-del-proyecto`. Las secciones públicas usan `#bio`, `#aparatos`, `#portfolio` y `#contacto`; atrás y adelante del navegador funcionan con estos hashes.
 
 ## Probar en local
 
@@ -75,6 +78,7 @@ GitHub Pages publica la rama `main`. Antes de subir cambios:
 1. Comprueba las vistas de escritorio y móvil.
 2. Recorre todas las rutas con atrás y adelante.
 3. Comprueba la secuencia de Bio desplazándote hacia abajo y hacia arriba.
-4. Actualiza el sufijo `?v=` de los recursos locales en `index.html` cuando cambien el CSS o JavaScript. Esto evita que el navegador combine el HTML nuevo con archivos antiguos en caché.
-5. Revisa `git status` para evitar originales pesados o archivos locales.
-6. Haz commit y push a `main`.
+4. Comprueba la entrada y salida de las imágenes de Aparatos y recorre el relato vertical de cada aparato.
+5. Actualiza el sufijo `?v=` de los recursos locales en `index.html` cuando cambien el CSS o JavaScript. Esto evita que el navegador combine el HTML nuevo con archivos antiguos en caché.
+6. Revisa `git status` para evitar originales pesados o archivos locales.
+7. Haz commit y push a `main`.

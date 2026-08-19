@@ -22,11 +22,11 @@
     if (window.gsap) {
       window.gsap.fromTo(
         content,
-        { autoAlpha: 0, y: 18 },
+        { autoAlpha: 0, y: 8 },
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.45,
+          duration: 0.36,
           ease: 'power2.out',
           clearProps: 'opacity,transform,visibility'
         }
@@ -36,10 +36,10 @@
 
     content.animate(
       [
-        { opacity: 0, transform: 'translateY(18px)' },
+        { opacity: 0, transform: 'translateY(8px)' },
         { opacity: 1, transform: 'translateY(0)' }
       ],
-      { duration: 450, easing: 'cubic-bezier(.2,.8,.2,1)' }
+      { duration: 360, easing: 'cubic-bezier(.2,.8,.2,1)' }
     );
   }
 
@@ -69,14 +69,35 @@
       const stage = section.querySelector('.bio-stage');
       const hero = section.querySelector('.bio-hero-visual');
       const copy = section.querySelector('.bio-copy-track');
-      const topImage = section.querySelector('.bio-support-image-top');
-      const bottomImage = section.querySelector('.bio-support-image-bottom');
+      const parallaxTop = section.querySelector('.bio-parallax-image-top');
+      const parallaxBottom = section.querySelector('.bio-parallax-image-bottom');
+      const finalScene = section.querySelector('.bio-final');
+      const finalCenter = section.querySelector('.bio-final-center');
+      const leftImage = section.querySelector('.bio-final-image-left');
+      const rightImage = section.querySelector('.bio-final-image-right');
+      const banner = section.querySelector('.scroll-banner');
       const bannerTrack = section.querySelector('.scroll-banner-track');
 
-      gsap.set([hero, copy, topImage, bottomImage], { force3D: true });
+      gsap.set([hero, copy, parallaxTop, parallaxBottom, finalCenter, leftImage, rightImage], { force3D: true });
       gsap.set(copy, { x: 0, autoAlpha: 1 });
-      gsap.set(topImage, { x: '12vw', autoAlpha: 0, rotate: 5 });
-      gsap.set(bottomImage, { x: '16vw', autoAlpha: 0, rotate: -5 });
+      gsap.set(parallaxTop, { x: '9vw', autoAlpha: 0 });
+      gsap.set(parallaxBottom, { x: '18vw', autoAlpha: 0 });
+      gsap.set(finalScene, { autoAlpha: 1, pointerEvents: 'none' });
+      gsap.set(finalCenter, { y: 14, autoAlpha: 0 });
+      gsap.set(leftImage, { x: '-62vw', autoAlpha: 0 });
+      gsap.set(rightImage, { x: '62vw', autoAlpha: 0 });
+
+      gsap.fromTo(
+        hero,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.62, delay: 0.08, ease: 'power2.out' }
+      );
+
+      gsap.fromTo(
+        banner,
+        { yPercent: 135, autoAlpha: 0 },
+        { yPercent: 0, autoAlpha: 1, duration: 0.78, delay: 0.08, ease: 'power3.out' }
+      );
 
       gsap.fromTo(
         bannerTrack,
@@ -90,7 +111,7 @@
           id: 'bio-story',
           trigger: story,
           start: 'top top',
-          end: () => `+=${Math.max(window.innerHeight * 4.5, 2800)}`,
+          end: () => `+=${Math.max(window.innerHeight * 6.2, 3900)}`,
           scrub: 0.8,
           pin: stage,
           anticipatePin: 1,
@@ -99,37 +120,56 @@
       });
 
       timeline
-        .to(hero, { x: () => -window.innerWidth * 0.38, scale: 0.84, duration: 1.45 }, 0)
+        .to(hero, { x: () => -window.innerWidth * 0.4, scale: 0.84, duration: 1.55 }, 0)
         .to(
           copy,
-          { x: () => -(window.innerWidth + copy.offsetWidth + 100), duration: 5.2 },
+          { x: () => -(window.innerWidth + copy.offsetWidth + 100), duration: 4.5 },
           0.3
         )
         .to(
-          topImage,
+          parallaxTop,
           {
-            x: () => -window.innerWidth * 1.5,
+            x: () => -(window.innerWidth * 1.46 + parallaxTop.offsetWidth),
             autoAlpha: 1,
-            rotate: -3,
-            duration: 3.3
+            duration: 4.15
           },
-          1.1
+          0.52
         )
         .to(
-          bottomImage,
+          parallaxBottom,
           {
-            x: () => -window.innerWidth * 1.55,
+            x: () => -(window.innerWidth * 1.72 + parallaxBottom.offsetWidth),
             autoAlpha: 1,
-            rotate: 3,
-            duration: 3.15
+            duration: 4.55
           },
-          2
+          0.72
         )
         .to(
           hero,
-          { x: () => -window.innerWidth * 0.72, autoAlpha: 0.2, duration: 2.7 },
-          1.45
-        );
+          { x: () => -window.innerWidth * 0.74, autoAlpha: 0, duration: 2.5 },
+          1.55
+        )
+        .to(
+          [parallaxTop, parallaxBottom],
+          { autoAlpha: 0, duration: 0.68 },
+          3.72
+        )
+        .to(
+          leftImage,
+          { x: 0, autoAlpha: 1, duration: 1.15, ease: 'power3.out' },
+          3.85
+        )
+        .to(
+          rightImage,
+          { x: 0, autoAlpha: 1, duration: 1.15, ease: 'power3.out' },
+          3.85
+        )
+        .to(
+          finalCenter,
+          { y: 0, autoAlpha: 1, duration: 0.85, ease: 'power2.out' },
+          4.05
+        )
+        .set(finalScene, { pointerEvents: 'auto' }, 4.72);
 
       requestAnimationFrame(() => ScrollTrigger.refresh(true));
     }, section);

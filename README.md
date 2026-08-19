@@ -20,7 +20,10 @@ robots.txt / sitemap.xml    Descubrimiento para buscadores
 
 El contenido que cambia con frecuencia está en `assets/js/content.js`:
 
-- `bioStory`: texto e imágenes provisionales de la narrativa animada.
+- `bioStory.line`: primera frase, la línea grande que cruza la pantalla.
+- `bioStory.biography`: biografía larga que aparece en el centro al final de la secuencia.
+- `bioStory.hero`, `bioStory.parallaxTop`, `bioStory.parallaxBottom`, `bioStory.left` y `bioStory.right`: fotografía inicial, imágenes parallax y fotos laterales.
+- `bioStory.socials`: enlaces de Instagram, LinkedIn, contacto, SoundCloud y YouTube.
 - `gear`: aparatos y enlaces.
 - `portfolio`: trabajos publicados.
 - `photos`: fotografías reservadas para futuras secciones; ahora no se muestran como galería.
@@ -71,6 +74,7 @@ GitHub Pages publica la rama `main`. Antes de subir cambios:
 
 1. Comprueba las vistas de escritorio y móvil.
 2. Recorre todas las rutas con atrás y adelante.
-3. Abre el visor de galería con ratón y teclado.
-4. Revisa `git status` para evitar originales pesados o archivos locales.
-5. Haz commit y push a `main`.
+3. Comprueba la secuencia de Bio desplazándote hacia abajo y hacia arriba.
+4. Actualiza el sufijo `?v=` de los recursos locales en `index.html` cuando cambien el CSS o JavaScript. Esto evita que el navegador combine el HTML nuevo con archivos antiguos en caché.
+5. Revisa `git status` para evitar originales pesados o archivos locales.
+6. Haz commit y push a `main`.

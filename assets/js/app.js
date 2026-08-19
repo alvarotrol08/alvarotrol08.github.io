@@ -63,11 +63,28 @@
   }
 
   function renderBioStory() {
-    dom.bioAccessibleText.textContent = content.bio;
+    dom.bioAccessibleText.textContent = `${content.bioStory.line}\n\n${content.bioStory.biography}`;
     dom.bioCopy.textContent = content.bioStory.line;
+    dom.bioLongCopy.textContent = content.bioStory.biography;
     applyImageData(dom.bioHeroImage, content.bioStory.hero);
-    applyImageData(dom.bioTopImage, content.bioStory.top);
-    applyImageData(dom.bioBottomImage, content.bioStory.bottom);
+    applyImageData(dom.bioParallaxTopImage, content.bioStory.parallaxTop);
+    applyImageData(dom.bioParallaxBottomImage, content.bioStory.parallaxBottom);
+    applyImageData(dom.bioLeftImage, content.bioStory.left);
+    applyImageData(dom.bioRightImage, content.bioStory.right);
+
+    document.querySelectorAll('[data-bio-social]').forEach((link) => {
+      const socialName = link.dataset.bioSocial;
+      const socialUrl = content.bioStory.socials[socialName];
+      link.href = socialUrl;
+
+      if (socialUrl.startsWith('#')) {
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+      } else {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      }
+    });
 
     const bannerWordCount = Math.max(20, Math.ceil(window.innerWidth / 110) + 4);
     document.querySelectorAll('.scroll-banner-group').forEach((group) => {
@@ -276,9 +293,12 @@
     dom.navLogo = document.querySelector('.nav-logo');
     dom.bioAccessibleText = document.getElementById('bio-accessible-text');
     dom.bioCopy = document.getElementById('bio-copy-line');
+    dom.bioLongCopy = document.getElementById('bio-long-copy');
     dom.bioHeroImage = document.getElementById('bio-hero-image');
-    dom.bioTopImage = document.getElementById('bio-top-image');
-    dom.bioBottomImage = document.getElementById('bio-bottom-image');
+    dom.bioParallaxTopImage = document.getElementById('bio-parallax-top-image');
+    dom.bioParallaxBottomImage = document.getElementById('bio-parallax-bottom-image');
+    dom.bioLeftImage = document.getElementById('bio-left-image');
+    dom.bioRightImage = document.getElementById('bio-right-image');
     dom.gearGrid = document.getElementById('gear-grid');
     dom.detailPhoto = document.getElementById('aparato-detail-photo');
     dom.detailName = document.getElementById('aparato-detail-name');

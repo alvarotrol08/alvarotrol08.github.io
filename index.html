@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260819-4">
 
   <script type="application/ld+json">
   {
@@ -46,11 +46,12 @@
   }
   </script>
 
-  <script defer src="assets/js/content.js"></script>
+  <!-- Cambia esta versión al publicar cambios de CSS o JavaScript para evitar mezclar archivos en caché. -->
+  <script defer src="assets/js/content.js?v=20260819-4"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script defer src="assets/js/animations.js"></script>
-  <script defer src="assets/js/app.js"></script>
+  <script defer src="assets/js/animations.js?v=20260819-4"></script>
+  <script defer src="assets/js/app.js?v=20260819-4"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -97,13 +98,63 @@
             <p class="bio-copy-line" id="bio-copy-line"></p>
           </div>
 
-          <figure class="bio-support-image bio-support-image-top">
-            <img id="bio-top-image" alt="" loading="lazy" decoding="async">
+          <figure class="bio-parallax-image bio-parallax-image-top" aria-hidden="true">
+            <img id="bio-parallax-top-image" alt="" loading="lazy" decoding="async">
           </figure>
 
-          <figure class="bio-support-image bio-support-image-bottom">
-            <img id="bio-bottom-image" alt="" loading="lazy" decoding="async">
+          <figure class="bio-parallax-image bio-parallax-image-bottom" aria-hidden="true">
+            <img id="bio-parallax-bottom-image" alt="" loading="lazy" decoding="async">
           </figure>
+
+          <div class="bio-final" id="bio-final">
+            <figure class="bio-final-image bio-final-image-left">
+              <img id="bio-left-image" alt="" loading="lazy" decoding="async">
+            </figure>
+
+            <div class="bio-final-center">
+              <p class="bio-long-copy" id="bio-long-copy" aria-hidden="true"></p>
+
+              <nav class="bio-socials" aria-label="Redes sociales de WEBO">
+                <a class="bio-social-link" data-bio-social="instagram" href="#" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <circle class="icon-dot" cx="17.4" cy="6.7" r="1"></circle>
+                  </svg>
+                </a>
+                <a class="bio-social-link" data-bio-social="linkedin" href="#" aria-label="LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                    <circle class="icon-dot" cx="7.2" cy="8" r="1"></circle>
+                    <path d="M7.2 11v6M11 17v-6m0 2.4c1-2.7 5.8-2.4 5.8 1.5V17"></path>
+                  </svg>
+                </a>
+                <a class="bio-social-link" data-bio-social="gmail" href="#contacto" aria-label="Contacto">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                    <path d="m4 7 8 6 8-6"></path>
+                  </svg>
+                </a>
+                <a class="bio-social-link" data-bio-social="soundcloud" href="#" aria-label="SoundCloud">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3.5 14v2m2-4v6m2-8v9m2-10v10m2-11v11h6.3a3.2 3.2 0 0 0 .3-6.4A5 5 0 0 0 9.5 10"></path>
+                  </svg>
+                </a>
+                <a class="bio-social-link" data-bio-social="youtube" href="#" aria-label="YouTube">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect>
+                    <path d="m10 9 5 3-5 3Z"></path>
+                  </svg>
+                </a>
+              </nav>
+
+              <img class="bio-mark" src="assets/images/favicon.png" width="192" height="192" alt="Logo de WEBO">
+            </div>
+
+            <figure class="bio-final-image bio-final-image-right">
+              <img id="bio-right-image" alt="" loading="lazy" decoding="async">
+            </figure>
+          </div>
 
           <div class="scroll-banner" aria-hidden="true">
             <div class="scroll-banner-track">

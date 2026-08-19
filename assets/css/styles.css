@@ -18,8 +18,10 @@
 
 html {
   min-height: 100%;
+  overflow-y: scroll;
   background: var(--black);
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   scrollbar-color: rgba(255, 255, 255, 0.55) transparent;
 }
 
@@ -103,13 +105,12 @@ img {
   object-fit: cover;
   object-position: center;
   filter: blur(0) brightness(1);
-  transform: scale(1);
-  transition: filter 0.55s ease, transform 0.55s ease;
+  will-change: filter;
+  transition: filter 0.72s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .bg-photo.blurred {
   filter: blur(7px) brightness(0.68);
-  transform: scale(1.025);
 }
 
 .navbar {
@@ -262,13 +263,14 @@ main {
 }
 
 .bio-hero-visual,
-.bio-support-image {
+.bio-parallax-image,
+.bio-final-image {
   position: absolute;
   z-index: 3;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  background: #050505;
+  border: 0;
+  background: transparent;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.54);
   will-change: transform, opacity;
 }
@@ -278,11 +280,14 @@ main {
   left: 50%;
   width: clamp(230px, 30vw, 440px);
   height: clamp(320px, 60vh, 590px);
+  opacity: 0;
+  visibility: hidden;
   translate: -50% -50%;
 }
 
 .bio-hero-visual img,
-.bio-support-image img {
+.bio-parallax-image img,
+.bio-final-image img {
   display: block;
   width: 100%;
   height: 100%;
@@ -313,28 +318,133 @@ main {
   white-space: nowrap;
 }
 
-.bio-support-image {
+.bio-parallax-image {
   left: 100%;
-  width: clamp(190px, 23vw, 350px);
-  aspect-ratio: 4 / 3;
+  z-index: 4;
+  width: clamp(190px, 22vw, 330px);
   opacity: 0;
 }
 
-.bio-support-image-top {
-  top: clamp(92px, 12vh, 132px);
+.bio-parallax-image-top {
+  top: clamp(94px, 12vh, 132px);
+  aspect-ratio: 3 / 2;
 }
 
-.bio-support-image-bottom {
-  bottom: clamp(62px, 9vh, 108px);
+.bio-parallax-image-bottom {
+  bottom: clamp(72px, 10vh, 118px);
+  aspect-ratio: 4 / 3;
+}
+
+.bio-final {
+  position: absolute;
+  inset: calc(var(--nav-height) + 18px) var(--page-inline) 72px;
+  z-index: 7;
+  display: grid;
+  grid-template-columns: minmax(150px, 22vw) minmax(340px, 640px) minmax(150px, 22vw);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 54px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bio-final-image {
+  position: relative;
+  z-index: 1;
+  width: min(22vw, 340px);
+  height: min(52vh, 500px);
+  opacity: 0;
+  border-radius: 0;
+}
+
+.bio-final-image-left {
+  justify-self: end;
+}
+
+.bio-final-image-right {
+  justify-self: start;
+}
+
+.bio-final-center {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(18px, 2.2vw, 30px) 0;
+  border: 0;
+  background: transparent;
+  will-change: transform, opacity;
+}
+
+.bio-long-copy {
+  margin: 0;
+  font-size: clamp(0.76rem, 0.95vw, 0.96rem);
+  hyphens: auto;
+  letter-spacing: 0.035em;
+  line-height: 1.55;
+  text-align: justify;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.94);
+  white-space: normal;
+}
+
+.bio-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.2vw, 16px);
+  margin-top: clamp(16px, 2.4vh, 24px);
+}
+
+.bio-social-link {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--white);
+  opacity: 0.7;
+  place-items: center;
+  transition: border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+.bio-social-link:hover,
+.bio-social-link:focus-visible {
+  border-color: rgba(255, 255, 255, 0.55);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.bio-social-link svg {
+  width: 23px;
+  height: 23px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.55;
+}
+
+.bio-social-link .icon-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.bio-mark {
+  display: block;
+  width: clamp(26px, 3vw, 38px);
+  height: auto;
+  margin: 13px auto 0;
+  opacity: 0.68;
 }
 
 .scroll-banner {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: max(12px, env(safe-area-inset-bottom));
   left: 0;
   z-index: 10;
-  height: 34px;
+  height: 44px;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.24);
   background: #000;
@@ -362,7 +472,7 @@ main {
   align-items: center;
   height: 100%;
   padding: 0 clamp(20px, 3vw, 42px);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   white-space: nowrap;
@@ -373,30 +483,35 @@ main {
 }
 
 .bio-fallback .bio-stage {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   height: auto;
   min-height: 100vh;
   min-height: 100dvh;
   padding: calc(var(--nav-height) + 32px) var(--page-inline) 70px;
   gap: 22px;
-  place-items: center;
+  align-items: center;
 }
 
 .bio-fallback .bio-hero-visual,
-.bio-fallback .bio-copy-track,
-.bio-fallback .bio-support-image {
+.bio-fallback .bio-parallax-image,
+.bio-fallback .bio-copy-track {
   position: relative;
   inset: auto;
   width: min(520px, 100%);
   height: auto;
   opacity: 1;
+  visibility: visible;
   aspect-ratio: 4 / 3;
   translate: none;
   transform: none !important;
 }
 
+.bio-fallback .bio-parallax-image {
+  width: min(440px, 86%);
+}
+
 .bio-fallback .bio-copy-track {
-  order: 2;
   overflow: hidden;
   border-block: 1px solid rgba(255, 255, 255, 0.5);
   padding-block: 18px;
@@ -409,12 +524,31 @@ main {
   white-space: normal;
 }
 
-.bio-fallback .bio-support-image-top {
-  order: 3;
+.bio-fallback .bio-final {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(280px, 2fr) minmax(150px, 1fr);
+  width: min(1120px, 100%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none !important;
 }
 
-.bio-fallback .bio-support-image-bottom {
-  order: 4;
+.bio-fallback .bio-final-image,
+.bio-fallback .bio-final-center {
+  opacity: 1;
+  visibility: visible;
+  transform: none !important;
+}
+
+.bio-fallback .scroll-banner {
+  position: relative;
+  inset: auto;
+  flex: 0 0 44px;
+  width: 100vw;
+  transform: none !important;
 }
 
 .grid-cards {
@@ -730,16 +864,77 @@ main {
     font-size: clamp(2.2rem, 11vw, 4.6rem);
   }
 
-  .bio-support-image {
-    width: min(48vw, 250px);
+  .bio-parallax-image {
+    width: min(46vw, 230px);
   }
 
-  .bio-support-image-top {
-    top: 15vh;
+  .bio-parallax-image-top {
+    top: 14vh;
   }
 
-  .bio-support-image-bottom {
+  .bio-parallax-image-bottom {
     bottom: 12vh;
+  }
+
+  .bio-final {
+    inset: calc(var(--nav-height) + 8px) 7px 58px;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .bio-final-image {
+    width: 100%;
+    height: min(44vh, 360px);
+  }
+
+  .bio-final-image-left {
+    grid-row: 1;
+    grid-column: 1 / 4;
+    justify-self: stretch;
+  }
+
+  .bio-final-image-right {
+    grid-row: 1;
+    grid-column: 8 / 11;
+    justify-self: stretch;
+  }
+
+  .bio-final-center {
+    grid-row: 1;
+    grid-column: 2 / 10;
+    padding: 14px 10px;
+    background: transparent;
+  }
+
+  .bio-long-copy {
+    font-size: clamp(0.68rem, 2.7vw, 0.78rem);
+    letter-spacing: 0.015em;
+    line-height: 1.4;
+  }
+
+  .bio-socials {
+    gap: 3px;
+    margin-top: 12px;
+  }
+
+  .bio-social-link {
+    width: 30px;
+    height: 30px;
+  }
+
+  .bio-social-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .bio-mark {
+    width: 25px;
+    margin-top: 8px;
+  }
+
+  .scroll-banner {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    height: 40px;
   }
 
   .screen-home {

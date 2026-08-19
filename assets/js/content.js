@@ -12,24 +12,68 @@ estudié ingeniería de audio y producción en abbey road amsterdam. volví a ma
   // Contenido provisional de la narrativa animada de Bio.
   // Sustituye estos textos e imágenes sin modificar animations.js.
   bioStory: {
+    // Primera frase: el texto grande que cruza horizontalmente la pantalla.
     line: 'ESTE ES UN TEXTO DUMMY PARA CONSTRUIR LA HISTORIA DE WEBO · AQUÍ IRÁ LA BIOGRAFÍA DEFINITIVA ·',
+
+    // Texto largo: aparece en el centro durante el segundo acto de la Bio.
+    biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Praesent vitae justo sed arcu fermentum viverra.
+Integer laoreet neque at sapien posuere, a tempor erat luctus.
+Curabitur euismod tellus vel sem consequat, vitae commodo urna aliquet.
+Sed finibus mauris in augue feugiat, sit amet ultrices odio interdum.
+Aliquam erat volutpat, cras dictum libero vitae sapien tincidunt.
+Donec consequat justo nec nibh cursus, id vulputate velit vulputate.
+Morbi feugiat lectus sit amet mi malesuada, vel malesuada justo luctus.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+Fusce dignissim nulla a lacus interdum, vitae pretium mauris fermentum.
+Maecenas quis erat vitae urna malesuada interdum sed at justo.
+Nullam sed magna ut libero posuere viverra et vitae lectus.
+Phasellus non velit ac augue interdum faucibus quis sed turpis.
+Suspendisse potenti, nam laoreet dolor at neque bibendum facilisis.
+Etiam malesuada metus id ipsum gravida, non efficitur sapien volutpat.
+Vivamus egestas purus eu tortor commodo, vel faucibus nibh faucibus.
+Quisque fringilla tellus vitae augue posuere, eget tincidunt neque malesuada.
+Aenean sodales lacus sit amet mauris tincidunt, vitae pharetra magna feugiat.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
+
     hero: {
       src: 'assets/images/gallery/paradiso-studio.jpg',
       width: 1537,
       height: 1023,
       alt: 'Imagen provisional de WEBO en un estudio de grabación'
     },
-    top: {
+    parallaxTop: {
+      src: 'assets/images/gallery/studio-console-4.jpg',
+      width: 1800,
+      height: 1200,
+      alt: 'Imagen provisional que acompaña la primera frase por arriba'
+    },
+    parallaxBottom: {
+      src: 'assets/images/gallery/studio-console-5.jpg',
+      width: 1800,
+      height: 1350,
+      alt: 'Imagen provisional que acompaña la primera frase por abajo'
+    },
+    left: {
       src: 'assets/images/gallery/studio-console-2.jpg',
       width: 1536,
       height: 1329,
-      alt: 'Imagen provisional de una sesión frente a una mesa de mezclas'
+      alt: 'Imagen provisional situada a la izquierda de la biografía'
     },
-    bottom: {
+    right: {
       src: 'assets/images/gallery/home-piano.jpg',
       width: 1800,
       height: 1200,
-      alt: 'Imagen provisional de WEBO tocando un teclado'
+      alt: 'Imagen provisional situada a la derecha de la biografía'
+    },
+
+    // Gmail mantiene una ruta interna y abre el apartado Contacto.
+    socials: {
+      instagram: 'https://www.instagram.com/webo______/',
+      linkedin: 'https://www.linkedin.com/in/alvaro-ramiro-a7191a42a/',
+      gmail: '#contacto',
+      soundcloud: 'https://soundcloud.com/webowebo',
+      youtube: 'https://www.youtube.com/@webowebowebo'
     }
   },
 

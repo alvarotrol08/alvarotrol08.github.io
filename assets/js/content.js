@@ -9,6 +9,30 @@ window.WEBO_CONTENT = {
 
 estudié ingeniería de audio y producción en abbey road amsterdam. volví a madrid en 2026 para trabajar en la industria.`,
 
+  // Contenido provisional de la narrativa animada de Bio.
+  // Sustituye estos textos e imágenes sin modificar animations.js.
+  bioStory: {
+    line: 'ESTE ES UN TEXTO DUMMY PARA CONSTRUIR LA HISTORIA DE WEBO · AQUÍ IRÁ LA BIOGRAFÍA DEFINITIVA ·',
+    hero: {
+      src: 'assets/images/gallery/paradiso-studio.jpg',
+      width: 1537,
+      height: 1023,
+      alt: 'Imagen provisional de WEBO en un estudio de grabación'
+    },
+    top: {
+      src: 'assets/images/gallery/studio-console-2.jpg',
+      width: 1536,
+      height: 1329,
+      alt: 'Imagen provisional de una sesión frente a una mesa de mezclas'
+    },
+    bottom: {
+      src: 'assets/images/gallery/home-piano.jpg',
+      width: 1800,
+      height: 1200,
+      alt: 'Imagen provisional de WEBO tocando un teclado'
+    }
+  },
+
   gear: [
     {
       name: 'TalkBox',

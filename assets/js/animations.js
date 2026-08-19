@@ -1,14 +1,14 @@
 /*
  * Punto único de entrada para animaciones.
- * GSAP se carga antes de este archivo; si la CDN no responde, la web sigue
- * funcionando mediante la Web Animations API. Todas las funciones respetan
- * prefers-reduced-motion.
+ * GSAP y ScrollTrigger se cargan antes de este archivo. La interfaz mantiene
+ * un modo estático si la CDN falla o el usuario prefiere reducir movimiento.
  */
 
 (function setupAnimations() {
   'use strict';
 
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let bioContext = null;
 
   function canAnimate() {
     return !reducedMotionQuery.matches;
@@ -23,7 +23,13 @@
       window.gsap.fromTo(
         content,
         { autoAlpha: 0, y: 18 },
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', clearProps: 'opacity,transform,visibility' }
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.45,
+          ease: 'power2.out',
+          clearProps: 'opacity,transform,visibility'
+        }
       );
       return;
     }
@@ -37,39 +43,102 @@
     );
   }
 
-  function galleryIn(items) {
-    if (!canAnimate() || !items.length) return;
-
-    if (window.gsap) {
-      window.gsap.fromTo(
-        items,
-        { autoAlpha: 0, scale: 0.88 },
-        {
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.5,
-          stagger: 0.055,
-          ease: 'back.out(1.4)',
-          clearProps: 'opacity,scale,visibility'
-        }
-      );
+  function destroyBioStory() {
+    if (bioContext) {
+      bioContext.revert();
+      bioContext = null;
     }
+
+    const section = document.querySelector('.bio-screen');
+    if (section) section.classList.remove('bio-fallback');
   }
 
-  function dialogIn(dialog) {
-    if (!canAnimate() || !window.gsap) return;
-    const figure = dialog.querySelector('figure');
-    window.gsap.fromTo(
-      figure,
-      { autoAlpha: 0, scale: 0.94 },
-      { autoAlpha: 1, scale: 1, duration: 0.32, ease: 'power2.out', clearProps: 'opacity,transform,visibility' }
-    );
+  function initBioStory(section) {
+    destroyBioStory();
+
+    if (!canAnimate() || !window.gsap || !window.ScrollTrigger) {
+      section.classList.add('bio-fallback');
+      return;
+    }
+
+    const { gsap, ScrollTrigger } = window;
+    gsap.registerPlugin(ScrollTrigger);
+
+    bioContext = gsap.context(() => {
+      const story = section.querySelector('.bio-story');
+      const stage = section.querySelector('.bio-stage');
+      const hero = section.querySelector('.bio-hero-visual');
+      const copy = section.querySelector('.bio-copy-track');
+      const topImage = section.querySelector('.bio-support-image-top');
+      const bottomImage = section.querySelector('.bio-support-image-bottom');
+      const bannerTrack = section.querySelector('.scroll-banner-track');
+
+      gsap.set([hero, copy, topImage, bottomImage], { force3D: true });
+      gsap.set(copy, { x: 0, autoAlpha: 1 });
+      gsap.set(topImage, { x: '12vw', autoAlpha: 0, rotate: 5 });
+      gsap.set(bottomImage, { x: '16vw', autoAlpha: 0, rotate: -5 });
+
+      gsap.fromTo(
+        bannerTrack,
+        { xPercent: -50 },
+        { xPercent: 0, duration: 11, repeat: -1, ease: 'none' }
+      );
+
+      const timeline = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          id: 'bio-story',
+          trigger: story,
+          start: 'top top',
+          end: () => `+=${Math.max(window.innerHeight * 4.5, 2800)}`,
+          scrub: 0.8,
+          pin: stage,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
+
+      timeline
+        .to(hero, { x: () => -window.innerWidth * 0.38, scale: 0.84, duration: 1.45 }, 0)
+        .to(
+          copy,
+          { x: () => -(window.innerWidth + copy.offsetWidth + 100), duration: 5.2 },
+          0.3
+        )
+        .to(
+          topImage,
+          {
+            x: () => -window.innerWidth * 1.5,
+            autoAlpha: 1,
+            rotate: -3,
+            duration: 3.3
+          },
+          1.1
+        )
+        .to(
+          bottomImage,
+          {
+            x: () => -window.innerWidth * 1.55,
+            autoAlpha: 1,
+            rotate: 3,
+            duration: 3.15
+          },
+          2
+        )
+        .to(
+          hero,
+          { x: () => -window.innerWidth * 0.72, autoAlpha: 0.2, duration: 2.7 },
+          1.45
+        );
+
+      requestAnimationFrame(() => ScrollTrigger.refresh(true));
+    }, section);
   }
 
   window.WEBO_ANIMATIONS = Object.freeze({
     screenIn,
-    galleryIn,
-    dialogIn,
+    initBioStory,
+    destroyBioStory,
     prefersReducedMotion: () => reducedMotionQuery.matches
   });
 })();

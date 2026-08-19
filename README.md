@@ -7,7 +7,7 @@ Web estática de WEBO para GitHub Pages, publicada en [webowebo.com](https://web
 ```text
 index.html                  Estructura, SEO y marcado accesible
 assets/css/styles.css       Diseño responsive y estilos
-assets/js/content.js        Textos, aparatos, galería, eventos y contacto
+assets/js/content.js        Textos, Bio animada, aparatos y contenido reservado
 assets/js/animations.js     Integración progresiva con GSAP
 assets/js/app.js            Renderizado, rutas y comportamiento
 assets/images/              Imágenes optimizadas para producción
@@ -20,14 +20,14 @@ robots.txt / sitemap.xml    Descubrimiento para buscadores
 
 El contenido que cambia con frecuencia está en `assets/js/content.js`:
 
-- `bio`: biografía.
+- `bioStory`: texto e imágenes provisionales de la narrativa animada.
 - `gear`: aparatos y enlaces.
 - `portfolio`: trabajos publicados.
-- `photos`: galería, textos alternativos y pies de foto.
-- `events`: eventos.
+- `photos`: fotografías reservadas para futuras secciones; ahora no se muestran como galería.
+- `events`: eventos reservados; la sección permanece fuera de la web hasta que haya contenido.
 - `contact`: endpoint de Formspree y correo alternativo.
 
-Cada aparato recibe una URL con el formato `#aparatos/nombre-del-aparato`. Las secciones usan `#bio`, `#aparatos`, `#portfolio`, `#galeria`, `#eventos` y `#contacto`; atrás y adelante del navegador funcionan con estos hashes.
+Cada aparato recibe una URL con el formato `#aparatos/nombre-del-aparato`. Las secciones públicas usan `#bio`, `#aparatos`, `#portfolio` y `#contacto`; atrás y adelante del navegador funcionan con estos hashes.
 
 ## Probar en local
 
@@ -53,7 +53,9 @@ Después verifica visualmente los resultados antes de publicar. Los nombres de e
 
 ## GSAP
 
-GSAP 3.13.0 se carga de forma diferida desde jsDelivr en `index.html`. Toda animación debe incorporarse a través de `assets/js/animations.js`, para mantener la lógica de interfaz separada y respetar `prefers-reduced-motion`.
+GSAP 3.13.0 y ScrollTrigger se cargan de forma diferida desde jsDelivr en `index.html`. Toda animación se incorpora a través de `assets/js/animations.js`, para mantener la lógica de interfaz separada y respetar `prefers-reduced-motion`.
+
+La sección Bio usa una timeline vinculada al scroll mediante `scrub`: al desplazarse hacia arriba, la secuencia retrocede automáticamente. `initBioStory()` crea la escena al entrar en la ruta y `destroyBioStory()` elimina el pin y restaura el DOM al salir.
 
 La web tiene una alternativa basada en Web Animations API si la CDN falla. Para añadir un plugin de GSAP más adelante:
 

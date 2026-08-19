@@ -48,6 +48,7 @@
 
   <script defer src="assets/js/content.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/animations.js"></script>
   <script defer src="assets/js/app.js"></script>
 </head>
@@ -71,8 +72,6 @@
       <a data-route="bio" href="#bio">Bio</a>
       <a data-route="gear" href="#aparatos">Aparatos</a>
       <a data-route="portfolio" href="#portfolio">Portfolio</a>
-      <a data-route="gallery" href="#galeria">Galería</a>
-      <a data-route="events" href="#eventos">Eventos</a>
       <a data-route="contact" href="#contacto">Contacto</a>
     </div>
   </nav>
@@ -85,16 +84,40 @@
       </div>
     </section>
 
-    <section id="bio" class="screen" data-route-screen="bio" hidden>
-      <div class="screen-content">
-        <h1 class="page-title" tabindex="-1">Bio</h1>
-        <p class="bio-text" id="bio-text"></p>
+    <section id="bio" class="screen bio-screen" data-route-screen="bio" hidden>
+      <h1 class="sr-only route-heading" tabindex="-1">Bio</h1>
+      <p class="sr-only" id="bio-accessible-text"></p>
+      <div class="bio-story" id="bio-story">
+        <div class="bio-stage" id="bio-stage">
+          <figure class="bio-hero-visual">
+            <img id="bio-hero-image" alt="" decoding="async">
+          </figure>
+
+          <div class="bio-copy-track" aria-hidden="true">
+            <p class="bio-copy-line" id="bio-copy-line"></p>
+          </div>
+
+          <figure class="bio-support-image bio-support-image-top">
+            <img id="bio-top-image" alt="" loading="lazy" decoding="async">
+          </figure>
+
+          <figure class="bio-support-image bio-support-image-bottom">
+            <img id="bio-bottom-image" alt="" loading="lazy" decoding="async">
+          </figure>
+
+          <div class="scroll-banner" aria-hidden="true">
+            <div class="scroll-banner-track">
+              <div class="scroll-banner-group"></div>
+              <div class="scroll-banner-group"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="gear" class="screen" data-route-screen="gear" hidden>
       <div class="screen-content">
-        <h1 class="page-title" tabindex="-1">Aparatos</h1>
+        <h1 class="sr-only route-heading" tabindex="-1">Aparatos</h1>
         <p class="page-sub">Pedales y diseños hechos por WEBO. Catálogo en construcción 🛠️</p>
         <div class="aparato-stack" id="gear-grid"></div>
       </div>
@@ -113,34 +136,15 @@
 
     <section id="portfolio" class="screen" data-route-screen="portfolio" hidden>
       <div class="screen-content">
-        <h1 class="page-title" tabindex="-1">Portfolio</h1>
+        <h1 class="sr-only route-heading" tabindex="-1">Portfolio</h1>
         <p class="page-sub">Trabajos seleccionados</p>
         <div class="grid-cards" id="portfolio-grid"></div>
       </div>
     </section>
 
-    <section id="gallery" class="screen" data-route-screen="gallery" hidden>
-      <div class="screen-content screen-content-wide">
-        <h1 class="page-title" tabindex="-1">Galería</h1>
-        <p class="page-sub">Lo último que voy haciendo</p>
-        <div class="gallery-cloud" id="gallery-cloud">
-          <div class="gallery-cloud-items" id="gallery-cloud-items"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="events" class="screen" data-route-screen="events" hidden>
-      <div class="screen-content">
-        <h1 class="page-title" tabindex="-1">Eventos</h1>
-        <p class="page-sub">Próximos directos y eventos de WEBO</p>
-        <div class="grid-cards" id="events-grid"></div>
-        <nav class="pager" id="events-pager" aria-label="Páginas de eventos"></nav>
-      </div>
-    </section>
-
     <section id="contact" class="screen" data-route-screen="contact" hidden>
       <div class="screen-content">
-        <h1 class="page-title" tabindex="-1">Contacto</h1>
+        <h1 class="sr-only route-heading" tabindex="-1">Contacto</h1>
         <p class="page-sub page-sub-contact">Cuéntame qué necesitas y te respondo en cuanto pueda</p>
         <form class="funk-form" id="contact-form" action="https://formspree.io/f/mppajzry" method="post">
           <label for="contact-name">Nombre</label>
@@ -158,18 +162,6 @@
       </div>
     </section>
   </main>
-
-  <dialog class="gallery-dialog" id="gallery-dialog" aria-labelledby="gallery-dialog-caption">
-    <div class="gallery-dialog-shell">
-      <button class="gallery-dialog-close" type="button" data-gallery-close aria-label="Cerrar imagen">×</button>
-      <button class="gallery-dialog-nav gallery-dialog-prev" type="button" data-gallery-prev aria-label="Foto anterior">‹</button>
-      <figure>
-        <img id="gallery-dialog-image" alt="" decoding="async">
-        <figcaption id="gallery-dialog-caption"></figcaption>
-      </figure>
-      <button class="gallery-dialog-nav gallery-dialog-next" type="button" data-gallery-next aria-label="Foto siguiente">›</button>
-    </div>
-  </dialog>
 
   <noscript>
     <div class="noscript-message">Esta web necesita JavaScript para navegar por las secciones. Puedes escribir a <a href="mailto:webo.managment@gmail.com">webo.managment@gmail.com</a>.</div>

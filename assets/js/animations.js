@@ -202,10 +202,9 @@
 
       gsap.fromTo(
         leftPhotos,
-        { x: '-135%', autoAlpha: 0 },
+        { x: '-135%' },
         {
           x: 0,
-          autoAlpha: 0.62,
           duration: 0.88,
           stagger: 0.1,
           ease: 'power3.out',
@@ -215,10 +214,9 @@
 
       gsap.fromTo(
         rightPhotos,
-        { x: '135%', autoAlpha: 0 },
+        { x: '135%' },
         {
           x: 0,
-          autoAlpha: 0.62,
           duration: 0.88,
           stagger: 0.1,
           ease: 'power3.out',
@@ -241,12 +239,12 @@
       gsap.timeline({ onComplete: resolve })
         .to(
           leftPhotos,
-          { x: '-145%', autoAlpha: 0, duration: 0.5, stagger: 0.045, ease: 'power3.in' },
+          { x: '-145%', duration: 0.5, stagger: 0.045, ease: 'power3.in' },
           0
         )
         .to(
           rightPhotos,
-          { x: '145%', autoAlpha: 0, duration: 0.5, stagger: 0.045, ease: 'power3.in' },
+          { x: '145%', duration: 0.5, stagger: 0.045, ease: 'power3.in' },
           0
         );
     });

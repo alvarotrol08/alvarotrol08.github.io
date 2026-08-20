@@ -5,15 +5,15 @@
  */
 
 window.WEBO_CONTENT = {
-  bio: `grabo artistas en estudios. diseño aparatos musicales eléctricos.
+  bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-estudié ingeniería de audio y producción en abbey road amsterdam. volví a madrid en 2026 para trabajar en la industria.`,
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
 
   // Contenido provisional de la narrativa animada de Bio.
   // Sustituye estos textos e imágenes sin modificar animations.js.
   bioStory: {
     // Primera frase: el texto grande que cruza horizontalmente la pantalla.
-    line: 'ESTE ES UN TEXTO DUMMY PARA CONSTRUIR LA HISTORIA DE WEBO · AQUÍ IRÁ LA BIOGRAFÍA DEFINITIVA ·',
+    line: 'LOREM IPSUM DOLOR SIT AMET · CONSECTETUR ADIPISCING ELIT · SED DO EIUSMOD TEMPOR INCIDIDUNT ·',
 
     // Texto largo: aparece en el centro durante el segundo acto de la Bio.
     biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -141,14 +141,14 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1440,
           height: 837,
           alt: 'Driver, tubo y primeras piezas utilizadas para construir el TalkBox',
-          text: `El punto de partida fue entender cómo llevar la señal de un amplificador hasta la boca sin perder la fuerza ni el carácter del sonido. Las primeras pruebas se centraron en el driver, el diámetro del tubo y la forma de unir cada pieza de manera resistente. Este texto es provisional: aquí podrás explicar las decisiones, los errores y las soluciones que fueron definiendo el aparato.`
+          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.`
         },
         {
           src: 'assets/images/gallery/studio-console-4.jpg',
           width: 1800,
           height: 1200,
           alt: 'Imagen provisional de una fase de pruebas de audio',
-          text: `Después llegaron las pruebas de nivel, respuesta y comodidad de uso. Cada versión permitió ajustar la presión, reducir ruidos y encontrar una construcción más sencilla de montar y reparar. Este segundo bloque también es editable y puede convertirse en un diario del proceso, incorporando nuevas fotografías a medida que el prototipo avance.`
+          text: `Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor.`
         }
       ]
     }
@@ -169,7 +169,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1537,
           height: 1023,
           alt: 'WEBO trabajando en el estudio Paradiso',
-          text: `Este espacio está reservado para contar el trabajo desarrollado en Paradiso: el punto de partida del proyecto, las decisiones tomadas durante las sesiones y el resultado final. De momento funciona como texto provisional y podrá crecer con nuevas fotografías, créditos y detalles de cada producción.`
+          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam.`
         }
       ]
     },
@@ -185,7 +185,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1440,
           height: 817,
           alt: 'Imagen provisional para el proyecto Abbey Road',
-          text: `Aquí podrás resumir la experiencia de Abbey Road, las técnicas que incorporaste a tu manera de trabajar y los proyectos vinculados a esa etapa. La fotografía y este texto son provisionales para que podamos ajustar primero la composición y el ritmo de lectura.`
+          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue.`
         }
       ]
     },
@@ -201,7 +201,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1536,
           height: 1329,
           alt: 'Imagen provisional para el proyecto Suite Spot',
-          text: `Este bloque puede explicar tu trabajo en Suite Spot, el contexto de las sesiones y las responsabilidades que asumiste en cada proyecto. Más adelante podrás sustituirlo por una selección concreta de trabajos, testimonios o fragmentos del proceso.`
+          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper.`
         }
       ]
     },
@@ -217,7 +217,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1800,
           height: 1200,
           alt: 'WEBO desarrollando una producción propia',
-          text: `Producciones reúne los lanzamientos y experimentos que parten de una idea personal. Aquí podrás presentar cada obra con su historia, explicar cómo evolucionó desde la primera maqueta y enlazar las versiones publicadas cuando estén disponibles.`
+          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.`
         }
       ]
     }

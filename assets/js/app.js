@@ -17,13 +17,13 @@
     throw new Error('No se ha podido cargar assets/js/content.js');
   }
 
-  const BASE_TITLE = 'WEBO — Ingeniería de audio y aparatos musicales';
+  const BASE_TITLE = 'WEBO - Productor';
   const routeDefinitions = {
     home: { screen: 'home', nav: null, title: BASE_TITLE },
-    bio: { screen: 'bio', nav: 'bio', title: `Bio | ${BASE_TITLE}` },
-    aparatos: { screen: 'gear', nav: 'gear', title: `Aparatos | ${BASE_TITLE}` },
-    portfolio: { screen: 'portfolio', nav: 'portfolio', title: `Portfolio | ${BASE_TITLE}` },
-    contacto: { screen: 'contact', nav: 'contact', title: `Contacto | ${BASE_TITLE}` }
+    bio: { screen: 'bio', nav: 'bio', title: 'WEBO - Bio' },
+    aparatos: { screen: 'gear', nav: 'gear', title: 'WEBO - Aparatos' },
+    portfolio: { screen: 'portfolio', nav: 'portfolio', title: 'WEBO - Portfolio' },
+    contacto: { screen: 'contact', nav: 'contact', title: 'WEBO - Contacto' }
   };
 
   const dom = {};
@@ -67,8 +67,8 @@
     applyImageData(dom.bioLeftImage, content.bioStory.left);
     applyImageData(dom.bioRightImage, content.bioStory.right);
 
-    document.querySelectorAll('[data-bio-social]').forEach((link) => {
-      const socialName = link.dataset.bioSocial;
+    document.querySelectorAll('[data-social]').forEach((link) => {
+      const socialName = link.dataset.social;
       const socialUrl = content.bioStory.socials[socialName];
       link.href = socialUrl;
 
@@ -235,7 +235,7 @@
           key: `aparatos/${segments[1]}`,
           screen: 'aparato-detail',
           nav: 'gear',
-          title: `${item.name} | ${BASE_TITLE}`,
+          title: `WEBO - ${item.name}`,
           detailType: 'gear',
           item
         };
@@ -249,7 +249,7 @@
           key: `portfolio/${segments[1]}`,
           screen: 'portfolio-detail',
           nav: 'portfolio',
-          title: `${item.name} | ${BASE_TITLE}`,
+          title: `WEBO - ${item.name}`,
           detailType: 'portfolio',
           item
         };

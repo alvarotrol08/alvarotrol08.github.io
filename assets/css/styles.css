@@ -25,6 +25,12 @@ html {
   scrollbar-color: rgba(255, 255, 255, 0.55) transparent;
 }
 
+html.viewport-locked,
+html.viewport-locked body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   min-width: 320px;
   min-height: 100%;
@@ -890,24 +896,36 @@ main {
   justify-self: end;
 }
 
-.portfolio-screen {
-  align-items: start;
+.portfolio-screen,
+.contact-screen {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: calc(var(--nav-height) + 18px);
+  padding-bottom: 18px;
+  overflow: hidden;
+  align-items: center;
+  overscroll-behavior: none;
 }
 
 .portfolio-content {
   width: min(720px, 100%);
-  margin: 0 auto;
+  margin: auto;
 }
 
 .portfolio-stack {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: clamp(8px, 1.5vh, 16px);
   width: 100%;
+  height: min(680px, calc(100dvh - var(--nav-height) - 54px));
+  min-height: 0;
 }
 
 .portfolio-row {
-  min-height: clamp(150px, 21vh, 205px);
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .contact-content {
@@ -948,7 +966,7 @@ main {
   background: var(--panel);
   color: var(--white);
   font-size: 1rem;
-  resize: vertical;
+  resize: none;
   backdrop-filter: blur(5px);
 }
 
@@ -1053,6 +1071,13 @@ main {
   .screen {
     align-items: start;
     padding-top: calc(var(--nav-height) + 28px);
+  }
+
+  .contact-screen,
+  .portfolio-screen {
+    padding-top: calc(var(--nav-height) + 12px);
+    padding-bottom: 12px;
+    align-items: center;
   }
 
   .bio-screen {
@@ -1245,15 +1270,16 @@ main {
   }
 
   .portfolio-screen {
-    padding-top: calc(var(--nav-height) + 22px);
+    padding-top: calc(var(--nav-height) + 12px);
   }
 
   .portfolio-stack {
-    gap: 14px;
+    gap: 10px;
+    height: calc(100dvh - var(--nav-height) - 36px);
   }
 
   .portfolio-row {
-    min-height: 132px;
+    min-height: 0;
   }
 }
 
@@ -1261,6 +1287,57 @@ main {
   .aparato-process-copy {
     font-size: 0.9rem;
     line-height: 1.65;
+  }
+}
+
+@media (max-height: 760px) {
+  .contact-screen {
+    padding-top: calc(var(--nav-height) + 8px);
+    padding-bottom: 8px;
+  }
+
+  .contact-mark {
+    width: 56px;
+    margin-bottom: 6px;
+  }
+
+  .page-sub-contact {
+    margin-bottom: 8px;
+  }
+
+  .funk-form {
+    gap: 3px;
+  }
+
+  .funk-form label {
+    margin-top: 2px;
+    font-size: 0.7rem;
+  }
+
+  .funk-form input,
+  .funk-form textarea {
+    padding: 7px 10px;
+    font-size: 0.9rem;
+  }
+
+  .funk-form textarea {
+    height: 62px;
+  }
+
+  .funk-form button[type='submit'] {
+    min-height: 36px;
+    margin-top: 4px;
+    padding-block: 6px;
+  }
+
+  .form-status {
+    min-height: 1.15em;
+    margin-top: 0;
+    font-size: 0.76rem;
+  }
+
+  .contact-socials {
+    margin-top: 8px;
   }
 }
 

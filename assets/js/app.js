@@ -301,6 +301,10 @@
 
     setActiveNavigation(route.nav);
     dom.background.classList.toggle('blurred', route.screen !== 'home');
+    document.documentElement.classList.toggle(
+      'viewport-locked',
+      route.screen === 'contact' || route.screen === 'portfolio'
+    );
     document.title = route.title;
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 

@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260820-2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260824-1">
 
   <script type="application/ld+json">
   {
@@ -50,26 +50,40 @@
   <script defer src="assets/js/content.js?v=20260820-1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script defer src="assets/js/animations.js?v=20260820-1"></script>
-  <script defer src="assets/js/app.js?v=20260820-2"></script>
+  <script defer src="assets/js/animations.js?v=20260824-1"></script>
+  <script defer src="assets/js/app.js?v=20260824-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
 
-  <img
-    class="bg-photo"
-    id="bg-photo"
-    src="assets/images/background.jpg"
-    width="2560"
-    height="1089"
-    alt=""
-    fetchpriority="high"
-    decoding="async"
-  >
+  <picture>
+    <source media="(max-width: 720px)" srcset="assets/images/background-mobile.jpg">
+    <img
+      class="bg-photo"
+      id="bg-photo"
+      src="assets/images/background.jpg"
+      width="2560"
+      height="1089"
+      alt=""
+      fetchpriority="high"
+      decoding="async"
+    >
+  </picture>
 
   <nav class="navbar" aria-label="Navegación principal">
     <a class="nav-logo" href="#home" aria-label="WEBO, ir al inicio">WEBO</a>
-    <div class="nav-links">
+    <button
+      class="nav-menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      aria-label="Abrir menú"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="primary-navigation">
       <a data-route="bio" href="#bio">Bio</a>
       <a data-route="gear" href="#aparatos">Aparatos</a>
       <a data-route="portfolio" href="#portfolio">Portfolio</a>
@@ -167,8 +181,6 @@
     </section>
 
     <section id="gear" class="screen gear-screen" data-route-screen="gear" hidden>
-      <div class="gear-side-gallery" id="gear-side-gallery" aria-hidden="true"></div>
-
       <div class="screen-content gear-center">
         <h1 class="sr-only route-heading" tabindex="-1">Aparatos</h1>
         <div class="aparato-stack" id="gear-grid"></div>

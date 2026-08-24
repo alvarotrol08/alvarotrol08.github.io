@@ -9,7 +9,6 @@
 
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let bioContext = null;
-  let gearContext = null;
   let apparatusContext = null;
 
   function canAnimate() {
@@ -177,79 +176,6 @@
     }, section);
   }
 
-  function destroyGearGallery() {
-    if (gearContext) {
-      gearContext.revert();
-      gearContext = null;
-    }
-
-    const section = document.querySelector('.gear-screen');
-    if (section) section.classList.remove('gear-fallback');
-  }
-
-  function initGearGallery(section) {
-    destroyGearGallery();
-    if (!section) return;
-    if (!canAnimate() || !window.gsap) {
-      section.classList.add('gear-fallback');
-      return;
-    }
-
-    const { gsap } = window;
-    gearContext = gsap.context(() => {
-      const leftPhotos = section.querySelectorAll('.gear-side-photo-left');
-      const rightPhotos = section.querySelectorAll('.gear-side-photo-right');
-
-      gsap.fromTo(
-        leftPhotos,
-        { x: '-135%' },
-        {
-          x: 0,
-          duration: 0.88,
-          stagger: 0.1,
-          ease: 'power3.out',
-          clearProps: 'transform'
-        }
-      );
-
-      gsap.fromTo(
-        rightPhotos,
-        { x: '135%' },
-        {
-          x: 0,
-          duration: 0.88,
-          stagger: 0.1,
-          ease: 'power3.out',
-          clearProps: 'transform'
-        }
-      );
-    }, section);
-  }
-
-  function exitGearGallery(section) {
-    if (!section || !canAnimate() || !window.gsap) return Promise.resolve();
-
-    const { gsap } = window;
-    const leftPhotos = section.querySelectorAll('.gear-side-photo-left');
-    const rightPhotos = section.querySelectorAll('.gear-side-photo-right');
-    const allPhotos = [...leftPhotos, ...rightPhotos];
-    gsap.killTweensOf(allPhotos);
-
-    return new Promise((resolve) => {
-      gsap.timeline({ onComplete: resolve })
-        .to(
-          leftPhotos,
-          { x: '-145%', duration: 0.5, stagger: 0.045, ease: 'power3.in' },
-          0
-        )
-        .to(
-          rightPhotos,
-          { x: '145%', duration: 0.5, stagger: 0.045, ease: 'power3.in' },
-          0
-        );
-    });
-  }
-
   function destroyApparatusStory() {
     if (apparatusContext) {
       apparatusContext.revert();
@@ -293,9 +219,6 @@
     screenIn,
     initBioStory,
     destroyBioStory,
-    initGearGallery,
-    exitGearGallery,
-    destroyGearGallery,
     initApparatusStory,
     destroyApparatusStory,
     prefersReducedMotion: () => reducedMotionQuery.matches

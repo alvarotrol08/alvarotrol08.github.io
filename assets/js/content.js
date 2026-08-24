@@ -86,8 +86,8 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
       imageAlt: 'Componentes de un TalkBox con tubo transparente y driver de audio',
       moreNote: 'más próximamente',
 
-      // Estas seis imágenes forman los laterales de la portada de Aparatos.
-      // Sustitúyelas por componentes electrónicos y fotografías del taller cuando las tengas.
+      // Material reservado para una posible composición futura de Aparatos.
+      // Estas imágenes se conservan, pero actualmente no se muestran en la web.
       sideGallery: [
         {
           side: 'left',

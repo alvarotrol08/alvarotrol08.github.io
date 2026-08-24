@@ -6,9 +6,6 @@
     screenIn() {},
     initBioStory(section) { section.classList.add('bio-fallback'); },
     destroyBioStory() {},
-    initGearGallery(section) { section.classList.add('gear-fallback'); },
-    exitGearGallery() { return Promise.resolve(); },
-    destroyGearGallery() {},
     initApparatusStory() {},
     destroyApparatusStory() {}
   };
@@ -101,14 +98,8 @@
     const button = createElement('button', 'aparato-row');
     button.type = 'button';
     button.setAttribute('aria-label', `Ver ${item.name}`);
-    button.addEventListener('click', async () => {
-      button.disabled = true;
-      try {
-        await animations.exitGearGallery(dom.gearScreen);
-      } finally {
-        button.disabled = false;
-        window.location.hash = `aparatos/${slugify(item.name)}`;
-      }
+    button.addEventListener('click', () => {
+      window.location.hash = `aparatos/${slugify(item.name)}`;
     });
 
     if (item.image) {
@@ -128,30 +119,34 @@
     return button;
   }
 
-  function renderGearSideGallery() {
-    const featuredItem = content.gear[0];
-    const sideCounts = { left: 0, right: 0 };
-    const photos = (featuredItem?.sideGallery || []).map((photo) => {
-      const side = photo.side === 'right' ? 'right' : 'left';
-      const figure = createElement('figure', `gear-side-photo gear-side-photo-${side}`);
-      figure.dataset.sideIndex = String(sideCounts[side]++);
-
-      const image = createElement('img');
-      applyImageData(image, { ...photo, alt: '' });
-      image.loading = 'lazy';
-      image.decoding = 'async';
-      figure.append(image);
-      return figure;
-    });
-
-    dom.gearSideGallery.replaceChildren(...photos);
-  }
-
   function renderAparatos() {
     const rows = content.gear.map(buildAparatoRow);
     dom.gearGrid.replaceChildren(...(rows.length ? rows : [emptyState('El catálogo está en preparación.')]));
     dom.gearMoreNote.textContent = content.gear[0]?.moreNote || '';
-    renderGearSideGallery();
+  }
+
+  function setMobileMenu(open) {
+    dom.navMenuToggle.setAttribute('aria-expanded', String(open));
+    dom.navMenuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    dom.navLinks.classList.toggle('is-open', open);
+  }
+
+  function setupMobileNavigation() {
+    dom.navMenuToggle.addEventListener('click', () => {
+      setMobileMenu(dom.navMenuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    dom.navLinks.addEventListener('click', (event) => {
+      if (event.target.closest('a')) setMobileMenu(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMobileMenu(false);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.navbar')) setMobileMenu(false);
+    });
   }
 
   function buildProcessStep(step, index) {
@@ -283,9 +278,6 @@
     if (currentRoute === 'bio' && route.key !== 'bio') {
       animations.destroyBioStory();
     }
-    if (currentRoute === 'aparatos' && route.key !== 'aparatos') {
-      animations.destroyGearGallery();
-    }
     const currentIsStory = currentRoute?.startsWith('aparatos/') || currentRoute?.startsWith('portfolio/');
     if (currentIsStory && route.key !== currentRoute) {
       animations.destroyApparatusStory();
@@ -300,6 +292,7 @@
     });
 
     setActiveNavigation(route.nav);
+    setMobileMenu(false);
     dom.background.classList.toggle('blurred', route.screen !== 'home');
     document.documentElement.classList.toggle(
       'viewport-locked',
@@ -313,9 +306,6 @@
 
     if (route.screen === 'bio') {
       requestAnimationFrame(() => animations.initBioStory(activeScreen));
-    }
-    if (route.screen === 'gear') {
-      requestAnimationFrame(() => animations.initGearGallery(activeScreen));
     }
     if (route.screen === 'aparato-detail' || route.screen === 'portfolio-detail') {
       requestAnimationFrame(() => animations.initApparatusStory(activeScreen));
@@ -363,6 +353,8 @@
   function cacheDom() {
     dom.background = document.getElementById('bg-photo');
     dom.navLogo = document.querySelector('.nav-logo');
+    dom.navMenuToggle = document.querySelector('.nav-menu-toggle');
+    dom.navLinks = document.querySelector('.nav-links');
     dom.bioAccessibleText = document.getElementById('bio-accessible-text');
     dom.bioCopy = document.getElementById('bio-copy-line');
     dom.bioLongCopy = document.getElementById('bio-long-copy');
@@ -371,8 +363,6 @@
     dom.bioParallaxBottomImage = document.getElementById('bio-parallax-bottom-image');
     dom.bioLeftImage = document.getElementById('bio-left-image');
     dom.bioRightImage = document.getElementById('bio-right-image');
-    dom.gearScreen = document.getElementById('gear');
-    dom.gearSideGallery = document.getElementById('gear-side-gallery');
     dom.gearGrid = document.getElementById('gear-grid');
     dom.gearMoreNote = document.getElementById('gear-more-note');
     dom.detailName = document.getElementById('aparato-detail-name');
@@ -389,6 +379,7 @@
     renderBioStory();
     renderAparatos();
     renderPortfolio();
+    setupMobileNavigation();
     setupContactForm();
 
     document.querySelector('.skip-link').addEventListener('click', (event) => {
@@ -402,7 +393,6 @@
     window.addEventListener('hashchange', renderRoute);
     window.addEventListener('pagehide', () => {
       animations.destroyBioStory();
-      animations.destroyGearGallery();
       animations.destroyApparatusStory();
     });
     renderRoute();

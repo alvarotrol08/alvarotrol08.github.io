@@ -143,6 +143,10 @@ img {
   text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
+.nav-menu-toggle {
+  display: none;
+}
+
 .nav-links {
   display: flex;
   justify-content: flex-end;
@@ -666,7 +670,7 @@ main {
 .gear-center {
   position: relative;
   z-index: 2;
-  width: min(600px, 52vw);
+  width: min(600px, 100%);
 }
 
 .gear-more-note {
@@ -675,85 +679,6 @@ main {
   letter-spacing: 0.045em;
   opacity: 0.66;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.92);
-}
-
-.gear-side-gallery {
-  position: absolute;
-  inset: var(--nav-height) 0 0;
-  z-index: 1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.gear-side-photo {
-  position: absolute;
-  width: clamp(220px, 23vw, 370px);
-  height: calc(33.3334% + 1px);
-  margin: 0;
-  overflow: hidden;
-  opacity: 1;
-  background: #000;
-  box-shadow: inset 0 0 52px rgba(0, 0, 0, 0.52), 0 22px 52px rgba(0, 0, 0, 0.54);
-}
-
-.gear-side-photo::after {
-  position: absolute;
-  inset: 0;
-  content: '';
-  pointer-events: none;
-}
-
-.gear-side-photo-left::after {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.36) 72%, rgba(0, 0, 0, 0.7));
-}
-
-.gear-side-photo-right::after {
-  background: linear-gradient(270deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.36) 72%, rgba(0, 0, 0, 0.7));
-}
-
-.gear-side-photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.48) saturate(0.72) contrast(1.12);
-  transform: scale(1.025);
-}
-
-.gear-fallback .gear-side-photo {
-  opacity: 1;
-}
-
-.gear-side-photo-left[data-side-index='0'] {
-  top: 0;
-  left: 0;
-}
-
-.gear-side-photo-left[data-side-index='1'] {
-  top: 33.3333%;
-  left: 0;
-}
-
-.gear-side-photo-left[data-side-index='2'] {
-  top: 66.6666%;
-  bottom: auto;
-  left: 0;
-}
-
-.gear-side-photo-right[data-side-index='0'] {
-  top: 0;
-  right: 0;
-}
-
-.gear-side-photo-right[data-side-index='1'] {
-  top: 33.3333%;
-  right: 0;
-}
-
-.gear-side-photo-right[data-side-index='2'] {
-  top: 66.6666%;
-  right: 0;
-  bottom: auto;
 }
 
 .aparato-row {
@@ -1040,32 +965,92 @@ main {
 
 @media (max-width: 720px) {
   :root {
-    --nav-height: 108px;
+    --nav-height: 76px;
   }
 
   .navbar {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding-inline: 16px;
-    padding-bottom: 10px;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    gap: 20px;
+    padding: max(14px, env(safe-area-inset-top)) 18px 12px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.08));
   }
 
   .nav-logo {
-    justify-self: center;
+    justify-self: start;
+  }
+
+  .nav-menu-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin: 0 -8px 0 0;
+    padding: 9px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .nav-menu-toggle span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+    transform-origin: center;
+    transition: opacity 0.2s ease, transform 0.24s ease;
+  }
+
+  .nav-menu-toggle[aria-expanded='true'] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-menu-toggle[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-menu-toggle[aria-expanded='true'] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   .nav-links {
+    position: absolute;
+    top: calc(100% - 6px);
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-start;
-    gap: 22px;
-    padding: 0 2px 3px;
-    scroll-snap-type: x proximity;
+    gap: 0;
+    width: min(210px, calc(100vw - 32px));
+    padding: 10px 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.88);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.24s ease, visibility 0.2s;
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-links.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .nav-links a {
-    min-height: 38px;
-    padding: 10px 0 8px;
-    scroll-snap-align: center;
+    min-height: 42px;
+    padding: 12px 0;
+    text-align: right;
   }
 
   .screen {
@@ -1106,32 +1091,19 @@ main {
   }
 
   .bio-final {
-    inset: calc(var(--nav-height) + 8px) 7px 58px;
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    gap: 0;
+    inset: calc(var(--nav-height) + 8px) 12px 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .bio-final-image {
-    width: 100%;
-    height: min(44vh, 360px);
-  }
-
-  .bio-final-image-left {
-    grid-row: 1;
-    grid-column: 1 / 4;
-    justify-self: stretch;
-  }
-
-  .bio-final-image-right {
-    grid-row: 1;
-    grid-column: 8 / 11;
-    justify-self: stretch;
+    display: none;
   }
 
   .bio-final-center {
-    grid-row: 1;
-    grid-column: 2 / 10;
-    padding: 14px 10px;
+    width: min(100%, 620px);
+    padding: 14px clamp(8px, 3vw, 18px);
     background: transparent;
   }
 
@@ -1176,51 +1148,8 @@ main {
   }
 
   .gear-center {
-    width: calc(100% - 104px);
-    min-width: 216px;
-  }
-
-  .gear-side-gallery {
-    inset: var(--nav-height) 0 0;
-  }
-
-  .gear-side-photo,
-  .gear-side-photo-left[data-side-index],
-  .gear-side-photo-right[data-side-index] {
-    width: 104px;
-    height: calc(33.3334% + 1px);
-  }
-
-  .gear-side-photo-left[data-side-index='0'] {
-    top: 0;
-    left: -48px;
-  }
-
-  .gear-side-photo-left[data-side-index='1'] {
-    top: 33.3333%;
-    left: -48px;
-  }
-
-  .gear-side-photo-left[data-side-index='2'] {
-    top: 66.6666%;
-    bottom: auto;
-    left: -48px;
-  }
-
-  .gear-side-photo-right[data-side-index='0'] {
-    top: 0;
-    right: -48px;
-  }
-
-  .gear-side-photo-right[data-side-index='1'] {
-    top: 33.3333%;
-    right: -48px;
-  }
-
-  .gear-side-photo-right[data-side-index='2'] {
-    top: 66.6666%;
-    right: -48px;
-    bottom: auto;
+    width: min(600px, 100%);
+    min-width: 0;
   }
 
   .contact-mark {

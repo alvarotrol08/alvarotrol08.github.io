@@ -26,7 +26,7 @@ El contenido que cambia con frecuencia está en `assets/js/content.js`:
 - `bioStory.socials`: enlaces de Instagram, LinkedIn, contacto, SoundCloud y YouTube.
 - `gear`: aparatos disponibles. Dentro de cada aparato:
   - `moreNote`: frase pequeña situada bajo la tarjeta central.
-  - `sideGallery`: las seis fotografías que entran desde los laterales de la portada.
+  - `sideGallery`: material fotográfico reservado; actualmente no se renderiza en la portada.
   - `process`: relato vertical del aparato. Añade un objeto con `src`, dimensiones, `alt` y `text` por cada nuevo paso del proceso.
 - `portfolio`: trabajos publicados. Cada objeto crea una tarjeta y una subpágina; amplía su array `story` con nuevos bloques de imagen y texto.
 - `photos`: fotografías reservadas para futuras secciones; ahora no se muestran como galería.

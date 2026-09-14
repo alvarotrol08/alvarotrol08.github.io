@@ -94,6 +94,13 @@
     });
   }
 
+  function renderSectionIntros() {
+    const intros = content.sectionIntros || {};
+    dom.gearIntro.textContent = intros.gear || '';
+    dom.portfolioIntro.textContent = intros.portfolio || '';
+    dom.contactIntro.textContent = intros.contact || 'Respondo rápido.';
+  }
+
   function buildAparatoRow(item) {
     const button = createElement('button', 'aparato-row');
     button.type = 'button';
@@ -121,7 +128,7 @@
 
   function renderAparatos() {
     const rows = content.gear.map(buildAparatoRow);
-    dom.gearGrid.replaceChildren(...(rows.length ? rows : [emptyState('El catálogo está en preparación.')]));
+    dom.gearGrid.replaceChildren(...(rows.length ? rows : [emptyState('No hay aparatos publicados en este momento.')]));
     dom.gearMoreNote.textContent = content.gear[0]?.moreNote || '';
   }
 
@@ -172,7 +179,7 @@
   function renderAparatoDetail(item) {
     dom.detailName.textContent = item.name;
     const steps = (item.process || []).map(buildProcessStep);
-    dom.processFlow.replaceChildren(...(steps.length ? steps : [emptyState('El proceso se documentará aquí.')]));
+    dom.processFlow.replaceChildren(...(steps.length ? steps : [emptyState('Este aparato todavía no tiene un proceso publicado.')]));
   }
 
   function buildPortfolioRow(item) {
@@ -202,13 +209,13 @@
 
   function renderPortfolio() {
     const rows = content.portfolio.map(buildPortfolioRow);
-    dom.portfolioGrid.replaceChildren(...(rows.length ? rows : [emptyState('Próximamente.')]));
+    dom.portfolioGrid.replaceChildren(...(rows.length ? rows : [emptyState('No hay proyectos publicados en este momento.')]));
   }
 
   function renderPortfolioDetail(item) {
     dom.portfolioDetailName.textContent = item.name;
     const steps = (item.story || []).map(buildProcessStep);
-    dom.portfolioDetailFlow.replaceChildren(...(steps.length ? steps : [emptyState('Este proyecto se documentará aquí.')]));
+    dom.portfolioDetailFlow.replaceChildren(...(steps.length ? steps : [emptyState('Este proyecto todavía no tiene contenido publicado.')]));
   }
 
   function parseRoute() {
@@ -340,7 +347,7 @@
           body: new FormData(dom.contactForm)
         });
         if (!response.ok) throw new Error(`Formspree respondió ${response.status}`);
-        status.textContent = '¡Mensaje enviado! Te respondo pronto 🎶';
+        status.textContent = 'Mensaje enviado. Te respondo pronto.';
         dom.contactForm.reset();
       } catch {
         showFormFailure(status);
@@ -363,20 +370,24 @@
     dom.bioParallaxBottomImage = document.getElementById('bio-parallax-bottom-image');
     dom.bioLeftImage = document.getElementById('bio-left-image');
     dom.bioRightImage = document.getElementById('bio-right-image');
+    dom.gearIntro = document.getElementById('gear-intro');
     dom.gearGrid = document.getElementById('gear-grid');
     dom.gearMoreNote = document.getElementById('gear-more-note');
     dom.detailName = document.getElementById('aparato-detail-name');
     dom.processFlow = document.getElementById('aparato-process-flow');
     dom.portfolioGrid = document.getElementById('portfolio-grid');
+    dom.portfolioIntro = document.getElementById('portfolio-intro');
     dom.portfolioDetailName = document.getElementById('portfolio-detail-name');
     dom.portfolioDetailFlow = document.getElementById('portfolio-detail-flow');
     dom.contactForm = document.getElementById('contact-form');
+    dom.contactIntro = document.getElementById('contact-intro');
     dom.formStatus = document.getElementById('form-status');
   }
 
   function init() {
     cacheDom();
     renderBioStory();
+    renderSectionIntros();
     renderAparatos();
     renderPortfolio();
     setupMobileNavigation();

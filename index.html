@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260824-1">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260914-1">
 
   <script type="application/ld+json">
   {
@@ -47,11 +47,11 @@
   </script>
 
   <!-- Cambia esta versión al publicar cambios de CSS o JavaScript para evitar mezclar archivos en caché. -->
-  <script defer src="assets/js/content.js?v=20260820-1"></script>
+  <script defer src="assets/js/content.js?v=20260914-1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/animations.js?v=20260824-1"></script>
-  <script defer src="assets/js/app.js?v=20260824-1"></script>
+  <script defer src="assets/js/app.js?v=20260914-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
@@ -183,6 +183,7 @@
     <section id="gear" class="screen gear-screen" data-route-screen="gear" hidden>
       <div class="screen-content gear-center">
         <h1 class="sr-only route-heading" tabindex="-1">Aparatos</h1>
+        <p class="page-sub section-intro section-intro-gear" id="gear-intro"></p>
         <div class="aparato-stack" id="gear-grid"></div>
         <p class="gear-more-note" id="gear-more-note"></p>
       </div>
@@ -199,6 +200,7 @@
     <section id="portfolio" class="screen portfolio-screen" data-route-screen="portfolio" hidden>
       <div class="screen-content portfolio-content">
         <h1 class="sr-only route-heading" tabindex="-1">Portfolio</h1>
+        <p class="page-sub section-intro section-intro-portfolio" id="portfolio-intro"></p>
         <div class="portfolio-stack" id="portfolio-grid"></div>
       </div>
     </section>
@@ -215,7 +217,7 @@
       <div class="screen-content contact-content">
         <h1 class="sr-only route-heading" tabindex="-1">Contacto</h1>
         <img class="contact-mark" src="assets/images/favicon.png" width="192" height="192" alt="Logo de WEBO">
-        <p class="page-sub page-sub-contact">Respondo rápido</p>
+        <p class="page-sub page-sub-contact" id="contact-intro"></p>
         <form class="funk-form" id="contact-form" action="https://formspree.io/f/mppajzry" method="post">
           <label for="contact-name">Nombre</label>
           <input id="contact-name" type="text" name="name" autocomplete="name" placeholder="Tu nombre" required>

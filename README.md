@@ -20,6 +20,7 @@ robots.txt / sitemap.xml    Descubrimiento para buscadores
 
 El contenido que cambia con frecuencia está en `assets/js/content.js`:
 
+- `sectionIntros`: introducciones breves de Aparatos, Portfolio y Contacto.
 - `bioStory.line`: primera frase, la línea grande que cruza la pantalla.
 - `bioStory.biography`: biografía larga que aparece en el centro al final de la secuencia.
 - `bioStory.hero`, `bioStory.parallaxTop`, `bioStory.parallaxBottom`, `bioStory.left` y `bioStory.right`: fotografía inicial, imágenes parallax y fotos laterales.

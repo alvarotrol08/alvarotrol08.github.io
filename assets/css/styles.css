@@ -248,6 +248,11 @@ main {
   margin-bottom: 22px;
 }
 
+.section-intro {
+  max-width: 620px;
+  margin-bottom: clamp(14px, 2.2vh, 22px);
+}
+
 .bio-screen {
   display: block;
   min-height: 100vh;
@@ -844,7 +849,7 @@ main {
   flex-direction: column;
   gap: clamp(8px, 1.5vh, 16px);
   width: 100%;
-  height: min(680px, calc(100dvh - var(--nav-height) - 54px));
+  height: min(620px, calc(100dvh - var(--nav-height) - 112px));
   min-height: 0;
 }
 
@@ -1204,7 +1209,7 @@ main {
 
   .portfolio-stack {
     gap: 10px;
-    height: calc(100dvh - var(--nav-height) - 36px);
+    height: calc(100dvh - var(--nav-height) - 104px);
   }
 
   .portfolio-row {

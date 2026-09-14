@@ -5,66 +5,59 @@
  */
 
 window.WEBO_CONTENT = {
-  bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  bio: `Soy WEBO, productor musical e ingeniero de grabación. Trabajo con artistas para convertir una idea en una canción que conserve su identidad, desde las primeras decisiones de producción hasta la grabación final.`,
 
-Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+  sectionIntros: {
+    gear: 'Además de producir y grabar, desarrollo herramientas musicales que responden a necesidades concretas dentro del estudio.',
+    portfolio: 'Una selección de espacios, sesiones y proyectos que han formado mi manera de trabajar con el sonido.',
+    contact: 'Cuéntame qué estás preparando y en qué punto se encuentra. Respondo rápido.'
+  },
 
-  // Contenido provisional de la narrativa animada de Bio.
-  // Sustituye estos textos e imágenes sin modificar animations.js.
+  // Contenido de la narrativa animada de Bio.
+  // Edita estos textos e imágenes sin modificar animations.js.
   bioStory: {
     // Primera frase: el texto grande que cruza horizontalmente la pantalla.
-    line: 'LOREM IPSUM DOLOR SIT AMET · CONSECTETUR ADIPISCING ELIT · SED DO EIUSMOD TEMPOR INCIDIDUNT ·',
+    line: 'PRODUCTOR MUSICAL, INGENIERO DE SONIDO, PROFUNK',
 
     // Texto largo: aparece en el centro durante el segundo acto de la Bio.
-    biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Praesent vitae justo sed arcu fermentum viverra.
-Integer laoreet neque at sapien posuere, a tempor erat luctus.
-Curabitur euismod tellus vel sem consequat, vitae commodo urna aliquet.
-Sed finibus mauris in augue feugiat, sit amet ultrices odio interdum.
-Aliquam erat volutpat, cras dictum libero vitae sapien tincidunt.
-Donec consequat justo nec nibh cursus, id vulputate velit vulputate.
-Morbi feugiat lectus sit amet mi malesuada, vel malesuada justo luctus.
-Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-Fusce dignissim nulla a lacus interdum, vitae pretium mauris fermentum.
-Maecenas quis erat vitae urna malesuada interdum sed at justo.
-Nullam sed magna ut libero posuere viverra et vitae lectus.
-Phasellus non velit ac augue interdum faucibus quis sed turpis.
-Suspendisse potenti, nam laoreet dolor at neque bibendum facilisis.
-Etiam malesuada metus id ipsum gravida, non efficitur sapien volutpat.
-Vivamus egestas purus eu tortor commodo, vel faucibus nibh faucibus.
-Quisque fringilla tellus vitae augue posuere, eget tincidunt neque malesuada.
-Aenean sodales lacus sit amet mauris tincidunt, vitae pharetra magna feugiat.
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
+    biography: `Soy WEBO, productor musical e ingeniero de grabación. Mi relación con la música nace de la curiosidad: paso horas detrás de los altavoces intentando entender por qué una canción consigue movernos y cómo se puede llevar esa emoción a una grabación.
+
+Estudié Ingeniería de Sonido y Producción Musical en Abbey Road Institute Amsterdam. Allí profundicé en la ciencia que hay detrás de una grabación, trabajé con distintos artistas y desarrollé un criterio más sólido como músico, técnico y productor. La convivencia diaria con estudios y equipos profesionales también me enseñó que conocer las herramientas solo tiene sentido cuando ayuda a tomar mejores decisiones.
+
+Mi paso por Paradiso, una de las salas de conciertos más importantes de Ámsterdam, me permitió seguir creciendo como ingeniero y entender más de cerca cómo funciona la industria musical. El contacto con los artistas que pasaban por la sala amplió mi manera de escuchar y de pensar el trabajo que ocurre antes, durante y después de cada actuación.
+
+Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero reducir el ego alrededor del proceso para que el arte sea lo más honesto posible. Trabajo para ayudar a artistas con un mundo propio a terminar sus canciones sin perder su esencia, reforzando aquello que los hace reconocibles y ofreciendo una guía cercana sobre la parte creativa y técnica de la industria.`,
+
 
     hero: {
       src: 'assets/images/gallery/paradiso-studio.jpg',
       width: 1537,
       height: 1023,
-      alt: 'Imagen provisional de WEBO en un estudio de grabación'
+      alt: 'WEBO sentado frente a la mesa de mezclas de Paradiso'
     },
     parallaxTop: {
       src: 'assets/images/gallery/studio-console-4.jpg',
       width: 1800,
       height: 1200,
-      alt: 'Imagen provisional que acompaña la primera frase por arriba'
+      alt: 'WEBO ajustando una mesa de mezclas durante una sesión'
     },
     parallaxBottom: {
       src: 'assets/images/gallery/studio-console-5.jpg',
       width: 1800,
       height: 1350,
-      alt: 'Imagen provisional que acompaña la primera frase por abajo'
+      alt: 'WEBO trabajando frente a una mesa de mezclas en una sala de control'
     },
     left: {
       src: 'assets/images/gallery/studio-console-2.jpg',
       width: 1536,
       height: 1329,
-      alt: 'Imagen provisional situada a la izquierda de la biografía'
+      alt: 'Dos personas trabajando sobre una mesa de mezclas'
     },
     right: {
       src: 'assets/images/gallery/home-piano.jpg',
       width: 1800,
       height: 1200,
-      alt: 'Imagen provisional situada a la derecha de la biografía'
+      alt: 'WEBO tocando un teclado en su espacio de trabajo'
     },
 
     // Gmail mantiene una ruta interna y abre el apartado Contacto.
@@ -94,42 +87,42 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           src: 'assets/images/gear/talkbox.jpg',
           width: 1440,
           height: 837,
-          alt: 'Primer plano provisional de los componentes del TalkBox'
+          alt: 'Primer plano de los componentes del TalkBox'
         },
         {
           side: 'left',
           src: 'assets/images/gallery/studio-console-3.jpg',
           width: 1800,
           height: 1723,
-          alt: 'Imagen provisional de trabajo técnico en estudio'
+          alt: 'Trabajo técnico durante una sesión de grabación'
         },
         {
           side: 'left',
           src: 'assets/images/gallery/studio-console-5.jpg',
           width: 1800,
           height: 1350,
-          alt: 'Imagen provisional de una sala de trabajo de audio'
+          alt: 'Sala de control preparada para trabajar con audio'
         },
         {
           side: 'right',
           src: 'assets/images/gallery/studio-console-4.jpg',
           width: 1800,
           height: 1200,
-          alt: 'Imagen provisional de ajustes sobre una mesa de mezclas'
+          alt: 'Ajustes sobre una mesa de mezclas'
         },
         {
           side: 'right',
           src: 'assets/images/gallery/studio-console-2.jpg',
           width: 1536,
           height: 1329,
-          alt: 'Imagen provisional de una sesión de trabajo técnico'
+          alt: 'Sesión de trabajo técnico sobre una mesa de mezclas'
         },
         {
           side: 'right',
           src: 'assets/images/gallery/studio-console-1.jpg',
           width: 1440,
           height: 817,
-          alt: 'Imagen provisional de una mesa de mezclas'
+          alt: 'Mesa de mezclas en un estudio de grabación'
         }
       ],
 
@@ -141,14 +134,14 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1440,
           height: 837,
           alt: 'Driver, tubo y primeras piezas utilizadas para construir el TalkBox',
-          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.`
+          text: `El TalkBox nace de mi interés por unir electrónica, diseño y producción musical en una herramienta física. Su funcionamiento parte de un driver que envía el sonido por un tubo hasta la boca; al articular, la forma de la boca modifica esa señal antes de que un micrófono vuelva a capturarla. Empecé este proyecto para comprender el recorrido completo del sonido y construir una unidad adaptada a mi manera de trabajar, con una respuesta clara y una conexión sencilla dentro del estudio.`
         },
         {
           src: 'assets/images/gallery/studio-console-4.jpg',
           width: 1800,
           height: 1200,
-          alt: 'Imagen provisional de una fase de pruebas de audio',
-          text: `Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor.`
+          alt: 'Ajustes de sonido sobre una mesa de mezclas durante una sesión',
+          text: `El desarrollo del prototipo es iterativo. Estoy probando cómo influyen el driver, el diámetro y la longitud del tubo, el recinto y el nivel de entrada en la presión, el ruido y la comodidad de uso. Cada versión me permite detectar un problema concreto y simplificar la siguiente. El objetivo es llegar a un aparato robusto, reparable y fácil de integrar en una sesión real. Esta página recoge el proceso a medida que el TalkBox evoluciona.`
         }
       ]
     }
@@ -169,7 +162,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1537,
           height: 1023,
           alt: 'WEBO trabajando en el estudio Paradiso',
-          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam.`
+          text: `Paradiso fue una parte importante de mi etapa en Ámsterdam. Trabajar dentro de una sala con una identidad tan marcada me permitió conocer de cerca el ritmo que rodea a cada concierto y entender que el sonido no termina en una buena configuración técnica. También depende de escuchar al artista, reaccionar con criterio y mantener una comunicación clara. El contacto con músicos y equipos distintos amplió mi visión de la industria y sigue influyendo en la forma en que afronto una grabación o una producción.`
         }
       ]
     },
@@ -178,14 +171,14 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
       image: 'assets/images/gallery/studio-console-1.jpg',
       imageWidth: 1440,
       imageHeight: 817,
-      imageAlt: 'Técnico de audio frente a una gran mesa de mezclas',
+      imageAlt: 'Mesa de mezclas en un estudio de grabación',
       story: [
         {
           src: 'assets/images/gallery/studio-console-1.jpg',
           width: 1440,
           height: 817,
-          alt: 'Imagen provisional para el proyecto Abbey Road',
-          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue.`
+          alt: 'Mesa de mezclas asociada a la etapa de formación en Abbey Road Institute Amsterdam',
+          text: `Mi formación en Abbey Road Institute Amsterdam convirtió años de curiosidad musical en un método de trabajo. Allí estudié Ingeniería de Sonido y Producción Musical y profundicé tanto en la parte creativa como en la técnica de una grabación. Aprendí a escuchar antes de actuar, a justificar cada decisión y a utilizar el equipo como una herramienta al servicio de la canción. Fue también un entorno de colaboración constante con otros músicos, productores e ingenieros, fundamental para construir mi criterio profesional.`
         }
       ]
     },
@@ -200,8 +193,8 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           src: 'assets/images/gallery/studio-console-2.jpg',
           width: 1536,
           height: 1329,
-          alt: 'Imagen provisional para el proyecto Suite Spot',
-          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper.`
+          alt: 'Sesión de trabajo compartida sobre una mesa de mezclas',
+          text: `Este apartado reúne mi trabajo en Suite Spot y las sesiones desarrolladas allí. Representa la parte más colaborativa del estudio: escuchar una referencia, entender qué busca el artista y convertir una conversación en decisiones concretas de sonido. Mi manera de trabajar parte de ordenar las ideas sin imponer una dirección ajena al proyecto. La técnica, desde la elección de una toma hasta el equilibrio de una mezcla, debe ayudar a que la intención original se entienda con más claridad.`
         }
       ]
     },
@@ -217,7 +210,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames.`,
           width: 1800,
           height: 1200,
           alt: 'WEBO desarrollando una producción propia',
-          text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.`
+          text: `Aquí reúno las producciones y proyectos que nacen de mis propias ideas o de una colaboración directa con otros artistas. Es el espacio donde puedo enseñar el recorrido completo de una canción: la intuición inicial, las pruebas que no funcionan, las decisiones de arreglo y la versión que finalmente sale al mundo. Me interesa mostrar el proceso además del resultado, porque una producción también se define por la manera en que se escucha, se descarta y se vuelve a construir.`
         }
       ]
     }

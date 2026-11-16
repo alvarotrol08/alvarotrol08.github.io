@@ -212,8 +212,112 @@
     dom.portfolioGrid.replaceChildren(...(rows.length ? rows : [emptyState('No hay proyectos publicados en este momento.')]));
   }
 
+  function buildPortfolioShowcase(showcase) {
+    const isWorkList = showcase.layout === 'work-list';
+    const container = createElement('div', `portfolio-showcase${isWorkList ? ' is-work-list' : ''}`);
+
+    if (showcase.logo && showcase.channelUrl) {
+      const logoLink = createElement('a', 'portfolio-showcase-logo');
+      logoLink.href = showcase.channelUrl;
+      logoLink.target = '_blank';
+      logoLink.rel = 'noopener noreferrer';
+      logoLink.setAttribute('aria-label', showcase.linkLabel || 'Abrir el enlace del proyecto');
+
+      const logo = createElement('img');
+      applyImageData(logo, showcase.logo);
+      logo.decoding = 'async';
+      logoLink.append(logo);
+      container.append(logoLink);
+
+      if (showcase.tagline) {
+        container.append(createElement('p', 'portfolio-showcase-tagline', showcase.tagline));
+      }
+    }
+
+    if (isWorkList) {
+      const workList = createElement('div', 'portfolio-work-list');
+
+      (showcase.works || []).forEach((work, index) => {
+        const link = createElement('a', 'portfolio-work-row');
+        link.href = work.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', `Ver ${work.title} en YouTube`);
+        link.style.setProperty('--frame-delay', `${index * -1.35}s`);
+
+        const visual = createElement('span', 'portfolio-work-visual');
+        (work.frames || []).forEach((frame, frameIndex) => {
+          const image = createElement('img', `portfolio-work-frame${frameIndex ? ' is-secondary' : ''}`);
+          applyImageData(image, frame);
+          image.loading = index === 0 && frameIndex === 0 ? 'eager' : 'lazy';
+          image.decoding = 'async';
+          visual.append(image);
+        });
+
+        const copy = createElement('span', 'portfolio-work-copy');
+        copy.append(
+          createElement('span', 'portfolio-work-title', work.title),
+          createElement('span', 'portfolio-work-role', work.role)
+        );
+
+        const arrow = createElement('span', 'portfolio-work-arrow', '↗');
+        arrow.setAttribute('aria-hidden', 'true');
+        link.append(visual, copy, arrow);
+        workList.append(link);
+      });
+
+      container.append(workList);
+      return container;
+    }
+
+    const videoGrid = createElement('div', 'portfolio-video-grid');
+    (showcase.videos || []).forEach((video, index) => {
+      const link = createElement('a', 'portfolio-video-card');
+      link.href = video.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', `Ver ${video.title} en YouTube`);
+
+      const visual = createElement('span', 'portfolio-video-visual');
+      const thumbnail = createElement('img');
+      thumbnail.src = video.thumbnail;
+      thumbnail.alt = '';
+      thumbnail.width = video.thumbnailWidth;
+      thumbnail.height = video.thumbnailHeight;
+      thumbnail.loading = index === 0 ? 'eager' : 'lazy';
+      thumbnail.decoding = 'async';
+      visual.append(thumbnail, createElement('span', 'portfolio-video-play'));
+
+      link.append(visual, createElement('span', 'portfolio-video-title', video.title));
+      videoGrid.append(link);
+    });
+    if (videoGrid.childElementCount) container.append(videoGrid);
+
+    const gallery = createElement('div', 'portfolio-photo-grid');
+    (showcase.gallery || []).forEach((photo, index) => {
+      const figure = createElement('figure', `portfolio-photo portfolio-photo-${index + 1}`);
+      const image = createElement('img');
+      applyImageData(image, photo);
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      figure.append(image);
+      gallery.append(figure);
+    });
+    if (gallery.childElementCount) container.append(gallery);
+
+    return container;
+  }
+
   function renderPortfolioDetail(item) {
     dom.portfolioDetailName.textContent = item.name;
+    const process = dom.portfolioDetailFlow.closest('.aparato-process');
+    process?.classList.toggle('is-showcase', Boolean(item.showcase));
+
+    if (item.showcase) {
+      dom.portfolioDetailFlow.replaceChildren(buildPortfolioShowcase(item.showcase));
+      return;
+    }
+
     const steps = (item.story || []).map(buildProcessStep);
     dom.portfolioDetailFlow.replaceChildren(...(steps.length ? steps : [emptyState('Este proyecto todavía no tiene contenido publicado.')]));
   }

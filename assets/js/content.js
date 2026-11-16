@@ -8,9 +8,9 @@ window.WEBO_CONTENT = {
   bio: `Soy WEBO, productor musical e ingeniero de grabación. Trabajo con artistas para convertir una idea en una canción que conserve su identidad, desde las primeras decisiones de producción hasta la grabación final.`,
 
   sectionIntros: {
-    gear: 'Además de producir y grabar, desarrollo herramientas musicales que responden a necesidades concretas dentro del estudio.',
-    portfolio: 'Una selección de espacios, sesiones y proyectos que han formado mi manera de trabajar con el sonido.',
-    contact: 'Cuéntame qué estás preparando y en qué punto se encuentra. Respondo rápido.'
+    gear: 'Aquí están los procesos creativos, planos, y recursos utilizados para construir mis aparatos. La idea es que sea replicable para quien quiera construirlos por su cuenta.',
+    portfolio: 'Aquí reúno los proyectos donde he podido participar',
+    contact: "let's work togetherrr !!!!"
   },
 
   // Contenido de la narrativa animada de Bio.
@@ -77,8 +77,6 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       imageWidth: 1440,
       imageHeight: 837,
       imageAlt: 'Componentes de un TalkBox con tubo transparente y driver de audio',
-      moreNote: 'más próximamente',
-
       // Material reservado para una posible composición futura de Aparatos.
       // Estas imágenes se conservan, pero actualmente no se muestran en la web.
       sideGallery: [
@@ -151,6 +149,129 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
   // Añade nuevos bloques a `story` cuando quieras ampliar una subpágina.
   portfolio: [
     {
+      name: 'Suite Spot',
+      image: 'assets/images/portfolio/suite-spot/studio-stage.jpg',
+      imageWidth: 1800,
+      imageHeight: 1350,
+      imageAlt: 'Escenario de Suite Spot preparado para una sesión',
+      showcase: {
+        channelUrl: 'https://www.youtube.com/@SuiteSpotConcert',
+        tagline: 'Sesiones en directo grabadas en Amsterdam. Una gran forma de descubrir talentos.',
+        logo: {
+          src: 'assets/images/portfolio/suite-spot/logo.png',
+          width: 1924,
+          height: 1168,
+          alt: 'Suite Spot'
+        },
+        videos: [
+          {
+            title: 'Suite Spot Concerts: Sneurf',
+            url: 'https://www.youtube.com/watch?v=KkZOZ65tmZM',
+            thumbnail: 'assets/images/portfolio/suite-spot/video-sneurf.jpg',
+            thumbnailWidth: 1280,
+            thumbnailHeight: 720
+          },
+          {
+            title: 'Suite Spot Concerts: Dorsy',
+            url: 'https://www.youtube.com/watch?v=4qN9ekb9Eyo',
+            thumbnail: 'assets/images/portfolio/suite-spot/video-dorsy.jpg',
+            thumbnailWidth: 1280,
+            thumbnailHeight: 720
+          },
+          {
+            title: 'Suite Spot Concerts: sulaWesi',
+            url: 'https://www.youtube.com/watch?v=ow2CCMunL4Y',
+            thumbnail: 'assets/images/portfolio/suite-spot/video-sulawesi.jpg',
+            thumbnailWidth: 1280,
+            thumbnailHeight: 720
+          }
+        ],
+        gallery: [
+          {
+            src: 'assets/images/portfolio/suite-spot/live-session.jpg',
+            width: 1350,
+            height: 1800,
+            alt: 'Concierto de Suite Spot con la banda reunida en el escenario'
+          },
+          {
+            src: 'assets/images/portfolio/suite-spot/piano-session.jpg',
+            width: 1800,
+            height: 1350,
+            alt: 'Sesión de Suite Spot junto al piano y la batería'
+          },
+          {
+            src: 'assets/images/portfolio/suite-spot/studio-stage.jpg',
+            width: 1800,
+            height: 1350,
+            alt: 'Instrumentos preparados para grabar una sesión de Suite Spot'
+          },
+          {
+            src: 'assets/images/portfolio/suite-spot/prepared-room.jpg',
+            width: 1800,
+            height: 1350,
+            alt: 'Piano preparado dentro del espacio de Suite Spot'
+          }
+        ]
+      }
+    },
+    {
+      name: 'Abbey Road',
+      image: 'assets/images/gallery/studio-console-1.jpg',
+      imageWidth: 1440,
+      imageHeight: 817,
+      imageAlt: 'Mesa de mezclas en Abbey Road Institute Amsterdam',
+      showcase: {
+        layout: 'work-list',
+        channelUrl: 'https://abbeyroadinstitute.nl',
+        linkLabel: 'Abrir la web de Abbey Road Institute Amsterdam',
+        tagline: 'El lugar donde me formé en Producción Musical e Ingeniería de Sonido.',
+        logo: {
+          src: 'assets/images/portfolio/abbey-road/logo.png',
+          width: 553,
+          height: 253,
+          alt: 'Abbey Road Institute'
+        },
+        works: [
+          {
+            title: 'Rover Onslow — Buddy',
+            role: 'Asistente de grabación',
+            url: 'https://www.youtube.com/watch?v=-bXbV3J6IFk',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/rover-onslow-1.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/rover-onslow-2.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: 'Angelo Benson — 03/09',
+            role: 'Asistente de grabación',
+            url: 'https://www.youtube.com/watch?v=Bt-6jrsoXkw',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/angelo-benson-1.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/angelo-benson-2.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: 'Oskar Billy — The Water',
+            role: 'Asistente de grabación · Equipo de mezcla',
+            url: 'https://www.youtube.com/watch?v=i_8iLfEVJtQ',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/oskar-billy-1.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/oskar-billy-2.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: 'Sé — ARIA Live',
+            role: 'Asistente de grabación · Vídeo',
+            url: 'https://www.youtube.com/watch?v=iq69LO7Vhq0',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/se-aria-1.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/se-aria-2.jpg', width: 480, height: 360 }
+            ]
+          }
+        ]
+      }
+    },
+    {
       name: 'Paradiso',
       image: 'assets/images/gallery/paradiso-studio.jpg',
       imageWidth: 1537,
@@ -163,38 +284,6 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           height: 1023,
           alt: 'WEBO trabajando en el estudio Paradiso',
           text: `Paradiso fue una parte importante de mi etapa en Ámsterdam. Trabajar dentro de una sala con una identidad tan marcada me permitió conocer de cerca el ritmo que rodea a cada concierto y entender que el sonido no termina en una buena configuración técnica. También depende de escuchar al artista, reaccionar con criterio y mantener una comunicación clara. El contacto con músicos y equipos distintos amplió mi visión de la industria y sigue influyendo en la forma en que afronto una grabación o una producción.`
-        }
-      ]
-    },
-    {
-      name: 'Abbey Road',
-      image: 'assets/images/gallery/studio-console-1.jpg',
-      imageWidth: 1440,
-      imageHeight: 817,
-      imageAlt: 'Mesa de mezclas en un estudio de grabación',
-      story: [
-        {
-          src: 'assets/images/gallery/studio-console-1.jpg',
-          width: 1440,
-          height: 817,
-          alt: 'Mesa de mezclas asociada a la etapa de formación en Abbey Road Institute Amsterdam',
-          text: `Mi formación en Abbey Road Institute Amsterdam convirtió años de curiosidad musical en un método de trabajo. Allí estudié Ingeniería de Sonido y Producción Musical y profundicé tanto en la parte creativa como en la técnica de una grabación. Aprendí a escuchar antes de actuar, a justificar cada decisión y a utilizar el equipo como una herramienta al servicio de la canción. Fue también un entorno de colaboración constante con otros músicos, productores e ingenieros, fundamental para construir mi criterio profesional.`
-        }
-      ]
-    },
-    {
-      name: 'Suite Spot',
-      image: 'assets/images/gallery/studio-console-2.jpg',
-      imageWidth: 1536,
-      imageHeight: 1329,
-      imageAlt: 'Dos personas trabajando sobre una mesa de mezclas',
-      story: [
-        {
-          src: 'assets/images/gallery/studio-console-2.jpg',
-          width: 1536,
-          height: 1329,
-          alt: 'Sesión de trabajo compartida sobre una mesa de mezclas',
-          text: `Este apartado reúne mi trabajo en Suite Spot y las sesiones desarrolladas allí. Representa la parte más colaborativa del estudio: escuchar una referencia, entender qué busca el artista y convertir una conversación en decisiones concretas de sonido. Mi manera de trabajar parte de ordenar las ideas sin imponer una dirección ajena al proyecto. La técnica, desde la elección de una toma hasta el equilibrio de una mezcla, debe ayudar a que la intención original se entienda con más claridad.`
         }
       ]
     },

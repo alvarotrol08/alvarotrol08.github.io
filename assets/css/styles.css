@@ -826,6 +826,301 @@ main {
   justify-self: end;
 }
 
+.aparato-process.is-showcase {
+  width: min(1320px, 100%);
+}
+
+.aparato-process.is-showcase .aparato-process-back {
+  margin-bottom: clamp(24px, 4vh, 42px);
+}
+
+.aparato-process-flow:has(.portfolio-showcase) {
+  display: block;
+}
+
+.portfolio-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(50px, 8vw, 96px);
+}
+
+.portfolio-showcase-logo {
+  align-self: center;
+  width: min(390px, 66vw);
+  color: inherit;
+  transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.portfolio-showcase-logo:hover,
+.portfolio-showcase-logo:focus-visible {
+  opacity: 0.82;
+  transform: scale(1.025);
+}
+
+.portfolio-showcase-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.portfolio-showcase-tagline {
+  align-self: center;
+  max-width: 620px;
+  margin: clamp(-72px, -6vw, -38px) auto 0;
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+  letter-spacing: 0.035em;
+  line-height: 1.6;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.92);
+}
+
+.portfolio-showcase.is-work-list {
+  gap: clamp(34px, 5vw, 62px);
+}
+
+.portfolio-showcase.is-work-list .portfolio-showcase-logo {
+  width: min(430px, 70vw);
+}
+
+.portfolio-showcase.is-work-list .portfolio-showcase-tagline {
+  margin-top: clamp(-46px, -4vw, -28px);
+}
+
+.portfolio-work-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.portfolio-work-row {
+  display: grid;
+  grid-template-columns: minmax(260px, 390px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(24px, 4vw, 58px);
+  padding: clamp(16px, 2vw, 24px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  color: var(--white);
+  text-decoration: none;
+}
+
+.portfolio-work-visual {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #050505;
+}
+
+.portfolio-work-frame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease, transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.portfolio-work-frame.is-secondary {
+  opacity: 0;
+  animation: portfolio-frame-swap 7s ease-in-out var(--frame-delay, 0s) infinite;
+}
+
+.portfolio-work-row:hover .portfolio-work-frame,
+.portfolio-work-row:focus-visible .portfolio-work-frame {
+  filter: brightness(1.08);
+  transform: scale(1.035);
+}
+
+.portfolio-work-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.portfolio-work-title {
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1.15;
+}
+
+.portfolio-work-role {
+  font-size: clamp(0.67rem, 0.85vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.portfolio-work-arrow {
+  align-self: center;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  opacity: 0.62;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+
+.portfolio-work-row:hover .portfolio-work-arrow,
+.portfolio-work-row:focus-visible .portfolio-work-arrow {
+  opacity: 1;
+  transform: translate(3px, -3px);
+}
+
+@keyframes portfolio-frame-swap {
+  0%,
+  40%,
+  100% {
+    opacity: 0;
+  }
+
+  50%,
+  90% {
+    opacity: 1;
+  }
+}
+
+.portfolio-video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2.2vw, 28px);
+}
+
+.portfolio-video-card {
+  min-width: 0;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.portfolio-video-visual {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #050505;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.46);
+}
+
+.portfolio-video-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease;
+}
+
+.portfolio-video-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.portfolio-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  transform: translate(-50%, -50%);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.portfolio-video-play::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 53%;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid #fff;
+  transform: translate(-50%, -50%);
+}
+
+.portfolio-video-card:hover .portfolio-video-visual img,
+.portfolio-video-card:focus-visible .portfolio-video-visual img {
+  transform: scale(1.045);
+}
+
+.portfolio-video-card:hover .portfolio-video-visual::after,
+.portfolio-video-card:focus-visible .portfolio-video-visual::after {
+  background: rgba(0, 0, 0, 0);
+}
+
+.portfolio-video-card:hover .portfolio-video-play,
+.portfolio-video-card:focus-visible .portfolio-video-play {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.portfolio-video-title {
+  display: block;
+  margin-top: 13px;
+  overflow: hidden;
+  font-size: clamp(0.72rem, 1vw, 0.88rem);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.portfolio-photo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  grid-template-areas:
+    'live piano'
+    'live stage'
+    'room room';
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.portfolio-photo {
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #050505;
+}
+
+.portfolio-photo-1 {
+  grid-area: live;
+}
+
+.portfolio-photo-2 {
+  grid-area: piano;
+}
+
+.portfolio-photo-3 {
+  grid-area: stage;
+}
+
+.portfolio-photo-4 {
+  grid-area: room;
+  aspect-ratio: 2 / 1;
+}
+
+.portfolio-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-photo-1 img {
+  aspect-ratio: 3 / 4;
+}
+
+.portfolio-photo-2 img,
+.portfolio-photo-3 img {
+  aspect-ratio: 4 / 3;
+}
+
 .portfolio-screen,
 .contact-screen {
   height: 100vh;
@@ -1203,6 +1498,77 @@ main {
     max-width: none;
   }
 
+  .aparato-process.is-showcase .aparato-process-back {
+    margin-bottom: 28px;
+  }
+
+  .portfolio-showcase {
+    gap: 46px;
+  }
+
+  .portfolio-showcase-logo {
+    width: min(300px, 72vw);
+  }
+
+  .portfolio-showcase-tagline {
+    margin-top: -28px;
+    font-size: 0.82rem;
+  }
+
+  .portfolio-showcase.is-work-list {
+    gap: 32px;
+  }
+
+  .portfolio-showcase.is-work-list .portfolio-showcase-logo {
+    width: min(310px, 76vw);
+  }
+
+  .portfolio-showcase.is-work-list .portfolio-showcase-tagline {
+    margin-top: -20px;
+  }
+
+  .portfolio-work-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    padding: 18px 0 22px;
+  }
+
+  .portfolio-work-visual {
+    grid-column: 1 / -1;
+  }
+
+  .portfolio-work-title {
+    font-size: 1.18rem;
+  }
+
+  .portfolio-work-role {
+    font-size: 0.66rem;
+  }
+
+  .portfolio-video-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .portfolio-video-title {
+    font-size: 0.78rem;
+    white-space: normal;
+  }
+
+  .portfolio-photo-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'live'
+      'piano'
+      'stage'
+      'room';
+    gap: 12px;
+  }
+
+  .portfolio-photo-4 {
+    aspect-ratio: 4 / 3;
+  }
+
   .portfolio-screen {
     padding-top: calc(var(--nav-height) + 12px);
   }
@@ -1312,5 +1678,9 @@ main {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .portfolio-work-frame.is-secondary {
+    opacity: 0;
   }
 }

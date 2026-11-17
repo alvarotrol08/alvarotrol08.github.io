@@ -124,7 +124,7 @@ try {
         if (videoState.renderedDifference > 1) failures.push(`${viewport.name} ${activeRoute}: el reproductor no es 1:1`);
       }
 
-      if (screenshotDir && ['', '#aparatos/talkbox', '#portfolio', '#portfolio/suite-spot', '#portfolio/abbey-road', '#portfolio/rockfield', '#contacto'].includes(route)) {
+      if (screenshotDir && ['', '#aparatos/talkbox', '#portfolio', '#portfolio/suite-spot', '#portfolio/abbey-road', '#portfolio/paradiso', '#portfolio/rockfield', '#contacto'].includes(route)) {
         const name = `${viewport.name}-${route.replace(/^#/, '').replaceAll('/', '-') || 'home'}.png`;
         await page.screenshot({ path: path.join(screenshotDir, name), fullPage: true, animations: 'disabled' });
       }

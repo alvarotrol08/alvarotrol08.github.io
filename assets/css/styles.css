@@ -1048,6 +1048,10 @@ a.bio-education-row:focus-visible {
   height: auto;
 }
 
+.portfolio-logo-paradiso {
+  filter: invert(1);
+}
+
 .portfolio-showcase-tagline {
   align-self: center;
   max-width: 620px;
@@ -1057,6 +1061,18 @@ a.bio-education-row:focus-visible {
   line-height: 1.6;
   text-align: center;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.92);
+}
+
+.portfolio-showcase-tagline a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.portfolio-showcase-tagline a:hover,
+.portfolio-showcase-tagline a:focus-visible {
+  text-decoration-thickness: 2px;
 }
 
 .portfolio-showcase.is-work-list {

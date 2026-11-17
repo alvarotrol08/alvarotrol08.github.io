@@ -319,12 +319,30 @@
 
       const logo = createElement('img');
       applyImageData(logo, showcase.logo);
+      if (showcase.logo.className) logo.classList.add(showcase.logo.className);
       logo.decoding = 'async';
       logoLink.append(logo);
       container.append(logoLink);
 
-      if (showcase.tagline) {
-        container.append(createElement('p', 'portfolio-showcase-tagline', showcase.tagline));
+      const taglineContent = showcase.taglineParts || showcase.tagline;
+      if (taglineContent) {
+        const tagline = createElement('p', 'portfolio-showcase-tagline');
+        const parts = Array.isArray(taglineContent) ? taglineContent : [taglineContent];
+
+        parts.forEach((part) => {
+          if (typeof part === 'string') {
+            tagline.append(document.createTextNode(part));
+            return;
+          }
+
+          const link = createElement('a', null, part.label);
+          link.href = part.url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          tagline.append(link);
+        });
+
+        container.append(tagline);
       }
     }
 

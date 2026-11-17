@@ -423,15 +423,51 @@ window.WEBO_CONTENT = {
       imageThumbWidth: 480,
       imageThumbHeight: 319,
       imageAlt: 'WEBO sentado ante la mesa de mezclas del estudio Paradiso',
-      story: [
-        {
-          src: 'assets/images/gallery/paradiso-studio.jpg',
-          width: 1537,
-          height: 1023,
-          alt: 'WEBO trabajando en el estudio Paradiso',
-          text: `Paradiso fue una parte importante de mi etapa en Ámsterdam. Trabajar dentro de una sala con una identidad tan marcada me permitió conocer de cerca el ritmo que rodea a cada concierto y entender que el sonido no termina en una buena configuración técnica. También depende de escuchar al artista, reaccionar con criterio y mantener una comunicación clara. El contacto con músicos y equipos distintos amplió mi visión de la industria y sigue influyendo en la forma en que afronto una grabación o una producción.`
-        }
-      ]
+      showcase: {
+        layout: 'photo-story',
+        channelUrl: 'https://www.paradiso.nl/en',
+        linkLabel: 'Abrir la web oficial de Paradiso Amsterdam',
+        tagline: 'En Paradiso iba a grabar conciertos directamente desde la sala. Operaba Pro Tools y la Sony MXP mientras el artista tocaba; después preparaba un mix y se lo enviaba por si quería publicar la versión en directo. Allí conocí a músicos muy distintos, aprendí mucho más de sonido en directo y, sobre todo, entendí lo importante que es escuchar, decidir y resolver rápido cuando todo está pasando en ese momento.',
+        logo: {
+          src: 'assets/images/portfolio/paradiso/logo.svg',
+          width: 1200,
+          height: 224,
+          alt: 'Paradiso Amsterdam',
+          className: 'portfolio-logo-paradiso'
+        },
+        gallery: [
+          {
+            src: 'assets/images/portfolio/paradiso/paradiso-1.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'WEBO operando Pro Tools y la mesa Sony MXP durante un concierto en Paradiso'
+          },
+          {
+            src: 'assets/images/portfolio/paradiso/paradiso-2.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'Seguimiento del escenario de Paradiso desde la sala de control'
+          },
+          {
+            src: 'assets/images/portfolio/paradiso/paradiso-3.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'WEBO junto al patch de audio de la sala de control de Paradiso'
+          },
+          {
+            src: 'assets/images/portfolio/paradiso/paradiso-4.jpg',
+            width: 1600,
+            height: 1200,
+            alt: 'Sala principal de Paradiso Amsterdam preparada para un concierto'
+          },
+          {
+            src: 'assets/images/portfolio/paradiso/paradiso-5.jpg',
+            width: 1600,
+            height: 1200,
+            alt: 'Mesa Sony MXP y sistema de grabación de Paradiso'
+          }
+        ]
+      }
     },
     {
       name: 'Rockfield',
@@ -446,8 +482,19 @@ window.WEBO_CONTENT = {
         layout: 'photo-story',
         channelUrl: 'https://rockfieldmusicgroup.com/',
         linkLabel: 'Abrir la web oficial de Rockfield Studios',
-        // Añade aquí el párrafo de introducción cuando esté listo.
-        tagline: '',
+        taglineParts: [
+          'Tuve la oportunidad de grabar un tema en Rockfield, uno de esos estudios legendarios por los que han pasado bandas como Queen, Oasis o Black Sabbath. Fueron tres días intensos de grabación en los que mi trabajo principal fue operar Pro Tools y asistir en la consola. Estuvimos asesorados en todo momento por ',
+          {
+            label: 'Matt Butler',
+            url: 'https://www.matt-butler.com/artists-clients'
+          },
+          ', que nos guió durante las sesiones y nos enseñó su forma de trabajar. También pude conocer a ',
+          {
+            label: 'Kingsley Ward',
+            url: 'https://en.wikipedia.org/wiki/Rockfield_Studios'
+          },
+          ', uno de los dos hermanos fundadores del estudio. La experiencia fue acogedora y difícil de explicar: hay una paz muy especial en grabar rodeado de vacas y monte, en mitad de Gales.'
+        ],
         logo: {
           src: 'assets/images/portfolio/rockfield/logo.png',
           width: 600,
@@ -461,6 +508,30 @@ window.WEBO_CONTENT = {
             width: 1600,
             height: 1061,
             alt: 'WEBO durante su experiencia en Rockfield Studios'
+          },
+          {
+            src: 'assets/images/portfolio/rockfield/rockfield-session-2.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'Equipo de grabación trabajando frente a la consola de Rockfield Studios'
+          },
+          {
+            src: 'assets/images/portfolio/rockfield/rockfield-session-1.jpg',
+            width: 1067,
+            height: 1600,
+            alt: 'WEBO operando Pro Tools durante la sesión en Rockfield Studios'
+          },
+          {
+            src: 'assets/images/portfolio/rockfield/rockfield-session-3.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'WEBO trabajando en la sala de control de Rockfield Studios'
+          },
+          {
+            src: 'assets/images/portfolio/rockfield/rockfield-session-4.jpg',
+            width: 1600,
+            height: 1067,
+            alt: 'Conversación durante una jornada de grabación en Rockfield Studios'
           }
         ]
       }

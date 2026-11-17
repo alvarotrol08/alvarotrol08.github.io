@@ -8,11 +8,48 @@
   'use strict';
 
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const animationScripts = [
+    'assets/vendor/gsap/gsap.min.js?v=3.13.0',
+    'assets/vendor/gsap/ScrollTrigger.min.js?v=3.13.0'
+  ];
   let bioContext = null;
   let apparatusContext = null;
+  let animationEnginePromise = null;
 
   function canAnimate() {
     return !reducedMotionQuery.matches;
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[src="${src}"]`);
+      if (existing?.dataset.loaded === 'true') {
+        resolve();
+        return;
+      }
+
+      const script = existing || document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.addEventListener('load', () => {
+        script.dataset.loaded = 'true';
+        resolve();
+      }, { once: true });
+      script.addEventListener('error', reject, { once: true });
+      if (!existing) document.head.append(script);
+    });
+  }
+
+  function preloadAnimationEngine() {
+    if (!canAnimate()) return Promise.resolve(false);
+    if (window.gsap && window.ScrollTrigger) return Promise.resolve(true);
+    if (!animationEnginePromise) {
+      animationEnginePromise = loadScript(animationScripts[0])
+        .then(() => loadScript(animationScripts[1]))
+        .then(() => Boolean(window.gsap && window.ScrollTrigger))
+        .catch(() => false);
+    }
+    return animationEnginePromise;
   }
 
   function screenIn(screen) {
@@ -54,11 +91,17 @@
     if (section) section.classList.remove('bio-fallback');
   }
 
-  function initBioStory(section) {
+  async function initBioStory(section) {
     destroyBioStory();
 
-    if (!canAnimate() || !window.gsap || !window.ScrollTrigger) {
+    if (!canAnimate()) {
       section.classList.add('bio-fallback');
+      return;
+    }
+
+    const engineReady = await preloadAnimationEngine();
+    if (!engineReady || section.hidden) {
+      if (!section.hidden) section.classList.add('bio-fallback');
       return;
     }
 
@@ -132,7 +175,7 @@
           parallaxTop,
           {
             x: () => -(window.innerWidth * 1.46 + parallaxTop.offsetWidth),
-            duration: 4.15
+            duration: 3.9
           },
           0.4
         )
@@ -141,7 +184,7 @@
           parallaxBottom,
           {
             x: () => -(window.innerWidth * 1.72 + parallaxBottom.offsetWidth),
-            duration: 4.15
+            duration: 3.25
           },
           1.1
         )
@@ -183,16 +226,21 @@
     }
   }
 
-  function initApparatusStory(section) {
+  async function initApparatusStory(section) {
     destroyApparatusStory();
-    if (!section || !canAnimate() || !window.gsap || !window.ScrollTrigger) return;
+    if (!section || !section.querySelector('.aparato-process-step') || !canAnimate()) return;
+
+    const engineReady = await preloadAnimationEngine();
+    if (!engineReady || section.hidden) return;
 
     const { gsap, ScrollTrigger } = window;
     gsap.registerPlugin(ScrollTrigger);
 
     apparatusContext = gsap.context(() => {
       section.querySelectorAll('.aparato-process-step').forEach((step) => {
-        const parts = step.querySelectorAll('.aparato-process-image, .aparato-process-copy');
+        const parts = step.querySelectorAll(
+          '.aparato-process-image, .aparato-process-gallery, .aparato-process-video, .aparato-process-copy'
+        );
         gsap.fromTo(
           parts,
           { y: 76, autoAlpha: 0 },
@@ -215,12 +263,30 @@
     }, section);
   }
 
+  function syncMotionPreference() {
+    const bioSection = document.querySelector('.bio-screen');
+    const detailSection = document.querySelector('.aparato-detail-screen:not([hidden])');
+
+    if (reducedMotionQuery.matches) {
+      destroyBioStory();
+      destroyApparatusStory();
+      if (bioSection && !bioSection.hidden) bioSection.classList.add('bio-fallback');
+      return;
+    }
+
+    if (bioSection && !bioSection.hidden) initBioStory(bioSection);
+    if (detailSection) initApparatusStory(detailSection);
+  }
+
+  reducedMotionQuery.addEventListener?.('change', syncMotionPreference);
+
   window.WEBO_ANIMATIONS = Object.freeze({
     screenIn,
     initBioStory,
     destroyBioStory,
     initApparatusStory,
     destroyApparatusStory,
+    preloadAnimationEngine,
     prefersReducedMotion: () => reducedMotionQuery.matches
   });
 })();

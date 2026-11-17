@@ -7,7 +7,8 @@
     initBioStory(section) { section.classList.add('bio-fallback'); },
     destroyBioStory() {},
     initApparatusStory() {},
-    destroyApparatusStory() {}
+    destroyApparatusStory() {},
+    preloadAnimationEngine() { return Promise.resolve(false); }
   };
 
   if (!content) {
@@ -49,9 +50,45 @@
 
   function applyImageData(image, data) {
     image.src = data.src;
-    image.alt = data.alt;
+    image.alt = data.alt || '';
     image.width = data.width;
     image.height = data.height;
+  }
+
+  function applyCardImageData(image, item) {
+    image.src = item.imageThumb || item.image;
+    image.alt = item.imageAlt || item.name;
+    image.width = item.imageThumbWidth || item.imageWidth;
+    image.height = item.imageThumbHeight || item.imageHeight;
+  }
+
+  function buildEducationRow(item) {
+    const row = createElement(item.url ? 'a' : 'div', 'bio-education-row');
+    if (item.url) {
+      row.href = item.url;
+      row.target = '_blank';
+      row.rel = 'noopener noreferrer';
+    }
+
+    const brand = createElement('span', 'bio-education-brand');
+    if (item.logo) {
+      const logo = createElement('img');
+      applyImageData(logo, item.logo);
+      logo.loading = 'lazy';
+      logo.decoding = 'async';
+      brand.append(logo);
+    } else {
+      brand.textContent = item.institution;
+    }
+
+    const copy = createElement('span', 'bio-education-copy');
+    if (item.logo) copy.append(createElement('span', 'sr-only', `${item.institution}: `));
+    copy.append(createElement('span', 'bio-education-qualification', item.qualification));
+
+    const period = createElement('span', 'bio-education-period', item.period);
+    row.append(brand, copy, period);
+    if (item.url) row.append(createElement('span', 'bio-education-arrow', '↗'));
+    return row;
   }
 
   function renderBioStory() {
@@ -63,6 +100,7 @@
     applyImageData(dom.bioParallaxBottomImage, content.bioStory.parallaxBottom);
     applyImageData(dom.bioLeftImage, content.bioStory.left);
     applyImageData(dom.bioRightImage, content.bioStory.right);
+    dom.bioEducation.replaceChildren(...(content.bioStory.education || []).map(buildEducationRow));
 
     document.querySelectorAll('[data-social]').forEach((link) => {
       const socialName = link.dataset.social;
@@ -111,12 +149,10 @@
 
     if (item.image) {
       const image = createElement('img', 'aparato-photo');
-      image.src = item.image;
-      image.alt = item.imageAlt || item.name;
-      image.width = item.imageWidth;
-      image.height = item.imageHeight;
+      applyCardImageData(image, item);
       image.loading = 'lazy';
       image.decoding = 'async';
+      image.fetchPriority = 'low';
       button.append(image);
     }
 
@@ -157,7 +193,9 @@
   }
 
   function buildProcessStep(step, index) {
-    const section = createElement('section', `aparato-process-step${index % 2 ? ' is-reversed' : ''}`);
+    const layoutClass = step.layout ? ` is-${step.layout}-media` : '';
+    const reverseClass = index % 2 && step.layout !== 'video' ? ' is-reversed' : '';
+    const section = createElement('section', `aparato-process-step${reverseClass}${layoutClass}`);
 
     if (step.src) {
       const figure = createElement('figure', 'aparato-process-image');
@@ -169,8 +207,64 @@
       section.append(figure);
     }
 
-    if (step.text) {
-      section.append(createElement('p', 'aparato-process-copy', step.text));
+    if (step.images?.length) {
+      const gallery = createElement('div', 'aparato-process-gallery');
+      step.images.forEach((photo) => {
+        const figure = createElement('figure', 'aparato-process-gallery-item');
+        const image = createElement('img');
+        applyImageData(image, photo);
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        figure.append(image);
+        gallery.append(figure);
+      });
+      section.append(gallery);
+    }
+
+    if (step.video) {
+      const figure = createElement('figure', 'aparato-process-video');
+      const video = createElement('video');
+      video.src = step.video.src;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.setAttribute('aria-label', step.video.label);
+      figure.append(video);
+      if (step.video.caption) {
+        figure.append(createElement('figcaption', 'aparato-process-video-caption', step.video.caption));
+      }
+      section.append(figure);
+    }
+
+    const paragraphs = step.paragraphs || (step.text ? [step.text] : []);
+    if (paragraphs.length || step.list?.length) {
+      const copy = createElement('div', 'aparato-process-copy');
+
+      paragraphs.forEach((paragraphData) => {
+        const paragraph = createElement('p');
+        if (typeof paragraphData === 'string') {
+          paragraph.textContent = paragraphData;
+        } else {
+          if (paragraphData.before) paragraph.append(document.createTextNode(paragraphData.before));
+          if (paragraphData.link) {
+            const link = createElement('a', 'aparato-process-link', paragraphData.link.label);
+            link.href = paragraphData.link.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            paragraph.append(link);
+          }
+          if (paragraphData.after) paragraph.append(document.createTextNode(paragraphData.after));
+        }
+        copy.append(paragraph);
+      });
+
+      if (step.list?.length) {
+        const list = createElement('ul', 'aparato-process-list');
+        step.list.forEach((item) => list.append(createElement('li', '', item)));
+        copy.append(list);
+      }
+
+      section.append(copy);
     }
 
     return section;
@@ -192,12 +286,10 @@
 
     if (item.image) {
       const image = createElement('img', 'aparato-photo');
-      image.src = item.image;
-      image.alt = item.imageAlt || item.name;
-      image.width = item.imageWidth;
-      image.height = item.imageHeight;
+      applyCardImageData(image, item);
       image.loading = 'lazy';
       image.decoding = 'async';
+      image.fetchPriority = 'low';
       button.append(image);
     }
 
@@ -214,7 +306,9 @@
 
   function buildPortfolioShowcase(showcase) {
     const isWorkList = showcase.layout === 'work-list';
-    const container = createElement('div', `portfolio-showcase${isWorkList ? ' is-work-list' : ''}`);
+    const isPhotoStory = showcase.layout === 'photo-story';
+    const layoutClass = isWorkList ? ' is-work-list' : (isPhotoStory ? ' is-photo-story' : '');
+    const container = createElement('div', `portfolio-showcase${layoutClass}`);
 
     if (showcase.logo && showcase.channelUrl) {
       const logoLink = createElement('a', 'portfolio-showcase-logo');
@@ -238,12 +332,10 @@
       const workList = createElement('div', 'portfolio-work-list');
 
       (showcase.works || []).forEach((work, index) => {
-        const link = createElement('a', 'portfolio-work-row');
+        const link = createElement('a', `portfolio-work-row frame-delay-${index % 4}`);
         link.href = work.url;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
-        link.setAttribute('aria-label', `Ver ${work.title} en YouTube`);
-        link.style.setProperty('--frame-delay', `${index * -1.35}s`);
 
         const visual = createElement('span', 'portfolio-work-visual');
         (work.frames || []).forEach((frame, frameIndex) => {
@@ -262,7 +354,7 @@
 
         const arrow = createElement('span', 'portfolio-work-arrow', '↗');
         arrow.setAttribute('aria-hidden', 'true');
-        link.append(visual, copy, arrow);
+        link.append(visual, copy, arrow, createElement('span', 'sr-only', 'Abrir en YouTube'));
         workList.append(link);
       });
 
@@ -276,7 +368,6 @@
       link.href = video.url;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.setAttribute('aria-label', `Ver ${video.title} en YouTube`);
 
       const visual = createElement('span', 'portfolio-video-visual');
       const thumbnail = createElement('img');
@@ -288,7 +379,11 @@
       thumbnail.decoding = 'async';
       visual.append(thumbnail, createElement('span', 'portfolio-video-play'));
 
-      link.append(visual, createElement('span', 'portfolio-video-title', video.title));
+      link.append(
+        visual,
+        createElement('span', 'portfolio-video-title', video.title),
+        createElement('span', 'portfolio-video-role', video.role || '')
+      );
       videoGrid.append(link);
     });
     if (videoGrid.childElementCount) container.append(videoGrid);
@@ -443,12 +538,16 @@
       const submitButton = dom.contactForm.querySelector('[type="submit"]');
       status.textContent = 'Enviando…';
       submitButton.disabled = true;
+      dom.contactForm.setAttribute('aria-busy', 'true');
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
 
       try {
         const response = await fetch(content.contact.endpoint, {
           method: 'POST',
           headers: { Accept: 'application/json' },
-          body: new FormData(dom.contactForm)
+          body: new FormData(dom.contactForm),
+          signal: controller.signal
         });
         if (!response.ok) throw new Error(`Formspree respondió ${response.status}`);
         status.textContent = 'Mensaje enviado. Te respondo pronto.';
@@ -456,8 +555,41 @@
       } catch {
         showFormFailure(status);
       } finally {
+        window.clearTimeout(timeoutId);
         submitButton.disabled = false;
+        dom.contactForm.removeAttribute('aria-busy');
       }
+    });
+  }
+
+  function setupHomeEntry() {
+    const homeScreen = document.querySelector('.screen-home');
+    let touchStartY = null;
+
+    function openBio() {
+      if (parseRoute().key !== 'home') return;
+      animations.preloadAnimationEngine();
+      window.location.hash = 'bio';
+    }
+
+    homeScreen.addEventListener('click', openBio);
+    homeScreen.addEventListener('touchstart', (event) => {
+      touchStartY = event.changedTouches[0]?.clientY ?? null;
+    }, { passive: true });
+    homeScreen.addEventListener('touchend', (event) => {
+      const endY = event.changedTouches[0]?.clientY;
+      if (touchStartY !== null && endY !== undefined && Math.abs(endY - touchStartY) > 18) openBio();
+      touchStartY = null;
+    }, { passive: true });
+
+    window.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) > 4) openBio();
+    }, { passive: true });
+
+    document.addEventListener('keydown', (event) => {
+      if (!['Enter', ' ', 'ArrowDown', 'PageDown'].includes(event.key)) return;
+      if (event.target instanceof Element && event.target.closest('a, button, input, textarea, select')) return;
+      openBio();
     });
   }
 
@@ -469,6 +601,7 @@
     dom.bioAccessibleText = document.getElementById('bio-accessible-text');
     dom.bioCopy = document.getElementById('bio-copy-line');
     dom.bioLongCopy = document.getElementById('bio-long-copy');
+    dom.bioEducation = document.getElementById('bio-education');
     dom.bioHeroImage = document.getElementById('bio-hero-image');
     dom.bioParallaxTopImage = document.getElementById('bio-parallax-top-image');
     dom.bioParallaxBottomImage = document.getElementById('bio-parallax-bottom-image');
@@ -496,6 +629,12 @@
     renderPortfolio();
     setupMobileNavigation();
     setupContactForm();
+    setupHomeEntry();
+
+    const bioLink = document.querySelector('[data-route="bio"]');
+    ['pointerenter', 'pointerdown', 'focus'].forEach((eventName) => {
+      bioLink.addEventListener(eventName, () => animations.preloadAnimationEngine(), { once: true });
+    });
 
     document.querySelector('.skip-link').addEventListener('click', (event) => {
       event.preventDefault();

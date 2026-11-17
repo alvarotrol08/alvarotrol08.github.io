@@ -1,0 +1,16 @@
+{
+  "name": "webo-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web estática de WEBO y herramientas locales de validación.",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "check": "node --check assets/js/content.js && node --check assets/js/animations.js && node --check assets/js/app.js && node --check tools/serve.mjs && node --check tools/check-site.mjs && node --check tools/browser-audit.mjs && node tools/check-site.mjs",
+    "audit:browser": "node tools/browser-audit.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.1",
+    "playwright-core": "1.65.1"
+  }
+}
+

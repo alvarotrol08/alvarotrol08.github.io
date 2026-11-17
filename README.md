@@ -1,85 +1,87 @@
 # WEBO
 
-Web estática de WEBO para GitHub Pages, publicada en [webowebo.com](https://webowebo.com/).
+Portfolio estático de WEBO, publicado con GitHub Pages en [webowebo.com](https://webowebo.com/).
 
 ## Estructura
 
 ```text
-index.html                  Estructura, SEO y marcado accesible
+index.html                  Estructura, metadatos, CSP y marcado accesible
+404.html                    Página de error coherente con el sitio
 assets/css/styles.css       Diseño responsive y estilos
-assets/js/content.js        Textos, Bio animada, aparatos y contenido reservado
-assets/js/animations.js     Integración progresiva con GSAP
-assets/js/app.js            Renderizado, rutas y comportamiento
-assets/images/              Imágenes optimizadas para producción
-tools/optimize-images.ps1   Regeneración de imágenes desde los originales
-CNAME                       Dominio personalizado de GitHub Pages
-robots.txt / sitemap.xml    Descubrimiento para buscadores
+assets/js/content.js        Textos, imágenes, aparatos y portfolio
+assets/js/animations.js     Carga progresiva de GSAP y animaciones
+assets/js/app.js            Renderizado, rutas, formulario y navegación
+assets/fonts/               Monoton y Oswald alojadas localmente
+assets/vendor/gsap/         GSAP 3.13.0 y ScrollTrigger locales
+assets/images/              Recursos optimizados para producción
+tools/serve.mjs             Servidor local sin caché
+tools/check-site.mjs        Comprobaciones estáticas
+tools/browser-audit.mjs     Playwright y axe-core
+_config.yml                 Exclusiones de publicación de GitHub Pages
+AUDIT.md                    Auditoría, métricas y pendientes
 ```
 
 ## Editar contenido
 
-El contenido que cambia con frecuencia está en `assets/js/content.js`:
+El contenido editable está en `assets/js/content.js`:
 
-- `sectionIntros`: introducciones breves de Aparatos, Portfolio y Contacto.
-- `bioStory.line`: primera frase, la línea grande que cruza la pantalla.
-- `bioStory.biography`: biografía larga que aparece en el centro al final de la secuencia.
-- `bioStory.hero`, `bioStory.parallaxTop`, `bioStory.parallaxBottom`, `bioStory.left` y `bioStory.right`: fotografía inicial, imágenes parallax y fotos laterales.
-- `bioStory.socials`: enlaces de Instagram, LinkedIn, contacto, SoundCloud y YouTube.
-- `gear`: aparatos disponibles. Dentro de cada aparato:
-  - `moreNote`: frase pequeña situada bajo la tarjeta central.
-  - `sideGallery`: material fotográfico reservado; actualmente no se renderiza en la portada.
-  - `process`: relato vertical del aparato. Añade un objeto con `src`, dimensiones, `alt` y `text` por cada nuevo paso del proceso.
-- `portfolio`: trabajos publicados. Cada objeto crea una tarjeta y una subpágina; amplía su array `story` con nuevos bloques de imagen y texto.
-- `photos`: fotografías reservadas para futuras secciones; ahora no se muestran como galería.
-- `events`: eventos reservados; la sección permanece fuera de la web hasta que haya contenido.
-- `contact`: endpoint de Formspree y correo alternativo.
+- `sectionIntros`: introducciones de Aparatos, Portfolio y Contacto.
+- `bioStory`: frase inicial, biografía, imágenes y redes sociales.
+- `gear`: aparatos y pasos de cada proceso.
+- `portfolio`: tarjetas, páginas narrativas y showcases visuales.
+- `contact`: endpoint público de Formspree y correo alternativo.
 
-Cada aparato recibe una URL con el formato `#aparatos/nombre-del-aparato` y cada proyecto usa `#portfolio/nombre-del-proyecto`. Las secciones públicas usan `#bio`, `#aparatos`, `#portfolio` y `#contacto`; atrás y adelante del navegador funcionan con estos hashes.
+Las secciones usan hashes: `#bio`, `#aparatos`, `#portfolio` y `#contacto`. Los detalles usan `#aparatos/nombre` y `#portfolio/nombre`.
 
-## Probar en local
+Cuando cambies el JSON-LD de `index.html`, ejecuta `npm run check`. La CSP utiliza un hash exacto y la prueba indicará el nuevo valor necesario.
 
-El sitio no necesita compilación. Debe abrirse mediante un servidor HTTP para reproducir el comportamiento de producción:
+## Preparación local
+
+Node.js es la única herramienta necesaria:
 
 ```powershell
-python -m http.server 8000
+npm install
+npm run serve
 ```
 
-Después abre `http://localhost:8000`. También puede utilizarse cualquier servidor estático del editor.
+Abre `http://127.0.0.1:4173`. El servidor desactiva la caché para que cada actualización muestre los últimos cambios.
+
+## Verificación
+
+```powershell
+npm run check
+npm run audit:browser
+npm audit
+```
+
+`audit:browser` utiliza Microsoft Edge instalado en Windows. Para elegir otro Chromium o cambiar la URL:
+
+```powershell
+$env:WEBO_BROWSER_PATH = 'C:\ruta\al\navegador.exe'
+$env:WEBO_BASE_URL = 'http://127.0.0.1:4173'
+npm run audit:browser
+```
+
+Las métricas y el alcance completo están en [AUDIT.md](AUDIT.md).
 
 ## Imágenes
 
-Las miniaturas de la galería se descargan inicialmente; la versión grande se solicita al abrir el visor. Los originales no se publican, pero siguen recuperables desde el historial de Git.
+Los fondos disponen de AVIF, WebP y JPEG fallback. Las tarjetas utilizan miniaturas; los detalles conservan las imágenes grandes.
 
-Para regenerar las versiones optimizadas en Windows, coloca los originales con sus nombres históricos en la raíz y ejecuta:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/optimize-images.ps1
-```
-
-Después verifica visualmente los resultados antes de publicar. Los nombres de entrada y salida se definen al final del script.
+Los originales de Suite Spot y `Foto_Web_phone.png` permanecen en Git, pero `_config.yml` impide que GitHub Pages los publique. No los elimines: sirven como fuentes para futuras optimizaciones.
 
 ## GSAP
 
-GSAP 3.13.0 y ScrollTrigger se cargan de forma diferida desde jsDelivr en `index.html`. Toda animación se incorpora a través de `assets/js/animations.js`, para mantener la lógica de interfaz separada y respetar `prefers-reduced-motion`.
+GSAP y ScrollTrigger están fijados en la versión 3.13.0 y guardados en `assets/vendor/gsap/`. Solo se cargan cuando una ruta necesita animación. Hover, foco o pulsación sobre Bio inicia la precarga.
 
-La sección Bio usa una timeline vinculada al scroll mediante `scrub`: al desplazarse hacia arriba, la secuencia retrocede automáticamente. `initBioStory()` crea la escena al entrar en la ruta y `destroyBioStory()` elimina el pin y restaura el DOM al salir.
-
-La web tiene una alternativa basada en Web Animations API si la CDN falla. Para añadir un plugin de GSAP más adelante:
-
-1. Añade su script después de `gsap.min.js` y antes de `animations.js`.
-2. Regístralo al inicio de `animations.js`, por ejemplo `gsap.registerPlugin(ScrollTrigger)`.
-3. Mantén una alternativa funcional cuando JavaScript externo no esté disponible.
-
-La instalación mediante CDN y el registro explícito de plugins siguen las [recomendaciones oficiales de GSAP](https://gsap.com/docs/v3/Installation/).
+Si la carga falla o el usuario prefiere movimiento reducido, Bio muestra una alternativa estática funcional. Licencias, fuentes y hashes están documentados en `THIRD_PARTY_NOTICES.md`.
 
 ## Publicación
 
-GitHub Pages publica la rama `main`. Antes de subir cambios:
+GitHub Pages publica `main` y usa `CNAME` para `webowebo.com`. Antes de publicar:
 
-1. Comprueba las vistas de escritorio y móvil.
-2. Recorre todas las rutas con atrás y adelante.
-3. Comprueba la secuencia de Bio desplazándote hacia abajo y hacia arriba.
-4. Comprueba la entrada y salida de las imágenes de Aparatos y recorre el relato vertical de cada aparato.
-5. Actualiza el sufijo `?v=` de los recursos locales en `index.html` cuando cambien el CSS o JavaScript. Esto evita que el navegador combine el HTML nuevo con archivos antiguos en caché.
-6. Revisa `git status` para evitar originales pesados o archivos locales.
-7. Haz commit y push a `main`.
+1. Ejecuta todas las comprobaciones.
+2. Recorre visualmente escritorio y móvil.
+3. Revisa `git status`.
+4. Actualiza los sufijos `?v=` cuando cambien CSS o JavaScript.
+5. Haz commit y push únicamente cuando la revisión esté aprobada.

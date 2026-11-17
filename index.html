@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'sha256-CTM5Iag/BEbULWrJqb2j0hsNGOvLQWWd8A3CeaNK3cE='; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="WEBO, productor musical en Madrid: producción, grabación y desarrollo de aparatos musicales.">
+  <meta name="description" content="WEBO, productor musical e ingeniero de sonido en Madrid. Producción musical, grabación, mezcla y desarrollo de herramientas para artistas.">
   <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="application-name" content="WEBO">
 
   <title>WEBO - Productor</title>
   <link rel="canonical" href="https://webowebo.com/">
@@ -15,49 +18,82 @@
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="WEBO">
   <meta property="og:title" content="WEBO - Productor">
-  <meta property="og:description" content="Producción musical, grabación y desarrollo de aparatos musicales en Madrid.">
+  <meta property="og:description" content="Producción musical, grabación, mezcla e ingeniería de sonido en Madrid.">
   <meta property="og:url" content="https://webowebo.com/">
   <meta property="og:image" content="https://webowebo.com/assets/images/og-image.jpg">
+  <meta property="og:image:secure_url" content="https://webowebo.com/assets/images/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="WEBO trabajando en un estudio de grabación">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="WEBO - Productor">
-  <meta name="twitter:description" content="Producción musical, grabación y desarrollo de aparatos musicales en Madrid.">
+  <meta name="twitter:description" content="Producción musical, grabación, mezcla e ingeniería de sonido en Madrid.">
   <meta name="twitter:image" content="https://webowebo.com/assets/images/og-image.jpg">
+  <meta name="twitter:image:alt" content="WEBO trabajando en un estudio de grabación">
 
   <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261116-3">
+  <link rel="preload" href="assets/fonts/monoton-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/oswald-latin-400-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/images/background.avif" as="image" type="image/avif" media="(min-width: 721px)" fetchpriority="high">
+  <link rel="preload" href="assets/images/background-mobile.avif" as="image" type="image/avif" media="(max-width: 720px)" fetchpriority="high">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261117-8">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "WEBO",
-    "url": "https://webowebo.com/",
-    "image": "https://webowebo.com/assets/images/og-image.jpg",
-    "jobTitle": "Productor musical",
-    "description": "Producción musical, grabación y desarrollo de aparatos musicales en Madrid."
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://webowebo.com/#website",
+        "url": "https://webowebo.com/",
+        "name": "WEBO",
+        "inLanguage": "es"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://webowebo.com/#webo",
+        "name": "WEBO",
+        "url": "https://webowebo.com/",
+        "image": "https://webowebo.com/assets/images/og-image.jpg",
+        "jobTitle": ["Productor musical", "Ingeniero de sonido"],
+        "description": "Productor musical e ingeniero de sonido especializado en producción, grabación y mezcla.",
+        "homeLocation": {
+          "@type": "Place",
+          "name": "Madrid, España"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Abbey Road Institute Amsterdam",
+          "url": "https://abbeyroadinstitute.nl/"
+        },
+        "sameAs": [
+          "https://www.instagram.com/webo______/",
+          "https://www.linkedin.com/in/alvaro-ramiro-a7191a42a/",
+          "https://soundcloud.com/webowebo",
+          "https://www.youtube.com/@webowebowebo"
+        ]
+      }
+    ]
   }
   </script>
 
   <!-- Cambia esta versión al publicar cambios de CSS o JavaScript para evitar mezclar archivos en caché. -->
-  <script defer src="assets/js/content.js?v=20261116-6"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script defer src="assets/js/animations.js?v=20260824-1"></script>
-  <script defer src="assets/js/app.js?v=20261116-3"></script>
+  <script defer src="assets/js/content.js?v=20261117-15"></script>
+  <script defer src="assets/js/animations.js?v=20261117-4"></script>
+  <script defer src="assets/js/app.js?v=20261117-8"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
 
   <picture>
+    <source media="(max-width: 720px)" type="image/avif" srcset="assets/images/background-mobile.avif">
+    <source media="(max-width: 720px)" type="image/webp" srcset="assets/images/background-mobile.webp">
     <source media="(max-width: 720px)" srcset="assets/images/background-mobile.jpg">
+    <source type="image/avif" srcset="assets/images/background.avif">
+    <source type="image/webp" srcset="assets/images/background.webp">
     <img
       class="bg-photo"
       id="bg-photo"
@@ -96,6 +132,7 @@
       <div class="screen-content screen-content-home">
         <h1 class="sr-only">WEBO - Productor</h1>
         <p class="sr-only">Producción musical, grabación y desarrollo de aparatos musicales en Madrid.</p>
+        <p class="sr-only">Pulsa o desplázate para entrar en la biografía.</p>
       </div>
     </section>
 
@@ -105,7 +142,7 @@
       <div class="bio-story" id="bio-story">
         <div class="bio-stage" id="bio-stage">
           <figure class="bio-hero-visual">
-            <img id="bio-hero-image" alt="" decoding="async">
+            <img id="bio-hero-image" alt="" loading="lazy" fetchpriority="low" decoding="async">
           </figure>
 
           <div class="bio-copy-track" aria-hidden="true">
@@ -127,6 +164,8 @@
 
             <div class="bio-final-center">
               <p class="bio-long-copy" id="bio-long-copy" aria-hidden="true"></p>
+
+              <div class="bio-education" id="bio-education" aria-label="Formación"></div>
 
               <nav class="bio-socials" aria-label="Redes sociales de WEBO">
                 <a class="bio-social-link" data-social="instagram" href="#" aria-label="Instagram">
@@ -220,13 +259,18 @@
         <p class="page-sub page-sub-contact" id="contact-intro"></p>
         <form class="funk-form" id="contact-form" action="https://formspree.io/f/mppajzry" method="post">
           <label for="contact-name">Nombre</label>
-          <input id="contact-name" type="text" name="name" autocomplete="name" placeholder="Tu nombre" required>
+          <input id="contact-name" type="text" name="name" autocomplete="name" maxlength="100" placeholder="Tu nombre" required>
 
           <label for="contact-email">Email</label>
-          <input id="contact-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="tu@email.com" required>
+          <input id="contact-email" type="email" name="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="tu@email.com" required>
 
           <label for="contact-message">Mensaje</label>
-          <textarea id="contact-message" name="message" rows="4" placeholder="Escribe aquí..." required></textarea>
+          <textarea id="contact-message" name="message" rows="4" maxlength="5000" placeholder="Escribe aquí..." required></textarea>
+
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="contact-company">Empresa</label>
+            <input id="contact-company" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
 
           <button type="submit">Enviar</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>

@@ -1,0 +1,15 @@
+exclude:
+  - README.md
+  - AUDIT.md
+  - THIRD_PARTY_NOTICES.md
+  - package.json
+  - package-lock.json
+  - node_modules
+  - tools
+  - assets/images/Foto_Web_phone.png
+  - assets/images/portfolio/suite-spot/originals
+  - assets/images/portfolio/abbey-road/originals
+  - assets/images/portfolio/paradiso/originals
+  - assets/images/portfolio/rockfield/originals
+  - assets/images/gear/talkbox/originals
+

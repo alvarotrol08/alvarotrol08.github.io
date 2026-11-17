@@ -5,11 +5,11 @@
  */
 
 window.WEBO_CONTENT = {
-  bio: `Soy WEBO, productor musical e ingeniero de grabación. Trabajo con artistas para convertir una idea en una canción que conserve su identidad, desde las primeras decisiones de producción hasta la grabación final.`,
+  bio: `Soy Webo, productor musical e ingeniero de grabación. Después de indagar por mi cuenta en el gran mundo de la producción por unos años, decidí profesionalizarme estudiando en Abbey Road Amsterdam. Allí crecí como ingeniero y empecé a entender cómo se mueven los cables de esta industria. Me junté con artistas de todo tipo y aprendí a tratar con ellos para sacar su máximo potencial. Mi visión es dedicarle toda la vida a la música, mejorar, entender, estudiar; y conseguir que los artistas transmitan en sus canciones todo lo que ellos sienten. Esta es mi formación:`,
 
   sectionIntros: {
-    gear: 'Aquí están los procesos creativos, planos, y recursos utilizados para construir mis aparatos. La idea es que sea replicable para quien quiera construirlos por su cuenta.',
-    portfolio: 'Aquí reúno los proyectos donde he podido participar',
+    gear: 'mis inventos jejej',
+    portfolio: 'mis trabajillos jejej',
     contact: "let's work togetherrr !!!!"
   },
 
@@ -20,13 +20,33 @@ window.WEBO_CONTENT = {
     line: 'PRODUCTOR MUSICAL, INGENIERO DE SONIDO, PROFUNK',
 
     // Texto largo: aparece en el centro durante el segundo acto de la Bio.
-    biography: `Soy WEBO, productor musical e ingeniero de grabación. Mi relación con la música nace de la curiosidad: paso horas detrás de los altavoces intentando entender por qué una canción consigue movernos y cómo se puede llevar esa emoción a una grabación.
+    biography: `Soy Webo, productor musical e ingeniero de grabación. Después de indagar por mi cuenta en el gran mundo de la producción por unos años, decidí profesionalizarme estudiando en Abbey Road Amsterdam. Allí crecí como ingeniero y empecé a entender cómo se mueven los cables de esta industria. Me junté con artistas de todo tipo y aprendí a tratar con ellos para sacar su máximo potencial. Mi visión es dedicarle toda la vida a la música, mejorar, entender, estudiar; y conseguir que los artistas transmitan en sus canciones todo lo que ellos sienten. Esta es mi formación:`,
 
-Estudié Ingeniería de Sonido y Producción Musical en Abbey Road Institute Amsterdam. Allí profundicé en la ciencia que hay detrás de una grabación, trabajé con distintos artistas y desarrollé un criterio más sólido como músico, técnico y productor. La convivencia diaria con estudios y equipos profesionales también me enseñó que conocer las herramientas solo tiene sentido cuando ayuda a tomar mejores decisiones.
-
-Mi paso por Paradiso, una de las salas de conciertos más importantes de Ámsterdam, me permitió seguir creciendo como ingeniero y entender más de cerca cómo funciona la industria musical. El contacto con los artistas que pasaban por la sala amplió mi manera de escuchar y de pensar el trabajo que ocurre antes, durante y después de cada actuación.
-
-Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero reducir el ego alrededor del proceso para que el arte sea lo más honesto posible. Trabajo para ayudar a artistas con un mundo propio a terminar sus canciones sin perder su esencia, reforzando aquello que los hace reconocibles y ofreciendo una guía cercana sobre la parte creativa y técnica de la industria.`,
+    // Formación: cada elemento genera una línea debajo de la biografía.
+    education: [
+      {
+        institution: 'Abbey Road Institute Amsterdam',
+        qualification: 'Advanced Diploma in Music Production & Sound Engineering',
+        period: '2025–2026',
+        url: 'https://abbeyroadinstitute.nl/courses/diploma-music-production-sound-engineering/curriculum/',
+        logo: {
+          src: 'assets/images/portfolio/abbey-road/logo.png',
+          width: 553,
+          height: 253,
+          alt: 'Abbey Road Institute'
+        }
+      },
+      {
+        institution: 'Dolby Atmos',
+        qualification: 'Formación Dolby Atmos',
+        period: 'En curso'
+      },
+      {
+        institution: 'Apple Music',
+        qualification: 'Formación Apple Music',
+        period: 'En curso'
+      }
+    ],
 
 
     hero: {
@@ -76,6 +96,9 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       image: 'assets/images/gear/talkbox.jpg',
       imageWidth: 1440,
       imageHeight: 837,
+      imageThumb: 'assets/images/gear/talkbox-thumb.jpg',
+      imageThumbWidth: 480,
+      imageThumbHeight: 279,
       imageAlt: 'Componentes de un TalkBox con tubo transparente y driver de audio',
       // Material reservado para una posible composición futura de Aparatos.
       // Estas imágenes se conservan, pero actualmente no se muestran en la web.
@@ -125,21 +148,87 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       ],
 
       // Añade nuevos objetos a este array para ampliar el relato del proceso.
-      // Cada paso admite una imagen y un texto de la longitud que necesites.
+      // Cada paso puede incluir texto, una imagen, una galería o un vídeo.
       process: [
         {
-          src: 'assets/images/gear/talkbox.jpg',
-          width: 1440,
-          height: 837,
-          alt: 'Driver, tubo y primeras piezas utilizadas para construir el TalkBox',
-          text: `El TalkBox nace de mi interés por unir electrónica, diseño y producción musical en una herramienta física. Su funcionamiento parte de un driver que envía el sonido por un tubo hasta la boca; al articular, la forma de la boca modifica esa señal antes de que un micrófono vuelva a capturarla. Empecé este proyecto para comprender el recorrido completo del sonido y construir una unidad adaptada a mi manera de trabajar, con una respuesta clara y una conexión sencilla dentro del estudio.`
+          src: 'assets/images/gear/talkbox/process-1.jpg',
+          width: 907,
+          height: 711,
+          alt: 'Stevie Wonder utilizando un TalkBox durante una actuación',
+          paragraphs: [
+            `Allá por principios de 2026 me obsesioné completamente con un género musical al que, hasta la fecha, nunca había prestado especial atención. Ese género, que hacía que mi cuerpo se moviese como poseído y me transmitía una felicidad casi inacabable, era el Funk.`,
+            `Desde el día que lo conocí no paré de indagar en sus entrañas, descubriendo cada vez artistas más talentosos que provocaban en mí sentimientos indescriptibles.`,
+            `Rápidamente, y como haría cualquier productor, me puse a intentar producir aquello que tanto llamaba mi atención. Enseguida me topé con un problema.`,
+            `Había estado escuchando algo en común en todas esas grabaciones. No era el ritmo, ni los sintetizadores, ni el bajo protagonista, ni las palmadas. Había una voz robótica que siempre aparecía. Rápidamente descubrí que esa voz se llamaba TalkBox, y más rápidamente aún descubrí que esas TalkBox costaban como mínimo 200 pavos. Yo, que soy pobre pero algo inteligente, decidí aprender un mínimo de electrónica competente para diseñar mi propia máquina del Funk.`
+          ]
         },
         {
-          src: 'assets/images/gallery/studio-console-4.jpg',
-          width: 1800,
-          height: 1200,
-          alt: 'Ajustes de sonido sobre una mesa de mezclas durante una sesión',
-          text: `El desarrollo del prototipo es iterativo. Estoy probando cómo influyen el driver, el diámetro y la longitud del tubo, el recinto y el nivel de entrada en la presión, el ruido y la comodidad de uso. Cada versión me permite detectar un problema concreto y simplificar la siguiente. El objetivo es llegar a un aparato robusto, reparable y fácil de integrar en una sesión real. Esta página recoge el proceso a medida que el TalkBox evoluciona.`
+          layout: 'wide',
+          src: 'assets/images/gear/talkbox/process-2.jpg',
+          width: 1600,
+          height: 900,
+          alt: 'Componentes electrónicos y herramientas utilizados para construir el TalkBox',
+          paragraphs: [
+            {
+              before: 'Ahí descubrí ',
+              link: {
+                label: 'ESTA PÁGINA',
+                url: 'https://www.gfworks.jp/talkbox/'
+              },
+              after: ', que es como el paraíso para las personas que quieran construir su propio TalkBox. Aquí no voy a quitaros mucho tiempo explicando detalles, puesto que allí podéis encontrar la respuesta a todas vuestras dudas.'
+            },
+            `Hay cuatro cosas que se necesitan para construir una:`
+          ],
+          list: [
+            'Un driver de compresión, que es básicamente un altavoz.',
+            'Un tubo de un material que no te intoxique instantáneamente.',
+            'Un amplificador.',
+            'Un filtro RC de paso alto.'
+          ]
+        },
+        {
+          layout: 'portrait',
+          src: 'assets/images/gear/talkbox/process-3.jpg',
+          width: 1200,
+          height: 1600,
+          alt: 'Driver de compresión, amplificador y filtro conectados durante las pruebas',
+          paragraphs: [
+            `El TalkBox funciona de la siguiente manera: un sintetizador produce una señal, normalmente una onda de sierra. Esa señal, a nivel de línea, entra a un amplificador que la amplifica para que un altavoz la reproduzca. Ese altavoz es el driver de compresión, y lo que nos interesa es que saca toda su presión sonora por un agujero chiquitito. En ese agujero se conecta el tubo de PVC para que el sonido viaje hasta tu boca. Y es la boca la que modulará la señal para producir un formante u otro. El filtro se suele poner antes del amplificador para cortar las frecuencias más bajas que podrían dañar el driver. Y ya está.`
+          ]
+        },
+        {
+          layout: 'gallery',
+          images: [
+            {
+              src: 'assets/images/gear/talkbox/process-4.jpg',
+              width: 1600,
+              height: 1200,
+              alt: 'Amplificador y conexiones instalados dentro de la caja del TalkBox'
+            },
+            {
+              src: 'assets/images/gear/talkbox/process-5.jpg',
+              width: 1200,
+              height: 1600,
+              alt: 'Vista superior de los componentes montados dentro de la caja'
+            },
+            {
+              src: 'assets/images/gear/talkbox/process-6.jpg',
+              width: 1200,
+              height: 1600,
+              alt: 'TalkBox montado en su caja y conectado al tubo'
+            }
+          ],
+          paragraphs: [
+            `Después de bastantes pruebas lo metí todo en una caja que, de momento, funciona y hace el apaño de no tener todos los componentes sueltos por ahí. A futuro sí que me gustaría mejorar el amplificador, para ganar inteligibilidad, y la conexión del tubo al driver, pero por ahora puedo mejorar mucho el sonido solo aprendiendo a usarla como tal. Antes que gastar más dinero, prefiero mejorar mi habilidad y ver hasta dónde puedo llegar con estos componentes. En total, todo me salió por unos 80 euros, que no está nada mal teniendo en cuenta que es una TalkBox con la potencia de una tope de gama.`
+          ]
+        },
+        {
+          layout: 'video',
+          video: {
+            src: 'assets/videos/talkbox-demo.mp4',
+            label: 'Demostración del sonido del TalkBox construido por WEBO',
+            caption: 'Así suena el resultado.'
+          }
         }
       ]
     }
@@ -153,6 +242,9 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       image: 'assets/images/portfolio/suite-spot/studio-stage.jpg',
       imageWidth: 1800,
       imageHeight: 1350,
+      imageThumb: 'assets/images/portfolio/suite-spot/studio-stage-thumb.jpg',
+      imageThumbWidth: 480,
+      imageThumbHeight: 360,
       imageAlt: 'Escenario de Suite Spot preparado para una sesión',
       showcase: {
         channelUrl: 'https://www.youtube.com/@SuiteSpotConcert',
@@ -166,6 +258,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
         videos: [
           {
             title: 'Suite Spot Concerts: Sneurf',
+            role: 'Ingeniero de Grabación',
             url: 'https://www.youtube.com/watch?v=KkZOZ65tmZM',
             thumbnail: 'assets/images/portfolio/suite-spot/video-sneurf.jpg',
             thumbnailWidth: 1280,
@@ -173,6 +266,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           },
           {
             title: 'Suite Spot Concerts: Dorsy',
+            role: 'Ingeniero de Grabación',
             url: 'https://www.youtube.com/watch?v=4qN9ekb9Eyo',
             thumbnail: 'assets/images/portfolio/suite-spot/video-dorsy.jpg',
             thumbnailWidth: 1280,
@@ -180,6 +274,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           },
           {
             title: 'Suite Spot Concerts: sulaWesi',
+            role: 'Ingeniero de Grabación',
             url: 'https://www.youtube.com/watch?v=ow2CCMunL4Y',
             thumbnail: 'assets/images/portfolio/suite-spot/video-sulawesi.jpg',
             thumbnailWidth: 1280,
@@ -219,6 +314,9 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       image: 'assets/images/gallery/studio-console-1.jpg',
       imageWidth: 1440,
       imageHeight: 817,
+      imageThumb: 'assets/images/gallery/studio-console-1-thumb.jpg',
+      imageThumbWidth: 480,
+      imageThumbHeight: 272,
       imageAlt: 'Mesa de mezclas en Abbey Road Institute Amsterdam',
       showcase: {
         layout: 'work-list',
@@ -234,7 +332,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
         works: [
           {
             title: 'Rover Onslow — Buddy',
-            role: 'Asistente de grabación',
+            role: 'Asistente de grabación · Mix',
             url: 'https://www.youtube.com/watch?v=-bXbV3J6IFk',
             frames: [
               { src: 'assets/images/portfolio/abbey-road/rover-onslow-1.jpg', width: 480, height: 360 },
@@ -243,7 +341,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           },
           {
             title: 'Angelo Benson — 03/09',
-            role: 'Asistente de grabación',
+            role: 'Asistente de grabación · Mix',
             url: 'https://www.youtube.com/watch?v=Bt-6jrsoXkw',
             frames: [
               { src: 'assets/images/portfolio/abbey-road/angelo-benson-1.jpg', width: 480, height: 360 },
@@ -252,7 +350,7 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           },
           {
             title: 'Oskar Billy — The Water',
-            role: 'Asistente de grabación · Equipo de mezcla',
+            role: 'Asistente de grabación · Mix',
             url: 'https://www.youtube.com/watch?v=i_8iLfEVJtQ',
             frames: [
               { src: 'assets/images/portfolio/abbey-road/oskar-billy-1.jpg', width: 480, height: 360 },
@@ -261,11 +359,56 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
           },
           {
             title: 'Sé — ARIA Live',
-            role: 'Asistente de grabación · Vídeo',
+            role: 'Ingeniero de grabación · Camera Operator',
             url: 'https://www.youtube.com/watch?v=iq69LO7Vhq0',
             frames: [
               { src: 'assets/images/portfolio/abbey-road/se-aria-1.jpg', width: 480, height: 360 },
               { src: 'assets/images/portfolio/abbey-road/se-aria-2.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: 'Petra Jordan — Tattoo In My Mind',
+            role: 'Asistente de grabación · Camera Operator',
+            url: 'https://www.youtube.com/watch?v=3ytlCf-pD4k',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-tattoo-in-my-mind.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/abbey-road-studio-1.jpg', width: 1600, height: 1067 }
+            ]
+          },
+          {
+            title: 'Petra Jordan — The Way We Dance',
+            role: 'Asistente de grabación · Camera Operator',
+            url: 'https://www.youtube.com/watch?v=nDvyjmDYB7c',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-the-way-we-dance.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/abbey-road-studio-2.jpg', width: 1600, height: 1067 }
+            ]
+          },
+          {
+            title: 'Petra Jordan — Pretty Boy',
+            role: 'Asistente de grabación · Camera Operator',
+            url: 'https://www.youtube.com/watch?v=quTv90VDucM',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-pretty-boy.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-pretty-boy-frame.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: "Petra Jordan — I Don't Wanna Love You No More",
+            role: 'Asistente de grabación · Camera Operator',
+            url: 'https://www.youtube.com/watch?v=5UeY4jpfGoI',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-dont-wanna-love-you.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/petra-jordan-dont-wanna-love-you-frame.jpg', width: 480, height: 360 }
+            ]
+          },
+          {
+            title: 'Tony Pitony — Jam Session',
+            role: 'Asistente de grabación',
+            url: 'https://www.youtube.com/channel/UCMSnPwNXOfPbV1hvbE8YYlA',
+            frames: [
+              { src: 'assets/images/portfolio/abbey-road/tony-pitony-1.jpg', width: 480, height: 360 },
+              { src: 'assets/images/portfolio/abbey-road/tony-pitony-2.jpg', width: 480, height: 360 }
             ]
           }
         ]
@@ -276,6 +419,9 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       image: 'assets/images/gallery/paradiso-studio.jpg',
       imageWidth: 1537,
       imageHeight: 1023,
+      imageThumb: 'assets/images/gallery/paradiso-studio-thumb.jpg',
+      imageThumbWidth: 480,
+      imageThumbHeight: 319,
       imageAlt: 'WEBO sentado ante la mesa de mezclas del estudio Paradiso',
       story: [
         {
@@ -288,20 +434,36 @@ Mi visión es sencilla: hacer música que inspire y transmita emociones. Quiero 
       ]
     },
     {
-      name: 'Producciones',
-      image: 'assets/images/gallery/home-piano.jpg',
-      imageWidth: 1800,
-      imageHeight: 1200,
-      imageAlt: 'WEBO trabajando con un teclado en un estudio doméstico',
-      story: [
-        {
-          src: 'assets/images/gallery/home-piano.jpg',
-          width: 1800,
-          height: 1200,
-          alt: 'WEBO desarrollando una producción propia',
-          text: `Aquí reúno las producciones y proyectos que nacen de mis propias ideas o de una colaboración directa con otros artistas. Es el espacio donde puedo enseñar el recorrido completo de una canción: la intuición inicial, las pruebas que no funcionan, las decisiones de arreglo y la versión que finalmente sale al mundo. Me interesa mostrar el proceso además del resultado, porque una producción también se define por la manera en que se escucha, se descarta y se vuelve a construir.`
-        }
-      ]
+      name: 'Rockfield',
+      image: 'assets/images/portfolio/rockfield/rockfield-studio.jpg',
+      imageWidth: 1600,
+      imageHeight: 1061,
+      imageThumb: 'assets/images/portfolio/rockfield/rockfield-studio-thumb.jpg',
+      imageThumbWidth: 480,
+      imageThumbHeight: 318,
+      imageAlt: 'WEBO trabajando en Rockfield Studios',
+      showcase: {
+        layout: 'photo-story',
+        channelUrl: 'https://rockfieldmusicgroup.com/',
+        linkLabel: 'Abrir la web oficial de Rockfield Studios',
+        // Añade aquí el párrafo de introducción cuando esté listo.
+        tagline: '',
+        logo: {
+          src: 'assets/images/portfolio/rockfield/logo.png',
+          width: 600,
+          height: 193,
+          alt: 'Rockfield Studios'
+        },
+        // Las próximas fotos se añaden aquí y se muestran una debajo de otra.
+        gallery: [
+          {
+            src: 'assets/images/portfolio/rockfield/rockfield-studio.jpg',
+            width: 1600,
+            height: 1061,
+            alt: 'WEBO durante su experiencia en Rockfield Studios'
+          }
+        ]
+      }
     }
   ],
 

@@ -660,6 +660,26 @@ a.bio-education-row:focus-visible {
   transform: none !important;
 }
 
+.bio-direct-final .bio-hero-visual,
+.bio-direct-final .bio-parallax-image,
+.bio-direct-final .bio-copy-track,
+.bio-direct-final .scroll-banner {
+  display: none;
+}
+
+.bio-direct-final .bio-final {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.bio-direct-final .bio-final-image,
+.bio-direct-final .bio-final-center {
+  opacity: 1;
+  visibility: visible;
+  transform: none !important;
+}
+
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
@@ -1297,6 +1317,8 @@ a.bio-education-row:focus-visible {
 
 .portfolio-photo-grid {
   display: grid;
+  width: min(920px, 82vw);
+  margin-inline: auto;
   grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   grid-template-areas:
     'live piano'
@@ -1319,7 +1341,7 @@ a.bio-education-row:focus-visible {
 
 .portfolio-showcase.is-photo-story .portfolio-photo-grid {
   display: flex;
-  width: min(920px, 100%);
+  width: min(760px, 82vw);
   margin: 0 auto;
   flex-direction: column;
   gap: clamp(18px, 3vw, 34px);

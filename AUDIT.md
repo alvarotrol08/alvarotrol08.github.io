@@ -101,7 +101,7 @@ GitHub Pages no permite configurar cabeceras HTTP arbitrarias desde este reposit
 - 63 verificaciones estáticas de archivos, rutas, CSP, JSON-LD, canonical, sitemap y CNAME.
 - 10 rutas en escritorio, tablet y móvil sin errores críticos de axe, consola u overflow.
 - Navegación atrás/adelante, menú móvil, lazy loading, motor de animación, movimiento reducido y página 404.
-- Enlaces de YouTube, Instagram, SoundCloud, Abbey Road y Suite Spot accesibles.
+- Enlaces de YouTube, Instagram, Abbey Road y Suite Spot accesibles.
 - `npm audit`: 0 vulnerabilidades.
 - Lighthouse: 100/100/100/100.
 

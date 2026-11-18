@@ -8,8 +8,8 @@ window.WEBO_CONTENT = {
   bio: `Soy Webo, productor musical e ingeniero de grabación. Después de indagar por mi cuenta en el gran mundo de la producción por unos años, decidí profesionalizarme estudiando en Abbey Road Amsterdam. Allí crecí como ingeniero y empecé a entender cómo se mueven los cables de esta industria. Me junté con artistas de todo tipo y aprendí a tratar con ellos para sacar su máximo potencial. Mi visión es dedicarle toda la vida a la música, mejorar, entender, estudiar; y conseguir que los artistas transmitan en sus canciones todo lo que ellos sienten. Esta es mi formación:`,
 
   sectionIntros: {
-    gear: 'mis inventos jejej',
-    portfolio: 'mis trabajillos jejej',
+    gear: 'Siempre me ha gustado diseñar cosas, entender cómo funcionan y arreglar lo que se rompe. Aquí reúno algunos inventos nacidos justo en esa intersección con la música.',
+    portfolio: '',
     contact: "let's work togetherrr !!!!"
   },
 
@@ -85,8 +85,8 @@ window.WEBO_CONTENT = {
       instagram: 'https://www.instagram.com/webo______/',
       linkedin: 'https://www.linkedin.com/in/alvaro-ramiro-a7191a42a/',
       gmail: '#contacto',
-      soundcloud: 'https://soundcloud.com/webowebo',
-      youtube: 'https://www.youtube.com/@webowebowebo'
+      youtube: 'https://www.youtube.com/@webowebowebo',
+      suiteSpotYoutube: 'https://www.youtube.com/@SuiteSpotConcert'
     }
   },
 

@@ -15,6 +15,7 @@ if (!fs.existsSync(axePath)) throw new Error('Ejecuta npm install antes de la au
 const routes = [
   ['', 'WEBO - Productor'],
   ['#bio', 'WEBO - Bio'],
+  ['#bio/final', 'WEBO - Bio'],
   ['#aparatos', 'WEBO - Aparatos'],
   ['#aparatos/talkbox', 'WEBO - TalkBox'],
   ['#portfolio', 'WEBO - Portfolio'],
@@ -91,6 +92,31 @@ try {
         const engineReady = await page.evaluate(() => Boolean(globalThis.gsap && globalThis.ScrollTrigger));
         if (!engineReady) failures.push('desktop #bio: GSAP o ScrollTrigger no se cargaron');
       }
+      if (route === '#bio/final') {
+        const directFinalState = await page.evaluate(() => {
+          const section = document.querySelector('.bio-screen');
+          const finalScene = document.querySelector('.bio-final');
+          return {
+            direct: section?.classList.contains('bio-direct-final'),
+            finalVisible: finalScene && getComputedStyle(finalScene).visibility === 'visible'
+          };
+        });
+        if (!directFinalState.direct || !directFinalState.finalVisible) {
+          failures.push(`${viewport.name} ${activeRoute}: Bio no mostró directamente el bloque final`);
+        }
+      }
+      if (route === '#contacto') {
+        const contactSocialState = await page.evaluate(() => ({
+          soundcloudLinks: document.querySelectorAll('[data-social="soundcloud"]').length,
+          youtubeUrl: document.querySelector('[data-social="suiteSpotYoutube"]')?.href
+        }));
+        if (contactSocialState.soundcloudLinks) {
+          failures.push(`${viewport.name} ${activeRoute}: SoundCloud sigue visible`);
+        }
+        if (contactSocialState.youtubeUrl !== 'https://www.youtube.com/@SuiteSpotConcert') {
+          failures.push(`${viewport.name} ${activeRoute}: el enlace de YouTube no apunta a Suite Spot`);
+        }
+      }
 
       if (route.startsWith('#portfolio/') || route.startsWith('#aparatos/')) {
         const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -124,7 +150,7 @@ try {
         if (videoState.renderedDifference > 1) failures.push(`${viewport.name} ${activeRoute}: el reproductor no es 1:1`);
       }
 
-      if (screenshotDir && ['', '#aparatos/talkbox', '#portfolio', '#portfolio/suite-spot', '#portfolio/abbey-road', '#portfolio/paradiso', '#portfolio/rockfield', '#contacto'].includes(route)) {
+      if (screenshotDir && ['', '#bio/final', '#aparatos/talkbox', '#portfolio', '#portfolio/suite-spot', '#portfolio/abbey-road', '#portfolio/paradiso', '#portfolio/rockfield', '#contacto'].includes(route)) {
         const name = `${viewport.name}-${route.replace(/^#/, '').replaceAll('/', '-') || 'home'}.png`;
         await page.screenshot({ path: path.join(screenshotDir, name), fullPage: true, animations: 'disabled' });
       }
@@ -145,6 +171,17 @@ try {
       await page.locator('.screen-home').click({ position: { x: 100, y: 200 } });
       await page.waitForTimeout(250);
       if (new URL(page.url()).hash !== '#bio') failures.push('desktop: pulsar la portada no abrió Bio');
+      if (await page.locator('.bio-screen').evaluate((section) => section.classList.contains('bio-direct-final'))) {
+        failures.push('desktop: pulsar la portada omitió la animación de Bio');
+      }
+
+      await page.goto(`${baseUrl}/#aparatos`, { waitUntil: 'networkidle' });
+      await page.locator('.nav-links [data-route="bio"]').click();
+      await page.waitForTimeout(250);
+      if (new URL(page.url()).hash !== '#bio/final') failures.push('desktop: el menú Bio no abrió el bloque final');
+      if (!await page.locator('.bio-screen').evaluate((section) => section.classList.contains('bio-direct-final'))) {
+        failures.push('desktop: el menú Bio no mostró directamente el bloque final');
+      }
 
       await page.goto(`${baseUrl}/`, { waitUntil: 'networkidle' });
       await page.mouse.wheel(0, 120);

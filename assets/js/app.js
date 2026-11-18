@@ -5,6 +5,7 @@
   const animations = window.WEBO_ANIMATIONS || {
     screenIn() {},
     initBioStory(section) { section.classList.add('bio-fallback'); },
+    showBioFinal(section) { section.classList.add('bio-direct-final'); },
     destroyBioStory() {},
     initApparatusStory() {},
     destroyApparatusStory() {},
@@ -136,6 +137,7 @@
     const intros = content.sectionIntros || {};
     dom.gearIntro.textContent = intros.gear || '';
     dom.portfolioIntro.textContent = intros.portfolio || '';
+    dom.portfolioIntro.hidden = !intros.portfolio;
     dom.contactIntro.textContent = intros.contact || 'Respondo rápido.';
   }
 
@@ -447,6 +449,14 @@
     const segments = decoded.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
     const route = segments[0] || 'home';
 
+    if (route === 'bio' && segments[1] === 'final') {
+      return {
+        key: 'bio/final',
+        ...routeDefinitions.bio,
+        bioMode: 'final'
+      };
+    }
+
     if (route === 'aparatos' && segments[1]) {
       const item = content.gear.find((candidate) => slugify(candidate.name) === segments[1]);
       if (item) {
@@ -499,7 +509,7 @@
     const route = parseRoute();
     if (route.key === currentRoute && hasRenderedRoute) return;
 
-    if (currentRoute === 'bio' && route.key !== 'bio') {
+    if (currentRoute?.startsWith('bio') && route.key !== currentRoute) {
       animations.destroyBioStory();
     }
     const currentIsStory = currentRoute?.startsWith('aparatos/') || currentRoute?.startsWith('portfolio/');
@@ -529,7 +539,13 @@
     animations.screenIn(activeScreen);
 
     if (route.screen === 'bio') {
-      requestAnimationFrame(() => animations.initBioStory(activeScreen));
+      requestAnimationFrame(() => {
+        if (route.bioMode === 'final') {
+          animations.showBioFinal(activeScreen);
+        } else {
+          animations.initBioStory(activeScreen);
+        }
+      });
     }
     if (route.screen === 'aparato-detail' || route.screen === 'portfolio-detail') {
       requestAnimationFrame(() => animations.initApparatusStory(activeScreen));

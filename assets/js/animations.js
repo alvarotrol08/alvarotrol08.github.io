@@ -88,7 +88,12 @@
     }
 
     const section = document.querySelector('.bio-screen');
-    if (section) section.classList.remove('bio-fallback');
+    if (section) section.classList.remove('bio-fallback', 'bio-direct-final');
+  }
+
+  function showBioFinal(section) {
+    destroyBioStory();
+    section.classList.add('bio-direct-final');
   }
 
   async function initBioStory(section) {
@@ -266,15 +271,21 @@
   function syncMotionPreference() {
     const bioSection = document.querySelector('.bio-screen');
     const detailSection = document.querySelector('.aparato-detail-screen:not([hidden])');
+    const isDirectFinal = bioSection?.classList.contains('bio-direct-final');
 
     if (reducedMotionQuery.matches) {
       destroyBioStory();
       destroyApparatusStory();
-      if (bioSection && !bioSection.hidden) bioSection.classList.add('bio-fallback');
+      if (bioSection && !bioSection.hidden) {
+        bioSection.classList.add(isDirectFinal ? 'bio-direct-final' : 'bio-fallback');
+      }
       return;
     }
 
-    if (bioSection && !bioSection.hidden) initBioStory(bioSection);
+    if (bioSection && !bioSection.hidden) {
+      if (isDirectFinal) showBioFinal(bioSection);
+      else initBioStory(bioSection);
+    }
     if (detailSection) initApparatusStory(detailSection);
   }
 
@@ -283,6 +294,7 @@
   window.WEBO_ANIMATIONS = Object.freeze({
     screenIn,
     initBioStory,
+    showBioFinal,
     destroyBioStory,
     initApparatusStory,
     destroyApparatusStory,

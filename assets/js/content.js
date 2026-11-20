@@ -50,9 +50,9 @@ window.WEBO_CONTENT = {
 
 
     hero: {
-      src: 'assets/images/gallery/paradiso-studio.jpg',
-      width: 1537,
-      height: 1023,
+      src: 'assets/images/gallery/paradiso-studio-no-bracelet.jpg',
+      width: 1536,
+      height: 1024,
       alt: 'WEBO sentado frente a la mesa de mezclas de Paradiso'
     },
     parallaxTop: {
@@ -416,12 +416,12 @@ window.WEBO_CONTENT = {
     },
     {
       name: 'Paradiso',
-      image: 'assets/images/gallery/paradiso-studio.jpg',
-      imageWidth: 1537,
-      imageHeight: 1023,
-      imageThumb: 'assets/images/gallery/paradiso-studio-thumb.jpg',
+      image: 'assets/images/gallery/paradiso-studio-no-bracelet.jpg',
+      imageWidth: 1536,
+      imageHeight: 1024,
+      imageThumb: 'assets/images/gallery/paradiso-studio-no-bracelet-thumb.jpg',
       imageThumbWidth: 480,
-      imageThumbHeight: 319,
+      imageThumbHeight: 320,
       imageAlt: 'WEBO sentado ante la mesa de mezclas del estudio Paradiso',
       showcase: {
         layout: 'photo-story',
@@ -590,12 +590,12 @@ window.WEBO_CONTENT = {
       caption: 'En la sala de control'
     },
     {
-      src: 'assets/images/gallery/paradiso-studio.jpg',
-      thumb: 'assets/images/gallery/paradiso-studio-thumb.jpg',
-      width: 1537,
-      height: 1023,
+      src: 'assets/images/gallery/paradiso-studio-no-bracelet.jpg',
+      thumb: 'assets/images/gallery/paradiso-studio-no-bracelet-thumb.jpg',
+      width: 1536,
+      height: 1024,
       thumbWidth: 480,
-      thumbHeight: 319,
+      thumbHeight: 320,
       alt: 'WEBO sentado ante la mesa de mezclas del estudio Paradiso',
       caption: 'Estudio Paradiso'
     },
